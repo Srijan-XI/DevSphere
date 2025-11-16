@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Start Guide</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: Inter, system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0e14 0%, #1a1f2e 50%, #0f1419 100%);
+            color: #e1e4e8;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        header {
+            background: #161b22;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-top: 4px solid #10b981;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #30363d;
+        }
+        
+        h1 { font-size: 2.5rem; color: #e1e4e8; margin-bottom: 0.5rem; font-weight: 800; }
+        header p { font-size: 1.125rem; color: #8b92a0; }
+        h2 { font-size: 1.875rem; color: #e1e4e8; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid #8b5cf6; }
+        h3 { font-size: 1.25rem; color: #e1e4e8; margin-bottom: 0.75rem; font-weight: 600; }
+        p { color: #8b92a0; margin-bottom: 1rem; }
+        
+        section { margin-bottom: 3rem; }
+        
+        .grid { display: grid; gap: 1.5rem; }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        
+        .card {
+            background: #161b22;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid #30363d;
+            transition: all 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.3);
+            border-color: #8b5cf6;
+        }
+        
+        .card-accent { border-top: 4px solid #8b5cf6; }
+        .card-success { border-top: 4px solid #10b981; }
+        .card-warn { border-top: 4px solid #f59e0b; }
+        
+        .card h3 { color: #8b5cf6; margin-bottom: 0.75rem; }
+        .card-success h3 { color: #10b981; }
+        .card-warn h3 { color: #f59e0b; }
+        
+        ol, ul { margin-left: 1.5rem; color: #8b92a0; line-height: 1.8; }
+        li { margin: 0.5rem 0; }
+        strong { color: #e1e4e8; }
+        
+        .code-block {
+            background: #0d1117;
+            color: #e1e4e8;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: monospace;
+            border: 1px solid #30363d;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        
+        .goal-section {
+            background: #161b22;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid #8b5cf6;
+            margin: 2rem 0;
+        }
+        
+        .goal-section h2 { border-bottom: none; padding-bottom: 0; margin-bottom: 1rem; }
+        
+        .goal-checkbox {
+            appearance: none;
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid #8b5cf6;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        
+        .goal-checkbox:checked {
+            background-color: #10b981;
+            border-color: #10b981;
+        }
+        
+        .goal-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: #0d1117;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .goal-item:hover { background: #161b22; }
+        .goal-text { color: #e1e4e8; font-weight: 500; font-size: 1.125rem; }
+        .goal-text-checked { text-decoration: line-through; color: #8b92a0; }
+        
+        footer {
+            background: #161b22;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            margin-top: 3rem;
+            border-top: 4px solid #8b92a0;
+            border: 1px solid #30363d;
+        }
+        
+        footer h2 { font-size: 1.5rem; border-bottom: none; margin-bottom: 1rem; }
+                .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .quickstart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .quickstart-title {
+            color: #8b5cf6;
+            font-size: 1.5rem;
+        }
+
+        .quickstart-title-spaced {
+            margin-top: 1.5rem;
+        }
+
+        .quickstart-tools-list {
+            list-style: none;
+            margin-left: 0;
+        }
+    </style>
+        footer p { color: #8b92a0; font-size: 0.875rem; text-align: center; margin-top: 2rem; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .grid-3 { grid-template-columns: 1fr; }
+            body { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🚀 Quick Start Guide</h1>
+            <p>Get up and running with any programming language in minutes!</p>
+        </header>
+
+        <section>
+            <h2>🎯 Choose Your Path</h2>
+            <div class="grid grid-3">
+                <div class="card card-accent">
+                    <h3>Path 1: Complete Beginner</h3>
+                    <p>Never coded before? Start here!</p>
+                    <ol class="list-decimal list-inside text-gray-600 space-y-2 text-sm">
+                        <li>**Choose Python** (most beginner-friendly)</li>
+                        <li>**Go to**: `PYTHON/Installation-Guide.md`</li>
+                        <li>**Follow**: Step-by-step installation</li>
+                        <li>**Try**: `q01_hello_world.py`</li>
+                        <li>**Progress**: Work through questions q01-q10</li>
+                    </ol>
+                </div>
+
+                <div class="card card-accent">
+                    <h3>Path 2: Experienced Developer</h3>
+                    <p>Setting up a new language or environment?</p>
+                    <ol class="list-decimal list-inside text-gray-600 space-y-2 text-sm">
+                        <li>**Pick your language**: Python, Java, C/C++, PHP, R, or Rust</li>
+                        <li>**Quick install**: Follow installation guide for your OS</li>
+                        <li>**Jump to**: Intermediate or Advanced questions</li>
+                        <li>**Build**: Real projects with your new skills</li>
+                    </ol>
+                </div>
+
+                <div class="card card-accent">
+                    <h3>Path 3: Contributor</h3>
+                    <p>Want to contribute to the project?</p>
+                    <ol class="list-decimal list-inside text-gray-600 space-y-2 text-sm">
+                        <li>**Read**: [CONTRIBUTING.md]</li>
+                        <li>**Fork**: The repository</li>
+                        <li>**Choose**: An open issue or create new content</li>
+                        <li>**Submit**: Pull request</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Installation (Quick Version)</h2>
+            <p>*For detailed instructions, see language-specific installation guides.*</p>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>Windows (PowerShell/Winget)</h3>
+                    <pre class="code-block text-xs sm:text-sm"><code># Python
+winget install Python.Python.3.11
+
+# Java
+winget install Oracle.JDK.17
+
+# Rust
+winget install Rustlang.Rust.MSVC</code></pre>
+                </div>
+                
+                <div class="card">
+                    <h3>macOS (Homebrew)</h3>
+                    <pre class="code-block text-xs sm:text-sm"><code># Using Homebrew
+brew install python
+brew install openjdk@17
+brew install rust</code></pre>
+                </div>
+                
+                <div class="card">
+                    <h3>Linux (Ubuntu/Debian)</h3>
+                    <pre class="code-block text-xs sm:text-sm"><code># Python
+sudo apt update
+sudo apt install python3 python3-pip
+
+# Java
+sudo apt install openjdk-17-jdk
+
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎓 Learning Path Recommendations</h2>
+            <div class="grid grid-3">
+                <div class="card card-success">
+                    <h3>Week 1: Getting Started</h3>
+                    <ul>
+                        <li>Install chosen language</li>
+                        <li>Set up IDE/editor</li>
+                        <li>Complete beginner questions (Q1-Q5)</li>
+                        <li>Read basic syntax documentation</li>
+                    </ul>
+                </div>
+                <div class="card card-accent">
+                    <h3>Week 2-4: Building Skills</h3>
+                    <ul>
+                        <li>Complete intermediate questions</li>
+                        <li>Read about data structures</li>
+                        <li>Start a small project</li>
+                        <li>Learn Docker basics (optional)</li>
+                        <li>Join community discussions</li>
+                    </ul>
+                </div>
+                <div class="card card-warn">
+                    <h3>Month 2-3: Advanced Topics</h3>
+                    <ul>
+                        <li>Complete advanced questions</li>
+                        <li>Build a medium-sized project</li>
+                        <li>Contribute to open source</li>
+                        <li>Explore frameworks/libraries</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="goal-section">
+            <h2>🎯 Your First Goal</h2>
+            <p>Choose ONE task to complete today. Check it off when done!</p>
+            <div id="goal-checklist">
+                <!-- Checkbox items will be rendered here -->
+            </div>
+        </section>
+        
+        <section>
+            <h2>💡 Quick Tips & Tools</h2>
+            <div class="quickstart-grid">
+                <div>
+                    <h3 class="quickstart-title">Tips for Learning</h3>
+                    <ul>
+                        <li>**Code daily**: Even 30 minutes helps</li>
+                        <li>**Type, don't copy**: Manual typing builds muscle memory</li>
+                        <li>**Experiment**: Modify examples to see what happens</li>
+                        <li>**Debug yourself**: Try to solve errors before searching</li>
+                        <li>**Build projects**: Apply what you learn</li>
+                    </ul>
+                    <h3 class="quickstart-title quickstart-title-spaced">Tips for Practice Questions</h3>
+                    <ul>
+                        <li>**Read carefully**: Understand requirements first</li>
+                        <li>**Plan first**: Pseudocode before coding</li>
+                        <li>**Start simple**: Get basic version working first</li>
+                        <li>**Test thoroughly**: Try edge cases</li>
+                        <li>**Refactor**: Improve after it works</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="quickstart-title">Essential Tools</h3>
+                    <ul class="quickstart-tools-list">
+                        <li>
+                            <strong class="text-dark-gray">Code Editors (Pick One):</strong>
+                            <span class="block text-sm text-gray-600 ml-4">VS Code (Recommended), PyCharm, IntelliJ IDEA, Sublime Text, Vim/Neovim.</span>
+                        </li>
+                        <li>
+                            <strong class="text-dark-gray">Version Control:</strong>
+                            <span class="block text-sm text-gray-600 ml-4">Git (Essential for all developers), GitHub Desktop (GUI for beginners).</span>
+                        </li>
+                        <li>
+                            <strong class="text-dark-gray">Terminal/Shell:</strong>
+                            <span class="block text-sm text-gray-600 ml-4">Windows (PowerShell/Windows Terminal), macOS (Terminal/iTerm2), Linux (Default Terminal).</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <h2>📚 Next Steps & Help</h2>
+            <div class="footer-grid">
+                <div>
+                    <h3 class="quickstart-title">After Quick Start</h3>
+                    <ol>
+                        <li>**Deep Dive**: Read full installation guide for your language</li>
+                        <li>**Practice**: Work through all practice questions</li>
+                        <li>**Resources**: Check [RESOURCES.md] for courses and books</li>
+                        <li>**Projects**: Build something from scratch</li>
+                        <li>**Contribute**: Add your own questions or improvements</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="quickstart-title">Need Help?</h3>
+                    <ul>
+                        <li>📖 Check [FAQ.md]</li>
+                        <li>💬 Open an [Issue]</li>
+                        <li>🔍 Search existing issues</li>
+                        <li>📧 Contact maintainers</li>
+                    </ul>
+                </div>
+            </div>
+            <p>[⬆ Back to README] | [View All Languages] | [Contribute]</p>
+        </footer>
+    </div>
+
+    <script>
+        const goals = [
+            'Install your first programming language',
+            'Complete "Hello World" in any language',
+            'Solve first 3 beginner questions',
+            'Read through one installation guide',
+            'Fork the repository and explore the code',
+            'Read CONTRIBUTING.md and find an issue to work on'
+        ];
+        
+        // --- Goal Checklist Functions ---
+
+        // Function to render the goals on load
+        function renderGoals() {
+            const checklist = document.getElementById('goal-checklist');
+            
+            goals.forEach((goal, index) => {
+                const id = `goal-${index}`;
+                const goalDiv = document.createElement('label');
+                goalDiv.className = 'goal-item';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = id;
+                checkbox.className = 'goal-checkbox';
+                checkbox.setAttribute('onchange', `toggleGoal('${id}')`);
+                
+                const textSpan = document.createElement('span');
+                textSpan.id = id + '-text';
+                textSpan.className = 'goal-text';
+                textSpan.textContent = goal;
+                
+                goalDiv.appendChild(checkbox);
+                goalDiv.appendChild(textSpan);
+                checklist.appendChild(goalDiv);
+            });
+        }
+
+        // Function to toggle the visual state of a goal
+        function toggleGoal(id) {
+            const checkbox = document.getElementById(id);
+            const textSpan = document.getElementById(id + '-text');
+
+            if (checkbox.checked) {
+                textSpan.classList.add('goal-text-checked');
+            } else {
+                textSpan.classList.remove('goal-text-checked');
+            }
+        }
+
+        // Run rendering function when the window loads
+        window.onload = renderGoals;
+    </script>
+</body>
+</html>

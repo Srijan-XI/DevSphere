@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JTest (JUnit + Mockito) — Installation Guide | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    .card{background:#161b22;border:1.0px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul,ol{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>JTest — Installation Guide (JUnit 5 + Mockito)</h1>
+      <p class="subtitle">Set up Java testing with JUnit 5 and Mockito using Maven or Gradle. Run tests and generate coverage reports.</p>
+      <div class="badge-row">
+        <span class="badge">JDK</span>
+        <span class="badge">MAVEN</span>
+        <span class="badge">GRADLE</span>
+        <span class="badge">JACOCO</span>
+      </div>
+      <nav>
+        <a href="#jdk">JDK</a>
+        <a href="#maven">Maven</a>
+        <a href="#gradle">Gradle</a>
+        <a href="#run">Run</a>
+        <a href="#coverage">Coverage</a>
+      </nav>
+    </header>
+
+    <section id="jdk" class="card">
+      <h2>Install JDK</h2>
+      <p>Install a recent LTS (e.g., 17 or 21) and ensure <code>java</code>/<code>javac</code> are on PATH.</p>
+      <pre><code># Windows (winget)
+winget install EclipseAdoptium.Temurin.21.JDK
+
+# macOS (Homebrew)
+brew install openjdk@21
+
+# Ubuntu
+sudo apt install openjdk-21-jdk</code><button class="copy-btn" data-copy="winget install EclipseAdoptium.Temurin.21.JDK">COPY</button></pre>
+    </section>
+
+    <section id="maven" class="card">
+      <h2>Maven Setup</h2>
+      <h3>pom.xml</h3>
+      <pre><code>&lt;project&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;properties&gt;
+    &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt;
+    &lt;junit.jupiter.version&gt;5.11.0&lt;/junit.jupiter.version&gt;
+    &lt;mockito.version&gt;5.11.0&lt;/mockito.version&gt;
+  &lt;/properties&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+      &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt;
+      &lt;version&gt;${junit.jupiter.version}&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+      &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
+      &lt;version&gt;${mockito.version}&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.2.5&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;useModulePath&gt;false&lt;/useModulePath&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+&lt;/project&gt;</code><button class="copy-btn" data-copy="mvn -q -Dtest=* test">COPY</button></pre>
+    </section>
+
+    <section id="gradle" class="card">
+      <h2>Gradle Setup</h2>
+      <h3>build.gradle.kts</h3>
+      <pre><code>plugins {
+  java
+}
+
+java { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
+
+dependencies {
+  testImplementation(platform("org.junit:junit-bom:5.11.0"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
+  testImplementation("org.mockito:mockito-core:5.11.0")
+}
+
+tasks.test {
+  useJUnitPlatform()
+}</code><button class="copy-btn" data-copy="useJUnitPlatform()">COPY</button></pre>
+    </section>
+
+    <section id="run" class="card">
+      <h2>Run Tests</h2>
+      <pre><code># Maven
+mvn -q test
+
+# Gradle
+gradle test</code><button class="copy-btn" data-copy="mvn -q test">COPY</button></pre>
+    </section>
+
+    <section id="coverage" class="card">
+      <h2>Coverage (JaCoCo)</h2>
+      <h3>Maven</h3>
+      <pre><code>&lt;plugin&gt;
+  &lt;groupId&gt;org.jacoco&lt;/groupId&gt;
+  &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;0.8.11&lt;/version&gt;
+  &lt;executions&gt;
+    &lt;execution&gt;
+      &lt;goals&gt;
+        &lt;goal&gt;prepare-agent&lt;/goal&gt;
+        &lt;goal&gt;report&lt;/goal&gt;
+      &lt;/goals&gt;
+    &lt;/execution&gt;
+  &lt;/executions&gt;
+&lt;/plugin&gt;</code><button class="copy-btn" data-copy="jacoco-maven-plugin">COPY</button></pre>
+      <h3>Gradle</h3>
+      <pre><code>plugins { jacoco }
+
+tasks.test { finalizedBy(tasks.jacocoTestReport) }
+
+tasks.jacocoTestReport {
+  dependsOn(tasks.test)
+  reports { xml.required.set(true); html.required.set(true) }
+}</code><button class="copy-btn" data-copy="plugins { jacoco }">COPY</button></pre>
+      <p>Next: <a href="intro.html">JTest Introduction</a></p>
+    </section>
+
+    <footer class="page-footer">&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>
+

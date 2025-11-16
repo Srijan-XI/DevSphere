@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHP Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    .examples { margin-top:1.2rem; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    .collapsible { border:1px solid #30363d; border-radius:.65rem; overflow:hidden; margin:1.5rem 0; }
+    .collapsible summary { cursor:pointer; padding:.85rem 1rem; background:#161b22; font-weight:600; color:#e1e4e8; list-style:none; }
+    .collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { padding:1rem 1.15rem 1.3rem; background:#0d1117; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>🐘 PHP Introduction</h1>
+      <p class="subtitle">The server-side scripting language powering 77% of the web – from WordPress to Laravel.</p>
+      <div class="badge-row">
+        <span class="badge">SERVER-SIDE</span>
+        <span class="badge">DYNAMIC</span>
+        <span class="badge">WEB</span>
+        <span class="badge">OPEN-SOURCE</span>
+        <span class="badge">FLEXIBLE</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is PHP?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Web Dominance:</strong> PHP powers WordPress, Drupal, Laravel, and countless web applications worldwide.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is PHP?</h2>
+      <p><strong>PHP (Hypertext Preprocessor)</strong> is a widely-used open-source server-side scripting language designed for web development. Created in 1995 by Rasmus Lerdorf, PHP can be embedded into HTML and is especially suited for creating dynamic web pages and applications.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Server-Side Execution:</strong> Code runs on the server, sending HTML to the client.</li>
+        <li><strong>Easy to Learn:</strong> Simple syntax similar to C, Java, and Perl.</li>
+        <li><strong>Cross-Platform:</strong> Runs on Windows, Linux, macOS, and Unix.</li>
+        <li><strong>Database Integration:</strong> Native support for MySQL, PostgreSQL, SQLite, and more.</li>
+        <li><strong>Flexible Typing:</strong> Dynamically typed with type hinting in modern versions.</li>
+        <li><strong>Rich Ecosystem:</strong> Composer package manager, Laravel, Symfony frameworks.</li>
+      </ul>
+      <div class="info-box warning"><strong>Note:</strong> Modern PHP (8.0+) offers significant performance improvements, JIT compilation, and strong typing features.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use PHP?</h2>
+      <p>PHP remains a cornerstone of web development, powering content management systems, e-commerce platforms, and modern web applications. Its mature ecosystem and widespread hosting support make it ideal for rapid deployment.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Content Management</span>
+        <span class="topic">E-commerce</span>
+        <span class="topic">Web Applications</span>
+        <span class="topic">REST APIs</span>
+        <span class="topic">Blog Platforms</span>
+        <span class="topic">Custom Websites</span>
+        <span class="topic">Server Scripts</span>
+        <span class="topic">Form Processing</span>
+        <span class="topic">Session Management</span>
+        <span class="topic">Database Apps</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Hosting Support:</strong> Available on virtually every web hosting provider.</li>
+        <li><strong>Fast Development:</strong> Quick prototyping and rapid iteration.</li>
+        <li><strong>Large Community:</strong> Millions of developers, extensive documentation.</li>
+        <li><strong>Cost-Effective:</strong> Free, open-source, with affordable hosting options.</li>
+        <li><strong>Framework Ecosystem:</strong> Laravel, Symfony, CodeIgniter, and more.</li>
+        <li><strong>CMS Integration:</strong> Powers WordPress, Drupal, Joomla.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Hello World</h3>
+      <pre><code>&lt;?php
+echo "Hello, DevSphere!";
+?&gt;</code><button class="copy-btn" data-copy="<?php\necho \"Hello, DevSphere!\";\n?>">COPY</button></pre>
+      
+      <h3>Embedded in HTML</h3>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+    &lt;h1&gt;&lt;?php echo "Welcome to PHP!"; ?&gt;&lt;/h1&gt;
+    &lt;p&gt;Current date: &lt;?php echo date("Y-m-d"); ?&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code><button class="copy-btn" data-copy="<!DOCTYPE html>\n<html>\n<body>\n    <h1><?php echo \"Welcome to PHP!\"; ?></h1>\n    <p>Current date: <?php echo date(\"Y-m-d\"); ?></p>\n</body>\n</html>">COPY</button></pre>
+      
+      <h3>Variables & Data Types</h3>
+      <pre><code>&lt;?php
+$name = "DevSphere";        // String
+$count = 100;               // Integer
+$price = 19.99;             // Float
+$isActive = true;           // Boolean
+$items = [1, 2, 3];         // Array
+
+echo "Welcome to $name!";
+?&gt;</code><button class="copy-btn" data-copy="<?php\n$name = \"DevSphere\";\n$count = 100;\n$price = 19.99;\n$isActive = true;\n$items = [1, 2, 3];\n\necho \"Welcome to $name!\";\n?>">COPY</button></pre>
+
+      <h3>Functions</h3>
+      <pre><code>&lt;?php
+function greet($name) {
+    return "Hello, " . $name . "!";
+}
+
+echo greet("Developer");  // Output: Hello, Developer!
+?&gt;</code><button class="copy-btn" data-copy="<?php\nfunction greet($name) {\n    return \"Hello, \" . $name . \"!\";\n}\n\necho greet(\"Developer\");\n?>">COPY</button></pre>
+
+      <h3>Arrays & Loops</h3>
+      <pre><code>&lt;?php
+$languages = ["PHP", "Python", "JavaScript", "Java"];
+
+foreach ($languages as $lang) {
+    echo $lang . "&lt;br&gt;";
+}
+
+// Associative array
+$user = [
+    "name" =&gt; "John",
+    "age" =&gt; 30,
+    "role" =&gt; "Developer"
+];
+
+echo $user["name"];  // Output: John
+?&gt;</code><button class="copy-btn" data-copy="<?php\n$languages = [\"PHP\", \"Python\", \"JavaScript\", \"Java\"];\n\nforeach ($languages as $lang) {\n    echo $lang . \"<br>\";\n}\n\n$user = [\n    \"name\" => \"John\",\n    \"age\" => 30,\n    \"role\" => \"Developer\"\n];\n\necho $user[\"name\"];\n?>">COPY</button></pre>
+
+      <h3>Form Processing</h3>
+      <pre><code>&lt;?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = htmlspecialchars($_POST["username"]);
+    $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+    
+    if ($email) {
+        echo "Valid email: $email";
+    } else {
+        echo "Invalid email format";
+    }
+}
+?&gt;
+
+&lt;form method="POST"&gt;
+    &lt;input type="text" name="username" required&gt;
+    &lt;input type="email" name="email" required&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code><button class="copy-btn" data-copy="<?php\nif ($_SERVER[\"REQUEST_METHOD\"] == \"POST\") {\n    $username = htmlspecialchars($_POST[\"username\"]);\n    $email = filter_var($_POST[\"email\"], FILTER_VALIDATE_EMAIL);\n    \n    if ($email) {\n        echo \"Valid email: $email\";\n    }\n}\n?>">COPY</button></pre>
+
+      <h3>Database Connection (PDO)</h3>
+      <pre><code>&lt;?php
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=mydb", "user", "pass");
+    $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $stmt = $pdo-&gt;prepare("SELECT * FROM users WHERE id = ?");
+    $stmt-&gt;execute([1]);
+    $user = $stmt-&gt;fetch(PDO::FETCH_ASSOC);
+    
+    echo $user["name"];
+} catch (PDOException $e) {
+    echo "Error: " . $e-&gt;getMessage();
+}
+?&gt;</code><button class="copy-btn" data-copy="<?php\ntry {\n    $pdo = new PDO(\"mysql:host=localhost;dbname=mydb\", \"user\", \"pass\");\n    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n    \n    $stmt = $pdo->prepare(\"SELECT * FROM users WHERE id = ?\");\n    $stmt->execute([1]);\n    $user = $stmt->fetch(PDO::FETCH_ASSOC);\n    \n    echo $user[\"name\"];\n} catch (PDOException $e) {\n    echo \"Error: \" . $e->getMessage();\n}\n?>">COPY</button></pre>
+    </section>
+
+    <section id="ecosystem" class="card">
+      <h2>Ecosystem & Frameworks</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Popular Frameworks</h3>
+          <ul>
+            <li><strong>Laravel:</strong> Modern, elegant syntax, MVC architecture.</li>
+            <li><strong>Symfony:</strong> Enterprise-grade, reusable components.</li>
+            <li><strong>CodeIgniter:</strong> Lightweight, simple framework.</li>
+            <li><strong>CakePHP:</strong> Rapid development framework.</li>
+            <li><strong>Slim:</strong> Micro-framework for APIs.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>CMS Platforms</h3>
+          <ul>
+            <li><strong>WordPress:</strong> 43% of all websites.</li>
+            <li><strong>Drupal:</strong> Enterprise content management.</li>
+            <li><strong>Joomla:</strong> Flexible CMS solution.</li>
+            <li><strong>Magento:</strong> E-commerce platform.</li>
+            <li><strong>PrestaShop:</strong> Online store management.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <h3>Package Manager</h3>
+      <pre><code># Install Composer
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+
+# Install Laravel
+composer create-project laravel/laravel my-app
+cd my-app
+php artisan serve</code><button class="copy-btn" data-copy="composer create-project laravel/laravel my-app\ncd my-app\nphp artisan serve">COPY</button></pre>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li>📦 <a href="install-guide.html">Install PHP & Configure Environment</a></li>
+        <li>🎯 Learn Laravel or Symfony framework</li>
+        <li>🗄️ Master PDO and database interactions</li>
+        <li>🔒 Study PHP security best practices</li>
+        <li>🚀 Build a REST API with PHP</li>
+        <li>📚 Explore Composer packages</li>
+      </ul>
+      <div class="info-box">
+        <strong>Best Practices:</strong> Use PHP 8.0+, enable strict types, validate inputs, use prepared statements, follow PSR standards.
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

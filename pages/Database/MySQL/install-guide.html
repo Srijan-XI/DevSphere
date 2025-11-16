@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MySQL Installation Guide | DevSphere</title>
+	<style>
+		* { box-sizing: border-box; margin:0; padding:0; }
+		body { font-family: Inter, system-ui, -apple-system, sans-serif; background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%); color:#e1e4e8; line-height:1.7; min-height:100vh; }
+		a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+		a:hover { text-decoration:underline; color:#a78bfa; }
+		.page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+		header.page-header { background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6; padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+		h1 { font-size:2.6rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+		.subtitle { color:#8b92a0; font-size:1.1rem; }
+		.card { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem; position:relative; transition:.25s; overflow:hidden; }
+		.card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+		.card.accent { border-top:4px solid #f59e0b; }
+		h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+		h3 { font-size:1.15rem; font-weight:600; margin:1.2rem 0 .55rem; color:#f59e0b; }
+		p { margin:.7rem 0; color:#8b92a0; }
+		ul,ol { margin:.6rem 0 .9rem 1.35rem; }
+		li { margin:.45rem 0; color:#8b92a0; }
+		code, pre code { font-family: "JetBrains Mono","Cascadia Code",Menlo,monospace; font-size:.85rem; }
+		pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; margin:.85rem 0; }
+		pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+		pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+		.badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+		.badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+		.info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem; border-radius:.6rem; margin:1.1rem 0; }
+		.step { background:#0d1117; border:1px solid #30363d; padding:1.1rem; border-radius:.6rem; margin:.85rem 0; }
+		.step .n { display:inline-block; width:1.65rem; height:1.65rem; background:#8b5cf6; color:#fff; text-align:center; line-height:1.65rem; border-radius:50%; font-weight:700; font-size:.8rem; margin-right:.5rem; }
+		.section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+		.section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+		.section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+		footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+		.copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+		.copy-feedback.show { opacity:1; transform:translateY(0); }
+	</style>
+</head>
+<body>
+	<div class="page-wrapper">
+		<header class="page-header">
+			<h1>MySQL — Installation Guide</h1>
+			<p class="subtitle">Install MySQL on Windows, macOS, and Linux. Secure it and verify connectivity.</p>
+			<div class="badge-row">
+				<span class="badge">CLIENT</span>
+				<span class="badge">SERVER</span>
+				<span class="badge">SECURE</span>
+			</div>
+			<nav class="section-nav">
+				<a href="#windows">Windows</a>
+				<a href="#macos">macOS</a>
+				<a href="#linux">Linux</a>
+				<a href="#secure">Secure</a>
+				<a href="#verify">Verify</a>
+			</nav>
+			<div class="info-box">Use the latest MySQL 8.x. For embedded apps or lightweight usage, consider MariaDB compatibility.</div>
+		</header>
+
+		<section id="windows" class="card accent">
+			<h2>Windows</h2>
+			<h3>Option 1 — MySQL Installer</h3>
+			<pre><code># Download and run the official MySQL Installer
+# Select: MySQL Server, MySQL Shell, MySQL Workbench</code><button class="copy-btn" data-copy="MySQL Installer">COPY</button></pre>
+			<h3>Option 2 — winget / Chocolatey</h3>
+			<pre><code># winget
+winget install Oracle.MySQL
+
+# Chocolatey
+choco install mysql</code><button class="copy-btn" data-copy="winget install Oracle.MySQL">COPY</button></pre>
+		</section>
+
+		<section id="macos" class="card">
+			<h2>macOS</h2>
+			<pre><code># Homebrew
+brew install mysql
+brew services start mysql
+
+# Set root password (first time)
+mysql_secure_installation</code><button class="copy-btn" data-copy="brew install mysql">COPY</button></pre>
+		</section>
+
+		<section id="linux" class="card">
+			<h2>Linux</h2>
+			<h3>Ubuntu/Debian</h3>
+			<pre><code>sudo apt update
+sudo apt install mysql-server
+sudo systemctl enable --now mysql
+sudo mysql_secure_installation</code><button class="copy-btn" data-copy="sudo apt install mysql-server">COPY</button></pre>
+
+			<h3>RHEL/CentOS/Fedora</h3>
+			<pre><code>sudo dnf install @mysql:8.0 mysql-server
+sudo systemctl enable --now mysqld
+sudo mysql_secure_installation</code><button class="copy-btn" data-copy="sudo dnf install mysql-server">COPY</button></pre>
+		</section>
+
+		<section id="secure" class="card">
+			<h2>Secure & Create User</h2>
+			<pre><code># Run secure installation wizard
+mysql_secure_installation
+
+# Connect as root (Linux)
+sudo mysql
+
+# Create database and user
+CREATE DATABASE appdb CHARACTER SET utf8mb4;
+CREATE USER 'app'@'%' IDENTIFIED BY 'StrongP@ssw0rd';
+GRANT ALL PRIVILEGES ON appdb.* TO 'app'@'%';
+FLUSH PRIVILEGES;</code><button class="copy-btn" data-copy="CREATE USER 'app'@'%' IDENTIFIED BY 'StrongP@ssw0rd';">COPY</button></pre>
+		</section>
+
+		<section id="verify" class="card">
+			<h2>Verify</h2>
+			<pre><code># CLI
+mysql -u app -p -h 127.0.0.1 -P 3306 -D appdb -e "SELECT VERSION();"
+
+# Create sample table
+mysql -u app -p -D appdb -e "CREATE TABLE t(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(60));"
+
+# Insert & query
+mysql -u app -p -D appdb -e "INSERT INTO t(name) VALUES ('Ada'); SELECT * FROM t;"</code><button class="copy-btn" data-copy="mysql -u app -p -e \"SELECT VERSION();\"">COPY</button></pre>
+		</section>
+
+		<footer>
+			<p>&copy; 2025 DevSphere</p>
+		</footer>
+	</div>
+
+	<div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+	<script>
+		document.querySelectorAll('.copy-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				const txt = btn.getAttribute('data-copy');
+				navigator.clipboard.writeText(txt).then(() => {
+					const fb = document.getElementById('copyFeedback');
+					fb.classList.add('show');
+					setTimeout(() => fb.classList.remove('show'), 1800);
+				});
+			});
+		});
+		document.querySelectorAll('a[href^="#"]').forEach(a => {
+			a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); });
+		});
+	</script>
+</body>
+</html>

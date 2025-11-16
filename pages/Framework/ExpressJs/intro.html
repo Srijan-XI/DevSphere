@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Express.js — Introduction | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden;margin-bottom:1.25rem}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    footer{margin-top:3.5rem;text-align:center;font-size:.8rem;color:#8b92a0}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+  </head>
+  <body>
+  <div class="wrap">
+    <header>
+      <h1>Express.js — Introduction</h1>
+      <p class="subtitle">Minimalist Node.js web framework: middleware, routing, and robust HTTP utilities.</p>
+      <div class="badge-row">
+        <span class="badge">Middleware</span>
+        <span class="badge">Router</span>
+        <span class="badge">JSON</span>
+        <span class="badge">TypeScript</span>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#middleware">Middleware</a>
+        <a href="#routing">Routing</a>
+        <a href="#typescript">TypeScript</a>
+        <a href="#docker">Docker Dev</a>
+        <a href="#structure">Folder Structure</a>
+        <a href="#pitfalls">Common Pitfalls</a>
+      </nav>
+    </header>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>Express.js is a minimal, unopinionated framework for building web servers and APIs on Node.js. Its core is a middleware pipeline and a powerful routing system.</p>
+      <pre><code># Install & start (quick demo)
+npm init -y && npm i express
+echo "const e=require('express');const app=e();app.get('/',(req,res)=>res.send('Hello'));app.listen(3000)" > index.js
+node index.js</code><button class="copy-btn" data-copy="npm init -y && npm i express">COPY</button></pre>
+    </section>
+
+    <section id="middleware" class="card">
+      <h2>Middleware</h2>
+      <p>Middleware are functions with signature <code>(req, res, next)</code>. They run in order and can modify the request/response or pass control using <code>next()</code>.</p>
+      <pre><code>const express = require('express');
+const app = express();
+
+// Built-in JSON body parser
+app.use(express.json());
+
+// Logger middleware
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    console.log(`${req.method} ${req.url} -> ${res.statusCode} ${Date.now()-start}ms`);
+  });
+  next();
+});</code><button class="copy-btn" data-copy="app.use(express.json());">COPY</button></pre>
+    </section>
+
+    <section id="routing" class="card">
+      <h2>Routing</h2>
+      <p>Declare handlers per HTTP method and path. Group routes with <code>express.Router()</code> and mount under a base path.</p>
+      <pre><code>const router = require('express').Router();
+router.get('/items', (req, res) => res.json([{ id: 1 }]));
+router.post('/items', (req, res) => res.status(201).json({ ok: true }));
+router.get('/items/:id', (req, res) => res.json({ id: req.params.id }));
+app.use('/api', router);</code><button class="copy-btn" data-copy="app.use('/api', router);">COPY</button></pre>
+    </section>
+
+    <section id="params" class="card">
+      <h2>Params & Query</h2>
+      <p>Access dynamic segments via <code>req.params</code> and query string via <code>req.query</code>. Validate inputs before use.</p>
+      <pre><code>app.get('/search', (req, res) => {
+  const { q = '', page = 1 } = req.query;
+  res.json({ q, page: Number(page) });
+});
+
+app.get('/users/:userId', (req, res) => {
+  const { userId } = req.params;
+  res.json({ userId });
+});</code><button class="copy-btn" data-copy="app.get('/users/:userId', (req,res)=>{ const { userId } = req.params; res.json({ userId }); });">COPY</button></pre>
+    </section>
+
+    <section id="errors" class="card">
+      <h2>Error Handling</h2>
+      <p>Define a final error handler with four args <code>(err, req, res, next)</code>. Call <code>next(err)</code> to delegate.</p>
+      <pre><code>// 404 (after all routes)
+app.use((req, res) => res.status(404).json({ error: 'Not found' }));
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({ error: err.message || 'Server error' });
+});</code><button class="copy-btn" data-copy="app.use((err, req, res, next)=>{ res.status(500).json({ error: 'Server error' }); });">COPY</button></pre>
+    </section>
+
+    <section id="reqres" class="card">
+      <h2>Req/Res</h2>
+      <p>Common response helpers: <code>res.status</code>, <code>res.json</code>, <code>res.send</code>, <code>res.redirect</code>. Read body via <code>req.body</code> with parsers.</p>
+      <pre><code>app.post('/login', (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ error: 'email required' });
+  res.status(200).json({ ok: true });
+});</code><button class="copy-btn" data-copy="res.status(200).json({ ok: true });">COPY</button></pre>
+    </section>
+
+    <section id="typescript" class="card">
+      <h2>TypeScript Setup</h2>
+      <pre><code>npm i -D typescript ts-node @types/node @types/express
+npx tsc --init --target ES2022 --module commonjs --rootDir src --outDir dist
+
+// src/index.ts
+import express, { Request, Response } from 'express'
+const app = express()
+app.use(express.json())
+app.get('/', (req: Request, res: Response) => res.json({ ok: true }))
+app.listen(3000)
+
+// Run: npx ts-node src/index.ts</code><button class="copy-btn" data-copy="npx ts-node src/index.ts">COPY</button></pre>
+    </section>
+
+    <section id="docker" class="card">
+      <h2>Docker Dev Environment</h2>
+      <pre><code># Dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
+
+# docker-compose.yml
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"</code><button class="copy-btn" data-copy="docker compose up">COPY</button></pre>
+    </section>
+
+    <section id="structure" class="card">
+      <h2>Folder Structure</h2>
+      <pre><code>project/
+  src/
+    controllers/
+    middleware/
+    routes/
+    models/
+    services/
+    utils/
+    index.ts
+  tests/
+  dist/
+  .env
+  package.json
+  tsconfig.json
+  Dockerfile</code><button class="copy-btn" data-copy="src/">COPY</button></pre>
+    </section>
+
+    <section id="pitfalls" class="card">
+      <h2>Common Pitfalls</h2>
+      <ul>
+        <li><strong>Middleware order matters:</strong> JSON parser must come before route handlers; error handlers must be last.</li>
+        <li><strong>Forgot next():</strong> Middleware must call <code>next()</code> or send a response, or the request hangs.</li>
+        <li><strong>No error handling:</strong> Use try/catch in async handlers and pass errors to <code>next(err)</code>.</li>
+        <li><strong>Exposing stack traces:</strong> Don't send <code>err.stack</code> in production; log it server-side only.</li>
+        <li><strong>Router mounting:</strong> Remember <code>app.use('/api', router)</code> prefixes all router paths with <code>/api</code>.</li>
+      </ul>
+      <p>Next: <a href="install-guide.html">Install Guide</a></p>
+    </section>
+
+    <footer>&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+  </body>
+  </html>

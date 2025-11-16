@@ -1,0 +1,15 @@
+Questions Links
+=========
+Java Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/JAVA/Question
+Python Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/PYTHON/Python%20questions
+JavaScript Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/JavaScript/questions
+Bash Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/Bash/Questions
+C and C++ Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/C%20%26%20C%2B%2B/questions%20of%20c%20%26%20cpp
+JavaScript Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/JavaScript/questions
+Kql Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/Kql/Questions
+PHP Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/PHP/Question
+RUST Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/RUST/Qustions
+Go Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/Golang/questions
+Typescript Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/TypeScript/questions
+SQL Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/SQL/questions
+R Questions Link: https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/R/R%20programming%20questions

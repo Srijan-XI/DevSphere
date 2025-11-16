@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Django — Introduction | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden;margin-bottom:1.25rem}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    footer{margin-top:3.5rem;text-align:center;font-size:.8rem;color:#8b92a0}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Django — Introduction</h1>
+      <p class="subtitle">Python web framework: MTV architecture, ORM, admin panel, templates, and batteries-included philosophy.</p>
+      <div class="badge-row">
+        <span class="badge">MTV</span>
+        <span class="badge">ORM</span>
+        <span class="badge">Admin</span>
+        <span class="badge">Templates</span>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#mtv">MTV Pattern</a>
+        <a href="#urls">URLs & Views</a>
+        <a href="#models">Models & ORM</a>
+        <a href="#docker">Docker Dev</a>
+        <a href="#structure">Folder Structure</a>
+        <a href="#pitfalls">Common Pitfalls</a>
+      </nav>
+    </header>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. It includes an ORM, template engine, admin panel, and authentication out of the box.</p>
+      <pre><code># Quick start
+django-admin startproject mysite
+cd mysite
+python manage.py runserver</code><button class="copy-btn" data-copy="django-admin startproject mysite">COPY</button></pre>
+    </section>
+
+    <section id="mtv" class="card">
+      <h2>MTV Pattern</h2>
+      <p>Django uses Model-Template-View (MTV): Models define data, Templates render HTML, and Views handle logic and return responses.</p>
+      <pre><code># Project structure
+mysite/
+  manage.py
+  mysite/
+    settings.py
+    urls.py
+    wsgi.py
+  app/
+    models.py
+    views.py
+    urls.py
+    templates/</code><button class="copy-btn" data-copy="python manage.py startapp app">COPY</button></pre>
+    </section>
+
+    <section id="urls" class="card">
+      <h2>URLs & Views</h2>
+      <p>Map URL patterns to view functions or classes. Views process requests and return HttpResponse or render templates.</p>
+      <pre><code># urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('item/<int:pk>/', views.detail, name='detail'),
+]</code><button class="copy-btn" data-copy="path('item/<int:pk>/', views.detail, name='detail')">COPY</button></pre>
+      <pre><code># views.py
+from django.shortcuts import render
+from django.http import JsonResponse
+
+def index(request):
+    return render(request, 'index.html', {'items': []})
+
+def detail(request, pk):
+    return JsonResponse({'id': pk})</code><button class="copy-btn" data-copy="return render(request, 'index.html', {'items': []})">COPY</button></pre>
+    </section>
+
+    <section id="models" class="card">
+      <h2>Models & ORM</h2>
+      <p>Define database schema with Python classes. Django's ORM translates Python to SQL and supports migrations.</p>
+      <pre><code># models.py
+from django.db import models
+
+class Item(models.Model):
+    name = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name</code><button class="copy-btn" data-copy="class Item(models.Model):">COPY</button></pre>
+      <pre><code># Migrations
+python manage.py makemigrations
+python manage.py migrate
+
+# Query
+Item.objects.all()
+Item.objects.filter(price__gt=10)
+Item.objects.create(name='Widget', price=9.99)</code><button class="copy-btn" data-copy="python manage.py makemigrations && python manage.py migrate">COPY</button></pre>
+    </section>
+
+    <section id="templates" class="card">
+      <h2>Templates</h2>
+      <p>Use Django Template Language (DTL) with variables, filters, and tags. Extend base templates for consistency.</p>
+      <pre><code>&lt;!-- base.html --&gt;
+&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;{% block title %}App{% endblock %}&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;{% block content %}{% endblock %}&lt;/body&gt;
+&lt;/html&gt;
+
+&lt;!-- index.html --&gt;
+{% extends "base.html" %}
+{% block content %}
+  {% for item in items %}
+    &lt;p&gt;{{ item.name }} - ${{ item.price }}&lt;/p&gt;
+  {% endfor %}
+{% endblock %}</code><button class="copy-btn" data-copy="{% extends 'base.html' %}">COPY</button></pre>
+    </section>
+
+    <section id="admin" class="card">
+      <h2>Admin Panel</h2>
+      <p>Automatic CRUD interface for models. Register models in <code>admin.py</code> and create a superuser.</p>
+      <pre><code># admin.py
+from django.contrib import admin
+from .models import Item
+
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'created_at')
+    search_fields = ('name',)</code><button class="copy-btn" data-copy="@admin.register(Item)">COPY</button></pre>
+      <pre><code>python manage.py createsuperuser
+# Visit http://localhost:8000/admin</code><button class="copy-btn" data-copy="python manage.py createsuperuser">COPY</button></pre>
+    </section>
+
+    <section id="docker" class="card">
+      <h2>Docker Dev Environment</h2>
+      <pre><code># Dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+# docker-compose.yml
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=postgres://user:pass@db:5432/appdb
+    depends_on:
+      - db
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:</code><button class="copy-btn" data-copy="docker compose up">COPY</button></pre>
+    </section>
+
+    <section id="structure" class="card">
+      <h2>Folder Structure</h2>
+      <pre><code>mysite/
+  manage.py
+  mysite/
+    __init__.py
+    settings.py
+    urls.py
+    wsgi.py
+    asgi.py
+  app/
+    __init__.py
+    admin.py
+    apps.py
+    models.py
+    views.py
+    urls.py
+    tests.py
+    migrations/
+    templates/
+      app/
+    static/
+      app/
+  requirements.txt
+  Dockerfile
+  .env</code><button class="copy-btn" data-copy="manage.py">COPY</button></pre>
+    </section>
+
+    <section id="pitfalls" class="card">
+      <h2>Common Pitfalls</h2>
+      <ul>
+        <li><strong>Forgot makemigrations:</strong> Run <code>python manage.py makemigrations</code> after model changes before <code>migrate</code>.</li>
+        <li><strong>Missing INSTALLED_APPS:</strong> Add new apps to <code>INSTALLED_APPS</code> in <code>settings.py</code>.</li>
+        <li><strong>DEBUG=True in production:</strong> Always set <code>DEBUG=False</code> and configure <code>ALLOWED_HOSTS</code> in production.</li>
+        <li><strong>N+1 queries:</strong> Use <code>select_related()</code> and <code>prefetch_related()</code> to optimize queries.</li>
+        <li><strong>Hardcoding URLs:</strong> Use <code>{% url 'name' %}</code> in templates and <code>reverse('name')</code> in views instead of hardcoding paths.</li>
+      </ul>
+      <p>Next: <a href="install-guide.html">Install Guide</a></p>
+    </section>
+
+    <footer>&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>

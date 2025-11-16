@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flask — Introduction | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden;margin-bottom:1.25rem}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    footer{margin-top:3.5rem;text-align:center;font-size:.8rem;color:#8b92a0}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Flask — Introduction</h1>
+      <p class="subtitle">Lightweight Python micro-framework: routing, templates, blueprints, and simple extension ecosystem.</p>
+      <div class="badge-row">
+        <span class="badge">Micro</span>
+        <span class="badge">Jinja2</span>
+        <span class="badge">Blueprints</span>
+        <span class="badge">WSGI</span>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#routing">Routing</a>
+        <a href="#templates">Templates</a>
+        <a href="#blueprints">Blueprints</a>
+        <a href="#docker">Docker Dev</a>
+        <a href="#structure">Folder Structure</a>
+        <a href="#pitfalls">Common Pitfalls</a>
+      </nav>
+    </header>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>Flask is a micro-framework for Python that provides routing, templating, and request handling. It's unopinionated and extensible via a rich ecosystem of extensions.</p>
+      <pre><code>from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Hello Flask'
+
+if __name__ == '__main__':
+    app.run(debug=True)</code><button class="copy-btn" data-copy="from flask import Flask\napp = Flask(__name__)">COPY</button></pre>
+    </section>
+
+    <section id="routing" class="card">
+      <h2>Routing</h2>
+      <p>Define routes with decorators. Support dynamic segments, query params, and HTTP methods.</p>
+      <pre><code>@app.route('/items')
+def list_items():
+    return {'items': []}
+
+@app.route('/items/<int:item_id>', methods=['GET', 'POST'])
+def item_detail(item_id):
+    if request.method == 'POST':
+        return {'created': item_id}, 201
+    return {'id': item_id}</code><button class="copy-btn" data-copy="@app.route('/items/<int:item_id>', methods=['GET', 'POST'])">COPY</button></pre>
+      <pre><code>from flask import request
+
+@app.route('/search')
+def search():
+    q = request.args.get('q', '')
+    return {'query': q}</code><button class="copy-btn" data-copy="request.args.get('q', '')">COPY</button></pre>
+    </section>
+
+    <section id="templates" class="card">
+      <h2>Templates</h2>
+      <p>Use Jinja2 for rendering HTML templates with variables, loops, filters, and inheritance.</p>
+      <pre><code># templates/base.html
+&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;{% block title %}App{% endblock %}&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;{% block content %}{% endblock %}&lt;/body&gt;
+&lt;/html&gt;
+
+# templates/index.html
+{% extends "base.html" %}
+{% block content %}
+  {% for item in items %}
+    &lt;p&gt;{{ item.name }}&lt;/p&gt;
+  {% endfor %}
+{% endblock %}</code><button class="copy-btn" data-copy="{% extends 'base.html' %}">COPY</button></pre>
+      <pre><code>from flask import render_template
+
+@app.route('/')
+def index():
+    return render_template('index.html', items=[])</code><button class="copy-btn" data-copy="return render_template('index.html', items=[])">COPY</button></pre>
+    </section>
+
+    <section id="blueprints" class="card">
+      <h2>Blueprints</h2>
+      <p>Organize routes into blueprints for modular apps. Register blueprints to the main app with URL prefixes.</p>
+      <pre><code>from flask import Blueprint
+
+api = Blueprint('api', __name__, url_prefix='/api')
+
+@api.route('/items')
+def items():
+    return {'items': []}
+
+# In main app
+app.register_blueprint(api)</code><button class="copy-btn" data-copy="app.register_blueprint(api)">COPY</button></pre>
+    </section>
+
+    <section id="extensions" class="card">
+      <h2>Extensions</h2>
+      <p>Flask extensions add functionality like ORM (Flask-SQLAlchemy), auth (Flask-Login), forms (Flask-WTF), and REST (Flask-RESTful).</p>
+      <pre><code># Example: Flask-SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy(app)
+
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))</code><button class="copy-btn" data-copy="from flask_sqlalchemy import SQLAlchemy">COPY</button></pre>
+    </section>
+
+    <section id="docker" class="card">
+      <h2>Docker Dev Environment</h2>
+      <pre><code># Dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["flask", "run", "--host=0.0.0.0"]
+
+# docker-compose.yml
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://user:pass@db:5432/appdb
+    depends_on:
+      - db
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:</code><button class="copy-btn" data-copy="docker compose up">COPY</button></pre>
+    </section>
+
+    <section id="structure" class="card">
+      <h2>Folder Structure (App Factory)</h2>
+      <pre><code>project/
+  app/
+    __init__.py       # create_app()
+    models.py
+    routes/
+      __init__.py
+      main.py
+      api.py
+    templates/
+    static/
+  tests/
+  config.py
+  requirements.txt
+  run.py              # Entry point
+  Dockerfile
+  .env</code><button class="copy-btn" data-copy="app/">COPY</button></pre>
+    </section>
+
+    <section id="pitfalls" class="card">
+      <h2>Common Pitfalls</h2>
+      <ul>
+        <li><strong>Debug mode in production:</strong> Never run <code>app.run(debug=True)</code> in production; use a WSGI server like Gunicorn.</li>
+        <li><strong>Missing SECRET_KEY:</strong> Set a strong <code>SECRET_KEY</code> in config for sessions and CSRF protection.</li>
+        <li><strong>Not using app factory:</strong> Use <code>create_app()</code> pattern for testing and configuration flexibility.</li>
+        <li><strong>Circular imports:</strong> Move imports inside functions or use blueprints to avoid import loops.</li>
+        <li><strong>No request context:</strong> <code>request</code>, <code>session</code>, <code>g</code> only work inside request handlers; use <code>with app.app_context()</code> for CLI.</li>
+      </ul>
+      <p>Next: <a href="install-guide.html">Install Guide</a></p>
+    </section>
+
+    <footer>&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>

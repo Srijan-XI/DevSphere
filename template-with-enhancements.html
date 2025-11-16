@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example Page with All Enhancements - DevSphere</title>
+	
+	<!-- Main Styles -->
+	<link rel="stylesheet" href="../../../main.css">
+	
+	<!-- Component Styles -->
+	<link rel="stylesheet" href="../../../components/breadcrumb.css">
+	<link rel="stylesheet" href="../../../components/theme-switcher.css">
+	<link rel="stylesheet" href="../../../components/scroll-to-top.css">
+	<link rel="stylesheet" href="../../../components/code-highlighter.css">
+	<link rel="stylesheet" href="../../../components/animations.css">
+</head>
+<body class="page-transition">
+	<!-- Breadcrumb Navigation -->
+	<div id="breadcrumb" class="breadcrumb-container"></div>
+	
+	<header>
+		<h1>Example Page Title</h1>
+		<p>This template shows all new enhancements integrated</p>
+	</header>
+	
+	<main class="container-padded">
+		<section class="fade-in">
+			<h2>Code Example with Syntax Highlighting</h2>
+			<p>Below is a code block with syntax highlighting and copy button:</p>
+			
+			<pre><code data-language="python">
+# Python Example
+def greet(name):
+    """Greet a person by name"""
+    return f"Hello, {name}!"
+
+# Test the function
+if __name__ == "__main__":
+    print(greet("Developer"))
+			</code></pre>
+			
+			<pre><code data-language="javascript">
+// JavaScript Example
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+// Test the function
+console.log(greet("Developer"));
+			</code></pre>
+		</section>
+		
+		<section>
+			<h2>Features Included</h2>
+			<ul>
+				<li>✅ Breadcrumb navigation (auto-generated from URL)</li>
+				<li>✅ Dark/Light theme toggle (persisted in localStorage)</li>
+				<li>✅ Scroll-to-top button (appears after scrolling)</li>
+				<li>✅ Code syntax highlighting (Highlight.js)</li>
+				<li>✅ Copy-to-clipboard buttons on code blocks</li>
+				<li>✅ Code theme selector (6 themes available)</li>
+				<li>✅ Smooth animated transitions</li>
+			</ul>
+		</section>
+		
+		<section>
+			<h2>How to Use This Template</h2>
+			<ol>
+				<li>Copy this file to your page location</li>
+				<li>Update the relative paths to CSS/JS files based on your page depth</li>
+				<li>Add <code>&lt;div id="breadcrumb" class="breadcrumb-container"&gt;&lt;/div&gt;</code> for breadcrumbs</li>
+				<li>Wrap code in <code>&lt;pre&gt;&lt;code data-language="..."&gt;...&lt;/code&gt;&lt;/pre&gt;</code></li>
+				<li>Add animation classes like <code>fade-in</code>, <code>slide-in-left</code>, etc.</li>
+			</ol>
+		</section>
+	</main>
+	
+	<footer class="page-footer">
+		<p>&copy; 2025 DevSphere. Part of Install-and-Learn-DevLangs.</p>
+		<p><a href="../../../index.html">Back to Homepage</a></p>
+	</footer>
+	
+	<!-- Component Scripts -->
+	<script src="../../../components/breadcrumb.js"></script>
+	<script src="../../../components/theme-switcher.js"></script>
+	<script src="../../../components/scroll-to-top.js"></script>
+	<script src="../../../components/code-highlighter.js"></script>
+</body>
+</html>

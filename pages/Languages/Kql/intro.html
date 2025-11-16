@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KQL Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    .examples { margin-top:1.2rem; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    .collapsible { border:1px solid #30363d; border-radius:.65rem; overflow:hidden; margin:1.5rem 0; }
+    .collapsible summary { cursor:pointer; padding:.85rem 1rem; background:#161b22; font-weight:600; color:#e1e4e8; list-style:none; }
+    .collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { padding:1rem 1.15rem 1.3rem; background:#0d1117; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>📊 KQL Introduction</h1>
+      <p class="subtitle">Kusto Query Language – powerful data exploration for Azure Monitor, Log Analytics, and Application Insights.</p>
+      <div class="badge-row">
+        <span class="badge">QUERY LANGUAGE</span>
+        <span class="badge">AZURE</span>
+        <span class="badge">LOG ANALYTICS</span>
+        <span class="badge">BIG DATA</span>
+        <span class="badge">TELEMETRY</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is KQL?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#operators">Operators</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Azure Integration:</strong> KQL is the native query language for Azure Data Explorer, Azure Monitor, and Microsoft Sentinel.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is KQL?</h2>
+      <p><strong>Kusto Query Language (KQL)</strong> is a powerful read-only query language designed for analyzing large volumes of structured, semi-structured, and unstructured data. Originally developed for Azure Data Explorer (formerly Kusto), KQL is now used across Microsoft's cloud analytics services.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Read-Only:</strong> Designed for querying and analyzing data, not modifying it.</li>
+        <li><strong>Pipeline-Based:</strong> Queries flow through operators using the pipe ( | ) character.</li>
+        <li><strong>Highly Performant:</strong> Optimized for querying terabytes of data in seconds.</li>
+        <li><strong>Intuitive Syntax:</strong> Similar to SQL but more concise and flexible.</li>
+        <li><strong>Rich Functions:</strong> Built-in aggregations, time series analysis, and pattern matching.</li>
+        <li><strong>Azure Native:</strong> First-class support in Azure Monitor, Sentinel, and Data Explorer.</li>
+      </ul>
+      <div class="info-box warning"><strong>Note:</strong> KQL is case-sensitive for string comparisons and column names.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use KQL?</h2>
+      <p>KQL excels at analyzing telemetry, logs, security events, and time-series data at scale. Its expressive syntax and Azure integration make it essential for DevOps, security analysts, and data engineers working in Microsoft cloud environments.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Log Analytics</span>
+        <span class="topic">Security Operations</span>
+        <span class="topic">Performance Monitoring</span>
+        <span class="topic">Troubleshooting</span>
+        <span class="topic">Threat Hunting</span>
+        <span class="topic">Resource Tracking</span>
+        <span class="topic">Cost Analysis</span>
+        <span class="topic">Compliance Auditing</span>
+        <span class="topic">Application Insights</span>
+        <span class="topic">IoT Telemetry</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Speed:</strong> Query billions of rows in seconds with columnar storage.</li>
+        <li><strong>Scalability:</strong> Handles massive datasets without performance degradation.</li>
+        <li><strong>Integration:</strong> Native support in Azure Portal, CLI, and APIs.</li>
+        <li><strong>Visualization:</strong> Direct rendering of charts and graphs.</li>
+        <li><strong>Time Intelligence:</strong> Advanced time-windowing and binning functions.</li>
+        <li><strong>Pattern Matching:</strong> Regex, wildcards, and fuzzy matching built-in.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Basic Query Structure</h3>
+      <p>KQL queries use a <strong>pipeline model</strong> where data flows through operators separated by pipes (<code>|</code>):</p>
+      <pre><code>TableName
+| where Condition
+| project Column1, Column2
+| summarize Count=count() by Column1
+| order by Count desc</code><button class="copy-btn" data-copy="TableName\n| where Condition\n| project Column1, Column2\n| summarize Count=count() by Column1\n| order by Count desc">COPY</button></pre>
+      
+      <h3>Simple Query Example</h3>
+      <pre><code>// Get last 100 events from the past hour
+SecurityEvent
+| where TimeGenerated > ago(1h)
+| take 100</code><button class="copy-btn" data-copy="SecurityEvent\n| where TimeGenerated > ago(1h)\n| take 100">COPY</button></pre>
+      
+      <h3>Filtering with where</h3>
+      <pre><code>// Find failed login attempts
+SigninLogs
+| where TimeGenerated > ago(24h)
+| where ResultType != "0"  // Non-zero = failure
+| where UserPrincipalName contains "@contoso.com"
+| project TimeGenerated, UserPrincipalName, ResultType, Location</code><button class="copy-btn" data-copy="SigninLogs\n| where TimeGenerated > ago(24h)\n| where ResultType != \"0\"\n| where UserPrincipalName contains \"@contoso.com\"\n| project TimeGenerated, UserPrincipalName, ResultType, Location">COPY</button></pre>
+
+      <h3>Aggregation with summarize</h3>
+      <pre><code>// Count events by severity level
+AzureActivity
+| where TimeGenerated > ago(7d)
+| summarize EventCount=count() by Level
+| order by EventCount desc</code><button class="copy-btn" data-copy="AzureActivity\n| where TimeGenerated > ago(7d)\n| summarize EventCount=count() by Level\n| order by EventCount desc">COPY</button></pre>
+
+      <h3>Time Binning</h3>
+      <pre><code>// Events over time (hourly buckets)
+Heartbeat
+| where TimeGenerated > ago(7d)
+| summarize Count=count() by bin(TimeGenerated, 1h)
+| render timechart</code><button class="copy-btn" data-copy="Heartbeat\n| where TimeGenerated > ago(7d)\n| summarize Count=count() by bin(TimeGenerated, 1h)\n| render timechart">COPY</button></pre>
+
+      <h3>Joining Data</h3>
+      <pre><code>// Join security events with user info
+SecurityEvent
+| where TimeGenerated > ago(1d)
+| join kind=inner (
+    IdentityInfo
+    | project AccountName, Department
+) on AccountName
+| project TimeGenerated, AccountName, Department, EventID</code><button class="copy-btn" data-copy="SecurityEvent\n| where TimeGenerated > ago(1d)\n| join kind=inner (\n    IdentityInfo\n    | project AccountName, Department\n) on AccountName\n| project TimeGenerated, AccountName, Department, EventID">COPY</button></pre>
+
+      <h3>String Operations</h3>
+      <pre><code>// Extract and parse strings
+Syslog
+| where TimeGenerated > ago(1h)
+| where SyslogMessage contains "error"
+| extend ErrorCode = extract(@"ERR-(\d+)", 1, SyslogMessage)
+| where isnotempty(ErrorCode)
+| project TimeGenerated, Computer, ErrorCode, SyslogMessage</code><button class="copy-btn" data-copy="Syslog\n| where TimeGenerated > ago(1h)\n| where SyslogMessage contains \"error\"\n| extend ErrorCode = extract(@\"ERR-(\\d+)\", 1, SyslogMessage)\n| project TimeGenerated, Computer, ErrorCode">COPY</button></pre>
+    </section>
+
+    <section id="operators" class="card">
+      <h2>Common Operators</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Filtering & Selection</h3>
+          <ul>
+            <li><code>where</code> – Filter rows by condition</li>
+            <li><code>project</code> – Select specific columns</li>
+            <li><code>project-away</code> – Exclude columns</li>
+            <li><code>distinct</code> – Remove duplicates</li>
+            <li><code>take</code> / <code>limit</code> – Return N rows</li>
+            <li><code>sample</code> – Random sampling</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Aggregation</h3>
+          <ul>
+            <li><code>summarize</code> – Aggregate data</li>
+            <li><code>count()</code> – Count rows</li>
+            <li><code>sum()</code> – Sum values</li>
+            <li><code>avg()</code> – Average</li>
+            <li><code>min()</code> / <code>max()</code> – Min/Max</li>
+            <li><code>percentile()</code> – Percentile calculation</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Transformation</h3>
+          <ul>
+            <li><code>extend</code> – Add calculated columns</li>
+            <li><code>parse</code> – Parse structured text</li>
+            <li><code>extract()</code> – Regex extraction</li>
+            <li><code>split()</code> – Split strings</li>
+            <li><code>strcat()</code> – Concatenate strings</li>
+            <li><code>todouble()</code> – Type conversion</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Ordering & Joining</h3>
+          <ul>
+            <li><code>order by</code> / <code>sort by</code> – Sort results</li>
+            <li><code>top</code> – Top N by expression</li>
+            <li><code>join</code> – Join tables</li>
+            <li><code>union</code> – Combine tables</li>
+            <li><code>lookup</code> – Dimension lookup</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Time Functions</h3>
+      <ul>
+        <li><code>ago()</code> – Relative time (e.g., <code>ago(1h)</code>, <code>ago(7d)</code>)</li>
+        <li><code>now()</code> – Current time</li>
+        <li><code>datetime()</code> – Parse datetime</li>
+        <li><code>bin()</code> – Round time to intervals</li>
+        <li><code>startofday()</code>, <code>endofweek()</code> – Time boundaries</li>
+      </ul>
+    </section>
+
+    <section id="examples" class="card">
+      <h2>Practical Examples</h2>
+      
+      <h3>1. Find Top 10 Error-Generating Computers</h3>
+      <pre><code>Event
+| where TimeGenerated > ago(24h)
+| where EventLevelName == "Error"
+| summarize ErrorCount=count() by Computer
+| top 10 by ErrorCount desc</code><button class="copy-btn" data-copy="Event\n| where TimeGenerated > ago(24h)\n| where EventLevelName == \"Error\"\n| summarize ErrorCount=count() by Computer\n| top 10 by ErrorCount desc">COPY</button></pre>
+
+      <h3>2. Analyze HTTP Status Codes</h3>
+      <pre><code>AppServiceHTTPLogs
+| where TimeGenerated > ago(1h)
+| summarize RequestCount=count() by ScStatus
+| extend Category = case(
+    ScStatus < 300, "Success",
+    ScStatus < 400, "Redirect",
+    ScStatus < 500, "Client Error",
+    "Server Error"
+)
+| project ScStatus, Category, RequestCount
+| order by RequestCount desc</code><button class="copy-btn" data-copy="AppServiceHTTPLogs\n| where TimeGenerated > ago(1h)\n| summarize RequestCount=count() by ScStatus\n| order by RequestCount desc">COPY</button></pre>
+
+      <h3>3. Security Alert Dashboard</h3>
+      <pre><code>SecurityAlert
+| where TimeGenerated > ago(30d)
+| summarize AlertCount=count() by AlertSeverity, bin(TimeGenerated, 1d)
+| render columnchart</code><button class="copy-btn" data-copy="SecurityAlert\n| where TimeGenerated > ago(30d)\n| summarize AlertCount=count() by AlertSeverity, bin(TimeGenerated, 1d)\n| render columnchart">COPY</button></pre>
+
+      <h3>4. Application Performance Percentiles</h3>
+      <pre><code>requests
+| where timestamp > ago(1h)
+| summarize 
+    p50=percentile(duration, 50),
+    p90=percentile(duration, 90),
+    p95=percentile(duration, 95),
+    p99=percentile(duration, 99)
+    by bin(timestamp, 5m)
+| render timechart</code><button class="copy-btn" data-copy="requests\n| where timestamp > ago(1h)\n| summarize p50=percentile(duration, 50), p90=percentile(duration, 90), p95=percentile(duration, 95)\n| render timechart">COPY</button></pre>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li>📦 <a href="install-guide.html">Set Up Azure Data Explorer & Log Analytics</a></li>
+        <li>🎯 Practice queries in Azure Portal's Log Analytics workspace</li>
+        <li>📚 Explore <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/" target="_blank" rel="noopener">KQL documentation</a></li>
+        <li>🔍 Master advanced operators (mv-expand, make-series, evaluate)</li>
+        <li>📊 Build custom Azure Monitor workbooks</li>
+        <li>🛡️ Learn Microsoft Sentinel hunting queries</li>
+      </ul>
+      <div class="info-box">
+        <strong>Practice Tip:</strong> Use the free <a href="https://dataexplorer.azure.com/clusters/help/databases/Samples" target="_blank" rel="noopener">Azure Data Explorer demo environment</a> to practice KQL queries without Azure subscription.
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

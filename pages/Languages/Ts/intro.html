@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeScript Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>🔷 TypeScript Introduction</h1>
+      <p class="subtitle">JavaScript with syntax for types – build scalable applications with confidence.</p>
+      <div class="badge-row">
+        <span class="badge">TYPED</span>
+        <span class="badge">JAVASCRIPT SUPERSET</span>
+        <span class="badge">COMPILED</span>
+        <span class="badge">ENTERPRISE</span>
+        <span class="badge">SCALABLE</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is TypeScript?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>JavaScript + Types:</strong> TypeScript is a superset of JavaScript that compiles to clean, readable JavaScript code.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is TypeScript?</h2>
+      <p><strong>TypeScript</strong> is an open-source programming language developed by Microsoft that builds on JavaScript by adding static type definitions. Types provide a way to describe the shape of objects, enabling better documentation and catching errors early in development.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Static Typing:</strong> Optional type annotations catch errors at compile time.</li>
+        <li><strong>JavaScript Superset:</strong> All valid JavaScript is valid TypeScript.</li>
+        <li><strong>Compiles to JavaScript:</strong> Transpiles to clean, readable JS for any browser/environment.</li>
+        <li><strong>Enhanced IDE Support:</strong> Superior autocomplete, navigation, and refactoring.</li>
+        <li><strong>Modern Features:</strong> Latest ECMAScript features plus additional TypeScript-specific features.</li>
+        <li><strong>Gradual Adoption:</strong> Add types incrementally to existing JavaScript projects.</li>
+      </ul>
+      <div class="info-box warning"><strong>Note:</strong> TypeScript doesn't run directly in browsers – it must be compiled to JavaScript first.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use TypeScript?</h2>
+      <p>TypeScript helps catch bugs before runtime, improves code maintainability, and enhances developer productivity with excellent tooling. It's become the standard for large-scale JavaScript applications.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Enterprise Apps</span>
+        <span class="topic">Large Codebases</span>
+        <span class="topic">React/Angular/Vue</span>
+        <span class="topic">Node.js Backends</span>
+        <span class="topic">API Development</span>
+        <span class="topic">Library Development</span>
+        <span class="topic">Team Projects</span>
+        <span class="topic">Type-Safe Code</span>
+        <span class="topic">Refactoring</span>
+        <span class="topic">Documentation</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Early Error Detection:</strong> Catch bugs during development, not production.</li>
+        <li><strong>Better IDE Experience:</strong> Intelligent autocomplete and inline documentation.</li>
+        <li><strong>Refactoring Confidence:</strong> Safe, automated refactoring tools.</li>
+        <li><strong>Self-Documenting Code:</strong> Types serve as inline documentation.</li>
+        <li><strong>Team Collaboration:</strong> Clear contracts between code modules.</li>
+        <li><strong>Industry Standard:</strong> Adopted by Microsoft, Google, Airbnb, Slack, and more.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Basic Types</h3>
+      <pre><code>// Primitive types
+let name: string = "DevSphere";
+let age: number = 25;
+let isActive: boolean = true;
+let nothing: null = null;
+let notDefined: undefined = undefined;
+
+// Arrays
+let numbers: number[] = [1, 2, 3];
+let names: Array&lt;string&gt; = ["Alice", "Bob"];
+
+// Tuples (fixed-length arrays with specific types)
+let person: [string, number] = ["John", 30];
+
+// Any (opt-out of type checking - use sparingly!)
+let anything: any = "could be anything";</code><button class="copy-btn" data-copy="let name: string = \"DevSphere\";\nlet age: number = 25;\nlet isActive: boolean = true;\nlet numbers: number[] = [1, 2, 3];">COPY</button></pre>
+      
+      <h3>Interfaces & Types</h3>
+      <pre><code>// Interface
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    age?: number;           // Optional property
+    readonly role: string;  // Read-only property
+}
+
+// Type alias
+type ID = string | number;
+
+// Using interfaces
+const user: User = {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    role: "admin"
+};
+
+// Function with typed parameters and return
+function greet(user: User): string {
+    return `Hello, ${user.name}!`;
+}</code><button class="copy-btn" data-copy="interface User {\n    id: number;\n    name: string;\n    email: string;\n    age?: number;\n}\n\nconst user: User = {\n    id: 1,\n    name: \"John\",\n    email: \"john@example.com\",\n    role: \"admin\"\n};">COPY</button></pre>
+
+      <h3>Functions</h3>
+      <pre><code>// Function with type annotations
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+// Arrow function
+const multiply = (a: number, b: number): number => a * b;
+
+// Optional parameters
+function greet(name: string, greeting?: string): string {
+    return `${greeting || "Hello"}, ${name}!`;
+}
+
+// Default parameters
+function createUser(name: string, role: string = "user") {
+    return { name, role };
+}
+
+// Rest parameters
+function sum(...numbers: number[]): number {
+    return numbers.reduce((acc, n) => acc + n, 0);
+}</code><button class="copy-btn" data-copy="function add(a: number, b: number): number {\n    return a + b;\n}\n\nconst multiply = (a: number, b: number): number => a * b;">COPY</button></pre>
+
+      <h3>Union & Intersection Types</h3>
+      <pre><code>// Union types (OR)
+type Status = "pending" | "approved" | "rejected";
+type ID = string | number;
+
+function printId(id: ID) {
+    console.log(`ID: ${id}`);
+}
+
+// Intersection types (AND)
+interface Person {
+    name: string;
+}
+
+interface Employee {
+    employeeId: number;
+}
+
+type Staff = Person & Employee;
+
+const employee: Staff = {
+    name: "John",
+    employeeId: 123
+};</code><button class="copy-btn" data-copy="type Status = \"pending\" | \"approved\" | \"rejected\";\ntype ID = string | number;\n\nfunction printId(id: ID) {\n    console.log(`ID: ${id}`);\n}">COPY</button></pre>
+
+      <h3>Generics</h3>
+      <pre><code>// Generic function
+function identity&lt;T&gt;(value: T): T {
+    return value;
+}
+
+const num = identity&lt;number&gt;(42);
+const str = identity&lt;string&gt;("hello");
+
+// Generic interface
+interface ApiResponse&lt;T&gt; {
+    data: T;
+    status: number;
+    message: string;
+}
+
+const userResponse: ApiResponse&lt;User&gt; = {
+    data: { id: 1, name: "John", email: "john@example.com", role: "user" },
+    status: 200,
+    message: "Success"
+};
+
+// Generic class
+class DataStore&lt;T&gt; {
+    private data: T[] = [];
+    
+    add(item: T): void {
+        this.data.push(item);
+    }
+    
+    getAll(): T[] {
+        return this.data;
+    }
+}</code><button class="copy-btn" data-copy="function identity<T>(value: T): T {\n    return value;\n}\n\nconst num = identity<number>(42);\nconst str = identity<string>(\"hello\");">COPY</button></pre>
+
+      <h3>Classes</h3>
+      <pre><code>class Person {
+    private name: string;
+    public age: number;
+    protected role: string;
+    
+    constructor(name: string, age: number, role: string) {
+        this.name = name;
+        this.age = age;
+        this.role = role;
+    }
+    
+    greet(): string {
+        return `Hello, I'm ${this.name}`;
+    }
+    
+    static species(): string {
+        return "Homo sapiens";
+    }
+}
+
+// Inheritance
+class Developer extends Person {
+    private language: string;
+    
+    constructor(name: string, age: number, language: string) {
+        super(name, age, "developer");
+        this.language = language;
+    }
+    
+    code(): string {
+        return `Coding in ${this.language}`;
+    }
+}
+
+const dev = new Developer("Alice", 28, "TypeScript");
+console.log(dev.greet());  // Hello, I'm Alice
+console.log(dev.code());   // Coding in TypeScript</code><button class="copy-btn" data-copy="class Person {\n    constructor(public name: string, public age: number) {}\n    \n    greet(): string {\n        return `Hello, I'm ${this.name}`;\n    }\n}">COPY</button></pre>
+
+      <h3>Type Guards & Narrowing</h3>
+      <pre><code>function printValue(value: string | number) {
+    if (typeof value === "string") {
+        // TypeScript knows value is string here
+        console.log(value.toUpperCase());
+    } else {
+        // TypeScript knows value is number here
+        console.log(value.toFixed(2));
+    }
+}
+
+// Custom type guard
+function isUser(obj: any): obj is User {
+    return obj && typeof obj.name === "string";
+}
+
+if (isUser(someObject)) {
+    // TypeScript knows someObject is User here
+    console.log(someObject.name);
+}</code><button class="copy-btn" data-copy="function printValue(value: string | number) {\n    if (typeof value === \"string\") {\n        console.log(value.toUpperCase());\n    } else {\n        console.log(value.toFixed(2));\n    }\n}">COPY</button></pre>
+    </section>
+
+    <section id="ecosystem" class="card">
+      <h2>Ecosystem & Frameworks</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Frontend Frameworks</h3>
+          <ul>
+            <li><strong>Angular:</strong> Built with TypeScript from the ground up.</li>
+            <li><strong>React:</strong> Excellent TypeScript support via Create React App.</li>
+            <li><strong>Vue 3:</strong> Written in TypeScript, first-class support.</li>
+            <li><strong>Next.js:</strong> React framework with built-in TS support.</li>
+            <li><strong>Svelte:</strong> TypeScript support via preprocessors.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Backend Frameworks</h3>
+          <ul>
+            <li><strong>NestJS:</strong> TypeScript-first Node.js framework.</li>
+            <li><strong>Express + TypeScript:</strong> Type-safe Express apps.</li>
+            <li><strong>Fastify:</strong> High-performance with TS support.</li>
+            <li><strong>tRPC:</strong> End-to-end typesafe APIs.</li>
+            <li><strong>Deno:</strong> TypeScript runtime (no compilation needed).</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Development Tools</h3>
+          <ul>
+            <li><strong>ts-node:</strong> Execute TypeScript directly.</li>
+            <li><strong>tsx:</strong> Fast TypeScript execution.</li>
+            <li><strong>ESLint + TypeScript:</strong> Linting for TS.</li>
+            <li><strong>Prettier:</strong> Code formatting.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Type Definitions</h3>
+          <ul>
+            <li><strong>DefinitelyTyped:</strong> Type definitions for JS libraries.</li>
+            <li><strong>@types/*:</strong> npm packages with type definitions.</li>
+            <li><strong>Built-in types:</strong> DOM, Node.js, etc.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <h3>Install Type Definitions</h3>
+      <pre><code># Install types for popular libraries
+npm install --save-dev @types/node
+npm install --save-dev @types/react
+npm install --save-dev @types/express
+npm install --save-dev @types/jest</code><button class="copy-btn" data-copy="npm install --save-dev @types/node @types/react @types/express">COPY</button></pre>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li>📦 <a href="install-guide.html">Install TypeScript & Configure Your Project</a></li>
+        <li>🎯 Learn TypeScript fundamentals (types, interfaces, generics)</li>
+        <li>⚛️ Use TypeScript with React or Angular</li>
+        <li>🔧 Configure tsconfig.json for strict type checking</li>
+        <li>📚 Study advanced types (mapped types, conditional types)</li>
+        <li>🧪 Write type-safe tests with Jest + TypeScript</li>
+        <li>🚀 Build a full-stack TypeScript application</li>
+      </ul>
+      <div class="info-box">
+        <strong>Migration Tip:</strong> You can rename <code>.js</code> files to <code>.ts</code> and gradually add types. Start with <code>any</code> and refine types over time.
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

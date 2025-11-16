@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Next.js — Introduction | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden;margin-bottom:1.25rem}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    footer{margin-top:3.5rem;text-align:center;font-size:.8rem;color:#8b92a0}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Next.js — Introduction</h1>
+      <p class="subtitle">A React framework for hybrid rendering (SSR/SSG), App Router, API Routes, and zero-config DX.</p>
+      <div class="badge-row">
+        <span class="badge">React</span>
+        <span class="badge">App Router</span>
+        <span class="badge">SSR/SSG/ISR</span>
+        <span class="badge">RSC</span>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#app-router">App Router</a>
+        <a href="#routing">Routing</a>
+        <a href="#data">Data Fetching</a>
+        <a href="#api">API Routes</a>
+        <a href="#docker">Docker Dev</a>
+        <a href="#structure">Folder Structure</a>
+        <a href="#pitfalls">Common Pitfalls</a>
+      </nav>
+    </header>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>Next.js brings server-first React with file-system routing, data fetching on the server, and automatic code splitting. The App Router (app/) uses React Server Components for great performance and DX.</p>
+      <pre><code># Create a new app
+npx create-next-app@latest my-app
+cd my-app
+npm run dev</code><button class="copy-btn" data-copy="npx create-next-app@latest my-app">COPY</button></pre>
+    </section>
+
+    <section id="app-router" class="card">
+      <h2>App Router</h2>
+      <p>Use the <code>app/</code> directory with <code>layout.tsx</code> and <code>page.tsx</code>. Server Components are default; add <code>"use client"</code> for Client Components.</p>
+      <pre><code>app/
+  layout.tsx
+  page.tsx
+  dashboard/
+    layout.tsx
+    page.tsx
+    [id]/page.tsx</code><button class="copy-btn" data-copy="app/\n  layout.tsx\n  page.tsx\n  dashboard/\n    layout.tsx\n    page.tsx\n    [id]/page.tsx">COPY</button></pre>
+      <pre><code>// app/layout.tsx
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}</code><button class="copy-btn" data-copy="export default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\">\n      <body>{children}</body>\n    </html>\n  );\n}">COPY</button></pre>
+    </section>
+
+    <section id="routing" class="card">
+      <h2>Routing</h2>
+      <p>Folders become routes. Use <code>[param]</code> for dynamic segments and <code>generateStaticParams</code> for SSG. Nested layouts provide shared UI.</p>
+      <pre><code>// app/blog/[slug]/page.tsx
+export default async function Post({ params }) {
+  const post = await fetch(`https://api.example.com/posts/${params.slug}`).then(r => r.json());
+  return <article>{post.title}</article>;
+}</code><button class="copy-btn" data-copy="export default async function Post({ params }) {\n  const post = await fetch(`https://api.example.com/posts/${params.slug}`).then(r => r.json());\n  return <article>{post.title}</article>;\n}">COPY</button></pre>
+    </section>
+
+    <section id="data" class="card">
+      <h2>Data Fetching</h2>
+      <p>Fetch data in Server Components by default; set caching with <code>fetch(..., { next: { revalidate: 60 } })</code>. For SSG, export <code>generateStaticParams</code>. Use <code>server actions</code> for mutations.</p>
+      <pre><code>// app/page.tsx (RSC)
+export default async function Home() {
+  const res = await fetch('https://api.example.com/items', { next: { revalidate: 60 } });
+  const items = await res.json();
+  return <ul>{items.map(i => <li key={i.id}>{i.name}</li>)}</ul>;
+}</code><button class="copy-btn" data-copy="const res = await fetch('https://api.example.com/items', { next: { revalidate: 60 } });">COPY</button></pre>
+      <pre><code>// app/actions.ts
+'use server'
+export async function saveItem(data) {
+  // server-side mutation logic
+}</code><button class="copy-btn" data-copy="'use server'\nexport async function saveItem(data) { }">COPY</button></pre>
+    </section>
+
+    <section id="api" class="card">
+      <h2>API Routes</h2>
+      <p>Create route handlers under <code>app/api/*/route.ts</code> with HTTP method exports.</p>
+      <pre><code>// app/api/hello/route.ts
+export async function GET() {
+  return Response.json({ message: 'Hello' });
+}
+
+export async function POST(req: Request) {
+  const body = await req.json();
+  return Response.json({ ok: true, body });
+}</code><button class="copy-btn" data-copy="export async function GET() { return Response.json({ message: 'Hello' }); }">COPY</button></pre>
+    </section>
+
+    <section id="deploy" class="card">
+      <h2>Deployment</h2>
+      <p>Build with <code>next build</code> and start with <code>next start</code>. Deploy easily to Vercel or any Node host. Use <code>.env.local</code> for secrets and <code>NEXT_PUBLIC_*</code> for client-safe envs.</p>
+      <pre><code>npm run build
+npm run start
+# or
+pnpm build && pnpm start</code><button class="copy-btn" data-copy="npm run build && npm run start">COPY</button></pre>
+    </section>
+
+    <section id="docker" class="card">
+      <h2>Docker Dev Environment</h2>
+      <pre><code># Dockerfile
+FROM node:20-alpine AS base
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
+
+# docker-compose.yml
+services:
+  nextjs:
+    build:
+      context: .
+      target: base
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development</code><button class="copy-btn" data-copy="docker compose up">COPY</button></pre>
+    </section>
+
+    <section id="structure" class="card">
+      <h2>Folder Structure (App Router)</h2>
+      <pre><code>project/
+  app/
+    layout.tsx
+    page.tsx
+    globals.css
+    api/
+      route.ts
+    (auth)/          # Route groups
+      login/page.tsx
+    dashboard/
+      layout.tsx
+      page.tsx
+  public/
+    images/
+  components/
+  lib/
+  .env.local
+  next.config.js
+  tsconfig.json</code><button class="copy-btn" data-copy="app/">COPY</button></pre>
+    </section>
+
+    <section id="pitfalls" class="card">
+      <h2>Common Pitfalls</h2>
+      <ul>
+        <li><strong>Server/Client Component confusion:</strong> Server Components can't use hooks or browser APIs; add <code>"use client"</code> directive when needed.</li>
+        <li><strong>Hydration mismatches:</strong> Ensure server and client render identical HTML; avoid <code>Date.now()</code> or <code>Math.random()</code> in RSC.</li>
+        <li><strong>Fetch caching:</strong> Next.js caches fetch by default; use <code>{ cache: 'no-store' }</code> or <code>revalidate</code> for dynamic data.</li>
+        <li><strong>Layout re-renders:</strong> Layouts don't re-render on navigation; use client components for state that needs to reset.</li>
+        <li><strong>Missing metadata exports:</strong> Use <code>export const metadata</code> in pages/layouts for SEO instead of <code>&lt;Head&gt;</code>.</li>
+      </ul>
+      <p>Next: <a href="install-guide.html">Install Guide</a></p>
+    </section>
+
+    <footer>&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>

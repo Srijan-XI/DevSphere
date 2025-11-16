@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>DevSphere </title>
+		<meta name="description" content="Browse the DevSphere repository info without visiting GitHub. Languages, questions, frameworks, tools, and docs in one place." />
+		<link rel="stylesheet" href="main.css" />
+		<link rel="stylesheet" href="popup message/popup.css" />
+		<!-- Component Styles -->
+		<link rel="stylesheet" href="components/theme-switcher.css" />
+		<link rel="stylesheet" href="components/search.css" />
+		<link rel="stylesheet" href="components/scroll-to-top.css" />
+		<link rel="stylesheet" href="components/code-highlighter.css" />
+		<link rel="stylesheet" href="components/animations.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Search Container -->
+		<div class="search-container">
+			<div class="search-box">
+				<span class="search-icon">🔍</span>
+				<input type="text" id="search-input" placeholder="Search languages, frameworks, databases..." />
+			</div>
+			<div id="search-results"></div>
+		</div>
+
+		<header class="site-header">
+			<div class="container header-inner">
+			<div class="brand">
+				<span class="logo">💻</span>
+				<div>
+				<h1>DevSphere</h1>
+				<p class="sub">Sphere of Information</p>
+				<p class="sub">Learn, install, and practice across 12 languages, 6 frameworks, 5 databases, 5 DevOps tools & 2 testing frameworks</p>
+					</div>
+				</div>
+
+				<div class="header-actions">
+					<a id="btn-download" class="btn primary" target="_blank" rel="noopener">Download ZIP</a>
+					<button id="btn-theme" class="btn ghost" aria-label="Toggle theme">🌓</button>
+				</div>
+			</div>
+		</header>
+
+		<!-- Under Development Popup -->
+		<div id="dev-popup" class="popup-overlay">
+			<div class="popup-modal">
+				<div class="popup-header">
+					<span class="popup-icon">🚧</span>
+					<h2>Site Under Development</h2>
+				</div>
+				<div class="popup-content">
+					<p>This website is still under active development. Some features may not work as expected.</p>
+					<p>We're working hard to improve your experience. Thank you for your patience!</p>
+				</div>
+				<div class="popup-footer">
+					<button id="close-popup" class="btn btn-primary">Got it!</button>
+					<label class="popup-checkbox">
+						<input type="checkbox" id="dont-show-again">
+						<span>Don't show this again</span>
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<main class="container">
+			<section class="hero">
+			<div class="hero-text">
+			<h2>Repository Overview</h2>
+			<p>Explore 12 languages, 6 frameworks, 5 databases, 5 DevOps tools, and 2 testing frameworks from this repo — no GitHub visit required.</p>
+				<div class="hero-actions">
+				<a href="pages/about.html" class="btn">About</a>
+				<a href="pages/Languages/languages.html" class="btn">Languages</a>
+				<a href="pages/Framework/frameworks.html" class="btn">Frameworks</a>
+				<a href="pages/Database/databases.html" class="btn">Databases</a>
+				</div>
+				</div>
+				<div class="stats" id="stats"></div>
+			</section>
+
+			<section class="controls">
+				<input id="search" class="input" type="search" placeholder="Search languages, frameworks, tools…" />
+			<div class="filters">
+				<button class="chip active" data-filter="all">All</button>
+				<button class="chip" data-filter="language">Languages</button>
+				<button class="chip" data-filter="framework">Frameworks</button>
+				<button class="chip" data-filter="database">Databases</button>
+				<button class="chip" data-filter="tool">DevOps</button>
+				<button class="chip" data-filter="testing">Testing</button>
+			</div>
+			</section>
+
+			<section>
+				<h3>Content</h3>
+				<div id="cards" class="grid"></div>
+			</section>
+
+			<section>
+				<h3>Quick Links</h3>
+				<div id="links" class="links"></div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="container footer-inner">
+				<small id="meta"></small>
+				<div class="footer-links">
+					<a id="repo-link" target="_blank" rel="noopener">GitHub Repo</a>
+					<a id="issues-link" target="_blank" rel="noopener">Issues</a>
+				</div>
+			</div>
+			<div class="container footer-disclaimer">
+				<p>
+					<strong>⚠️ Disclaimer:</strong> If the site doesn't work properly, please visit the <a id="disclaimer-repo-link" target="_blank" rel="noopener" class="disclaimer-link">GitHub repository</a> directly.
+				</p>
+			</div>
+		</footer>
+
+		<script>
+			window.repoConfig = {
+				repoUrl: "https://github.com/Srijan-XI/Install-and-Learn-DevLangs",
+				zipUrl: "https://github.com/Srijan-XI/Install-and-Learn-DevLangs/archive/refs/heads/main.zip"
+			};
+		</script>
+		<!-- Component Scripts -->
+		<script src="components/theme-switcher.js"></script>
+		<!-- Ensure data models exist before search builds index -->
+		<script src="app.js"></script>
+		<script src="components/search.js"></script>
+		<script src="components/scroll-to-top.js"></script>
+		<script src="components/code-highlighter.js"></script>
+		<script src="popup message/popup.js"></script>
+	</body>
+ </html>
+

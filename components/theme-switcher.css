@@ -1,0 +1,156 @@
+/* Theme Switcher Styles */
+
+/* CSS Variables for Dark Theme (default) */
+:root[data-theme="dark"] {
+	--bg-primary: #0a0e14;
+	--bg-secondary: #161b22;
+	--bg-tertiary: #0d1117;
+	--border-color: #30363d;
+	--text-primary: #e1e4e8;
+	--text-secondary: #8b92a0;
+	--accent-primary: #8b5cf6;
+	--accent-secondary: #f59e0b;
+	--accent-hover: #a78bfa;
+	--card-bg: rgba(22, 27, 34, 0.8);
+	--gradient-start: #0a0e14;
+	--gradient-mid: #1a1f2e;
+	--gradient-end: #0f1419;
+}
+
+/* CSS Variables for Light Theme */
+:root[data-theme="light"] {
+	--bg-primary: #ffffff;
+	--bg-secondary: #f6f8fa;
+	--bg-tertiary: #ffffff;
+	--border-color: #d0d7de;
+	--text-primary: #24292f;
+	--text-secondary: #57606a;
+	--accent-primary: #8b5cf6;
+	--accent-secondary: #f59e0b;
+	--accent-hover: #7c3aed;
+	--card-bg: rgba(255, 255, 255, 0.9);
+	--gradient-start: #f6f8fa;
+	--gradient-mid: #ffffff;
+	--gradient-end: #eaeef2;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+	position: relative;
+	background: var(--accent-primary);
+	color: white;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 2rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.theme-toggle:hover {
+	background: var(--accent-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.theme-toggle.floating {
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	z-index: 1000;
+}
+
+.theme-icon {
+	font-size: 1.25rem;
+	line-height: 1;
+}
+
+.theme-label {
+	font-size: 0.875rem;
+}
+
+/* Apply theme colors to existing elements */
+body {
+	background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+	color: var(--text-primary);
+	transition: background 0.3s ease, color 0.3s ease;
+}
+
+.card,
+.doc-section,
+.sidebar,
+header,
+footer {
+	background: var(--bg-secondary);
+	border-color: var(--border-color);
+	color: var(--text-primary);
+	transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.card h3,
+h1, h2, h3, h4, h5, h6,
+strong {
+	color: var(--text-primary);
+}
+
+p, li,
+.text-secondary {
+	color: var(--text-secondary);
+}
+
+a {
+	color: var(--accent-primary);
+}
+
+a:hover {
+	color: var(--accent-hover);
+}
+
+.btn-primary,
+.filter-btn.active {
+	background: var(--accent-primary);
+}
+
+.btn-primary:hover,
+.filter-btn:hover {
+	background: var(--accent-hover);
+}
+
+/* Code blocks theme adjustment */
+code {
+	background: var(--bg-tertiary);
+	color: var(--accent-secondary);
+}
+
+/* Table theme */
+th {
+	background: var(--accent-primary);
+}
+
+td {
+	border-bottom-color: var(--border-color);
+	color: var(--text-secondary);
+}
+
+/* Smooth transitions for theme change */
+* {
+	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.theme-label {
+		display: none;
+	}
+	
+	.theme-toggle {
+		padding: 0.5rem;
+		min-width: 2.5rem;
+		justify-content: center;
+	}
+}

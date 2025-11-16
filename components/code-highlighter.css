@@ -1,0 +1,239 @@
+/* Code Highlighter Styles */
+
+/* Code Block Wrapper */
+.code-block-wrapper {
+	position: relative;
+	margin: 1.5rem 0;
+	border-radius: 0.5rem;
+	overflow: hidden;
+	border: 1px solid var(--border-color);
+}
+
+.code-block-wrapper pre {
+	margin: 0;
+	padding: 1.5rem;
+	overflow-x: auto;
+	background: var(--bg-tertiary) !important;
+}
+
+.code-block-wrapper code {
+	padding: 0;
+	background: transparent !important;
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+	font-size: 0.875rem;
+	line-height: 1.6;
+}
+
+/* Copy Button */
+.copy-button {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	background: var(--accent-primary);
+	color: white;
+	border: none;
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.375rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	opacity: 0;
+	transition: all 0.2s ease;
+	z-index: 10;
+}
+
+.code-block-wrapper:hover .copy-button {
+	opacity: 1;
+}
+
+.copy-button:hover {
+	background: var(--accent-hover);
+	transform: scale(1.05);
+}
+
+.copy-button:active {
+	transform: scale(0.95);
+}
+
+.copy-button .check-icon {
+	display: none;
+}
+
+.copy-button.copied {
+	background: #10b981;
+}
+
+.copy-button.copied .copy-icon {
+	display: none;
+}
+
+.copy-button.copied .check-icon {
+	display: block;
+}
+
+.copy-button.copied .copy-text::after {
+	content: 'Copied!';
+}
+
+.copy-button:not(.copied) .copy-text::after {
+	content: 'Copy';
+}
+
+/* Code Theme Selector */
+.code-theme-selector {
+	position: relative;
+	display: inline-block;
+}
+
+.theme-selector-button {
+	background: rgba(139, 92, 246, 0.1);
+	color: var(--accent-primary);
+	border: 1px solid var(--accent-primary);
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	transition: all 0.2s ease;
+}
+
+.theme-selector-button:hover {
+	background: rgba(139, 92, 246, 0.2);
+}
+
+.theme-selector-dropdown {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	right: 0;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	min-width: 180px;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-10px);
+	transition: all 0.3s ease;
+	z-index: 1001;
+}
+
+.theme-selector-dropdown.visible {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.theme-option {
+	display: block;
+	width: 100%;
+	padding: 0.75rem 1rem;
+	background: transparent;
+	border: none;
+	color: var(--text-primary);
+	text-align: left;
+	cursor: pointer;
+	font-size: 0.875rem;
+	transition: all 0.2s ease;
+	border-left: 3px solid transparent;
+}
+
+.theme-option:hover {
+	background: rgba(139, 92, 246, 0.1);
+}
+
+.theme-option.active {
+	background: rgba(139, 92, 246, 0.2);
+	border-left-color: var(--accent-primary);
+	font-weight: 600;
+}
+
+.theme-option:first-child {
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+
+.theme-option:last-child {
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+/* Inline code (not in blocks) */
+:not(pre) > code {
+	background: var(--bg-tertiary);
+	color: var(--accent-secondary);
+	padding: 0.2rem 0.4rem;
+	border-radius: 0.25rem;
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+	font-size: 0.875em;
+	border: 1px solid var(--border-color);
+}
+
+/* Scrollbar for code blocks */
+.code-block-wrapper pre::-webkit-scrollbar {
+	height: 8px;
+}
+
+.code-block-wrapper pre::-webkit-scrollbar-track {
+	background: var(--bg-tertiary);
+}
+
+.code-block-wrapper pre::-webkit-scrollbar-thumb {
+	background: var(--border-color);
+	border-radius: 4px;
+}
+
+.code-block-wrapper pre::-webkit-scrollbar-thumb:hover {
+	background: var(--accent-primary);
+}
+
+/* Line numbers (optional enhancement) */
+.code-block-wrapper.line-numbers pre {
+	padding-left: 3.5rem;
+}
+
+.code-block-wrapper.line-numbers code {
+	counter-reset: line;
+}
+
+.code-block-wrapper.line-numbers code .line::before {
+	counter-increment: line;
+	content: counter(line);
+	display: inline-block;
+	width: 2rem;
+	margin-left: -3.5rem;
+	margin-right: 1.5rem;
+	text-align: right;
+	color: var(--text-secondary);
+	opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.code-block-wrapper pre {
+		padding: 1rem;
+		font-size: 0.8rem;
+	}
+	
+	.copy-button {
+		opacity: 1;
+		top: 0.5rem;
+		right: 0.5rem;
+		padding: 0.375rem 0.625rem;
+		font-size: 0.7rem;
+	}
+	
+	.theme-selector-button {
+		padding: 0.375rem 0.75rem;
+		font-size: 0.8rem;
+	}
+	
+	.theme-selector-button svg {
+		display: none;
+	}
+}

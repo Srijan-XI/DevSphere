@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL Installation Guide | DevSphere</title>
+  <link rel="stylesheet" href="../../../components/breadcrumb.css" />
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; margin:.85rem 0; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .step { background:#0d1117; border:1px solid #30363d; padding:1.2rem; border-radius:.6rem; margin:.85rem 0; }
+    .step-number { display:inline-block; width:1.75rem; height:1.75rem; background:#8b5cf6; color:#fff; text-align:center; line-height:1.75rem; border-radius:50%; font-weight:700; font-size:.85rem; margin-right:.5rem; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <nav id="breadcrumb" class="breadcrumb-container"></nav>
+    <header class="page-header">
+      <h1>🗄️ SQL Installation Guide</h1>
+      <p class="subtitle">Install database systems and SQL clients to start working with databases.</p>
+      <div class="badge-row">
+        <span class="badge">RELATIONAL DATABASES</span>
+        <span class="badge">DATA QUERYING</span>
+        <span class="badge">CROSS-PLATFORM</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#overview">Overview</a>
+        <a href="#mysql">MySQL</a>
+        <a href="#postgresql">PostgreSQL</a>
+        <a href="#sqlite">SQLite</a>
+        <a href="#sql-server">SQL Server</a>
+        <a href="#clients">SQL Clients</a>
+        <a href="#verify">Verify</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Note:</strong> SQL is a language, not a product. You'll need to install a database system (MySQL, PostgreSQL, SQLite, etc.) to practice SQL.
+      </div>
+    </header>
+
+    <section id="overview" class="card accent">
+      <h2>What to Install?</h2>
+      <p>SQL (Structured Query Language) requires a database management system to execute queries. Choose one based on your needs:</p>
+      <ul>
+        <li><strong>SQLite:</strong> Lightweight, file-based, no server needed (best for learning)</li>
+        <li><strong>MySQL:</strong> Popular, open-source, widely used in web applications</li>
+        <li><strong>PostgreSQL:</strong> Advanced, feature-rich, excellent for complex queries</li>
+        <li><strong>Microsoft SQL Server:</strong> Enterprise-grade, Windows-focused</li>
+        <li><strong>MariaDB:</strong> MySQL fork with additional features</li>
+      </ul>
+      <div class="info-box">
+        <strong>Recommendation for Beginners:</strong> Start with SQLite (no setup) or MySQL (most popular).
+      </div>
+    </section>
+
+    <section id="sqlite" class="card">
+      <h2>SQLite - Easiest Option</h2>
+      <p>SQLite is perfect for learning SQL. No server setup required!</p>
+      
+      <h3>Windows</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        Download SQLite tools from:
+      </div>
+      <pre><code>https://www.sqlite.org/download.html</code><button class="copy-btn" data-copy="https://www.sqlite.org/download.html">COPY</button></pre>
+      
+      <div class="step">
+        <span class="step-number">2</span>
+        Download "sqlite-tools-win32-x86-*.zip"
+      </div>
+      
+      <div class="step">
+        <span class="step-number">3</span>
+        Extract and add the folder to your PATH
+      </div>
+
+      <h3>macOS/Linux</h3>
+      <p>SQLite is usually pre-installed! Test with:</p>
+      <pre><code>sqlite3 --version</code><button class="copy-btn" data-copy="sqlite3 --version">COPY</button></pre>
+      
+      <p>If not installed:</p>
+      <pre><code># macOS (Homebrew)
+brew install sqlite3
+
+# Ubuntu/Debian
+sudo apt install sqlite3
+
+# Fedora
+sudo dnf install sqlite</code><button class="copy-btn" data-copy="brew install sqlite3">COPY</button></pre>
+
+      <h3>Quick Start</h3>
+      <pre><code># Create/open a database
+sqlite3 mydb.db
+
+# Inside SQLite shell
+sqlite> CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT);
+sqlite> INSERT INTO users VALUES (1, 'Alice');
+sqlite> SELECT * FROM users;
+sqlite> .quit</code><button class="copy-btn" data-copy="sqlite3 mydb.db">COPY</button></pre>
+    </section>
+
+    <section id="mysql" class="card">
+      <h2>MySQL Installation</h2>
+      
+      <h3>Windows</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        Download MySQL Installer from:
+      </div>
+      <pre><code>https://dev.mysql.com/downloads/installer/</code><button class="copy-btn" data-copy="https://dev.mysql.com/downloads/installer/">COPY</button></pre>
+      
+      <div class="step">
+        <span class="step-number">2</span>
+        Run the installer and choose "Developer Default"
+      </div>
+      
+      <div class="step">
+        <span class="step-number">3</span>
+        Set a root password (remember it!)
+      </div>
+      
+      <div class="step">
+        <span class="step-number">4</span>
+        Complete the installation wizard
+      </div>
+
+      <h3>macOS</h3>
+      <pre><code># Using Homebrew (recommended)
+brew install mysql
+
+# Start MySQL service
+brew services start mysql
+
+# Secure installation
+mysql_secure_installation</code><button class="copy-btn" data-copy="brew install mysql">COPY</button></pre>
+
+      <h3>Linux (Ubuntu/Debian)</h3>
+      <pre><code># Update package list
+sudo apt update
+
+# Install MySQL Server
+sudo apt install mysql-server
+
+# Start MySQL service
+sudo systemctl start mysql
+
+# Secure installation
+sudo mysql_secure_installation</code><button class="copy-btn" data-copy="sudo apt install mysql-server">COPY</button></pre>
+
+      <h3>Connect to MySQL</h3>
+      <pre><code># Connect as root
+mysql -u root -p
+
+# Inside MySQL
+mysql> SHOW DATABASES;
+mysql> CREATE DATABASE testdb;
+mysql> USE testdb;
+mysql> EXIT;</code><button class="copy-btn" data-copy="mysql -u root -p">COPY</button></pre>
+    </section>
+
+    <section id="postgresql" class="card">
+      <h2>PostgreSQL Installation</h2>
+      
+      <h3>Windows</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        Download from:
+      </div>
+      <pre><code>https://www.postgresql.org/download/windows/</code><button class="copy-btn" data-copy="https://www.postgresql.org/download/windows/">COPY</button></pre>
+      
+      <div class="step">
+        <span class="step-number">2</span>
+        Run the installer and follow the wizard
+      </div>
+      
+      <div class="step">
+        <span class="step-number">3</span>
+        Set a password for the postgres user
+      </div>
+
+      <h3>macOS</h3>
+      <pre><code># Using Homebrew
+brew install postgresql@15
+
+# Start PostgreSQL
+brew services start postgresql@15
+
+# Or use Postgres.app (GUI application)
+# Download from: https://postgresapp.com/</code><button class="copy-btn" data-copy="brew install postgresql@15">COPY</button></pre>
+
+      <h3>Linux (Ubuntu/Debian)</h3>
+      <pre><code># Install PostgreSQL
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+# Start service
+sudo systemctl start postgresql
+
+# Switch to postgres user
+sudo -i -u postgres
+psql</code><button class="copy-btn" data-copy="sudo apt install postgresql postgresql-contrib">COPY</button></pre>
+
+      <h3>Connect to PostgreSQL</h3>
+      <pre><code># Connect to default database
+psql -U postgres
+
+# Inside psql
+postgres=# \l              -- List databases
+postgres=# CREATE DATABASE testdb;
+postgres=# \c testdb       -- Connect to database
+postgres=# \q              -- Quit</code><button class="copy-btn" data-copy="psql -U postgres">COPY</button></pre>
+    </section>
+
+    <section id="sql-server" class="card">
+      <h2>Microsoft SQL Server</h2>
+      
+      <h3>Windows</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        Download SQL Server Express (free):
+      </div>
+      <pre><code>https://www.microsoft.com/en-us/sql-server/sql-server-downloads</code><button class="copy-btn" data-copy="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">COPY</button></pre>
+      
+      <div class="step">
+        <span class="step-number">2</span>
+        Download SQL Server Management Studio (SSMS)
+      </div>
+      
+      <div class="step">
+        <span class="step-number">3</span>
+        Run both installers
+      </div>
+
+      <h3>macOS/Linux</h3>
+      <pre><code># Run SQL Server in Docker
+docker pull mcr.microsoft.com/mssql/server:2022-latest
+
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Password" \
+  -p 1433:1433 --name sql1 \
+  -d mcr.microsoft.com/mssql/server:2022-latest</code><button class="copy-btn" data-copy="docker pull mcr.microsoft.com/mssql/server:2022-latest">COPY</button></pre>
+    </section>
+
+    <section id="clients" class="card accent">
+      <h2>SQL Client Tools</h2>
+      <p>GUI tools for managing databases and writing SQL queries:</p>
+      
+      <div class="grid-2">
+        <div class="info-box">
+          <h3>DBeaver (Universal)</h3>
+          <p>Free, cross-platform, supports all databases</p>
+          <a href="https://dbeaver.io/" target="_blank">https://dbeaver.io/</a>
+        </div>
+        
+        <div class="info-box">
+          <h3>MySQL Workbench</h3>
+          <p>Official MySQL GUI tool</p>
+          <a href="https://dev.mysql.com/downloads/workbench/" target="_blank">MySQL Workbench</a>
+        </div>
+        
+        <div class="info-box">
+          <h3>pgAdmin</h3>
+          <p>PostgreSQL administration tool</p>
+          <a href="https://www.pgadmin.org/" target="_blank">https://www.pgadmin.org/</a>
+        </div>
+        
+        <div class="info-box">
+          <h3>DataGrip</h3>
+          <p>JetBrains IDE for databases (paid)</p>
+          <a href="https://www.jetbrains.com/datagrip/" target="_blank">DataGrip</a>
+        </div>
+      </div>
+
+      <h3>VS Code Extensions</h3>
+      <pre><code># Install these extensions in VS Code:
+- SQLTools (by Matheus Teixeira)
+- SQLTools MySQL/MariaDB
+- SQLTools PostgreSQL
+- Database Client (by Weijan Chen)</code></pre>
+    </section>
+
+    <section id="verify" class="card">
+      <h2>Verify Installation</h2>
+      
+      <h3>SQLite</h3>
+      <pre><code>sqlite3 --version
+# Expected: 3.x.x</code><button class="copy-btn" data-copy="sqlite3 --version">COPY</button></pre>
+
+      <h3>MySQL</h3>
+      <pre><code>mysql --version
+# Expected: mysql Ver 8.x.x
+
+# Test connection
+mysql -u root -p -e "SELECT VERSION();"</code><button class="copy-btn" data-copy="mysql --version">COPY</button></pre>
+
+      <h3>PostgreSQL</h3>
+      <pre><code>psql --version
+# Expected: psql (PostgreSQL) 15.x
+
+# Test connection
+psql -U postgres -c "SELECT version();"</code><button class="copy-btn" data-copy="psql --version">COPY</button></pre>
+
+      <div class="info-box success">
+        <strong>Success!</strong> If you can connect and run queries, your installation is complete.
+      </div>
+    </section>
+
+    <section id="practice" class="card">
+      <h2>Practice SQL</h2>
+      
+      <h3>Online SQL Playgrounds (No Installation)</h3>
+      <ul>
+        <li><a href="https://sqliteonline.com/" target="_blank">SQLite Online</a></li>
+        <li><a href="https://www.db-fiddle.com/" target="_blank">DB Fiddle</a> (MySQL, PostgreSQL, SQLite)</li>
+        <li><a href="https://www.sqltutorial.org/sql-try-it/" target="_blank">SQL Try It</a></li>
+        <li><a href="https://www.programiz.com/sql/online-compiler/" target="_blank">Programiz SQL Online</a></li>
+      </ul>
+
+      <h3>Sample Databases</h3>
+      <pre><code># Northwind Database (Microsoft)
+# Chinook Database (Music Store)
+# Sakila Database (MySQL Sample)
+# AdventureWorks (Microsoft)</code></pre>
+
+      <div class="info-box">
+        <strong>Practice Questions:</strong> <a href="https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/SQL/questions" target="_blank">SQL Practice Questions on GitHub</a>
+      </div>
+    </section>
+
+    <section id="next" class="card accent">
+      <h2>Next Steps</h2>
+      <ul>
+        <li><strong>Learn SQL Basics:</strong> SELECT, WHERE, ORDER BY, GROUP BY</li>
+        <li><strong>Create Tables:</strong> Practice CREATE TABLE and data types</li>
+        <li><strong>Insert Data:</strong> Use INSERT, UPDATE, DELETE statements</li>
+        <li><strong>Join Tables:</strong> Master INNER JOIN, LEFT JOIN, etc.</li>
+        <li><strong>Practice Queries:</strong> Solve SQL problems on LeetCode or HackerRank</li>
+        <li><strong>Learn Advanced:</strong> Subqueries, indexes, transactions, stored procedures</li>
+        <li><strong>Install a GUI Client:</strong> DBeaver or MySQL Workbench for easier management</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere | <a href="../../../index.html">Back to Home</a> | <a href="../languages.html">All Languages</a></p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback">Copied!</div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          const feedback = document.querySelector('.copy-feedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+  </script>
+  <script src="../../../components/breadcrumb.js"></script>
+</body>
+</html>

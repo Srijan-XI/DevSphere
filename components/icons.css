@@ -1,0 +1,147 @@
+/* Technology Icon Styles */
+
+.tech-icon {
+	display: inline-block;
+	line-height: 1;
+	transition: transform 0.3s ease;
+}
+
+.tech-icon-small {
+	font-size: 1.5rem;
+}
+
+.tech-icon-medium {
+	font-size: 2rem;
+}
+
+.tech-icon-large {
+	font-size: 3rem;
+}
+
+.tech-icon:hover {
+	transform: scale(1.2) rotate(5deg);
+}
+
+/* Icon with Label */
+.tech-icon-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	border-radius: 0.5rem;
+	transition: all 0.3s ease;
+}
+
+.tech-icon-label:hover {
+	background: rgba(139, 92, 246, 0.1);
+	border-color: var(--accent-primary);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
+
+.tech-icon-label .tech-icon {
+	font-size: 1.5rem;
+}
+
+.tech-icon-label .tech-name {
+	color: var(--text-primary);
+	font-weight: 600;
+	font-size: 0.875rem;
+}
+
+/* Icon Grid */
+.tech-icon-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	gap: 1rem;
+	margin: 1.5rem 0;
+}
+
+.tech-icon-grid .tech-icon-label {
+	justify-content: center;
+	flex-direction: column;
+	padding: 1rem;
+	text-align: center;
+}
+
+.tech-icon-grid .tech-icon {
+	font-size: 2.5rem;
+	margin-bottom: 0.5rem;
+}
+
+/* Icon Badge */
+.tech-icon-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.25rem 0.75rem;
+	background: var(--bg-tertiary);
+	border: 1px solid var(--border-color);
+	border-radius: 1rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+	transition: all 0.2s ease;
+}
+
+.tech-icon-badge:hover {
+	border-color: var(--accent-primary);
+	color: var(--accent-primary);
+}
+
+.tech-icon-badge .tech-icon {
+	font-size: 1rem;
+}
+
+/* Animated Icon */
+@keyframes iconBounce {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+}
+
+.tech-icon.animated {
+	animation: iconBounce 2s ease-in-out infinite;
+}
+
+/* Icon Colors by Category */
+.tech-icon.language {
+	color: #3B82F6;
+}
+
+.tech-icon.framework {
+	color: #8B5CF6;
+}
+
+.tech-icon.database {
+	color: #10B981;
+}
+
+.tech-icon.devops {
+	color: #F59E0B;
+}
+
+.tech-icon.testing {
+	color: #EC4899;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.tech-icon-grid {
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+		gap: 0.75rem;
+	}
+	
+	.tech-icon-large {
+		font-size: 2rem;
+	}
+	
+	.tech-icon-medium {
+		font-size: 1.5rem;
+	}
+}

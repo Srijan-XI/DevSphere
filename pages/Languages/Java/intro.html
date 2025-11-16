@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    .examples { margin-top:1.2rem; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; }
+    .collapsible { border:1px solid #30363d; border-radius:.65rem; overflow:hidden; margin:1.5rem 0; }
+    .collapsible summary { cursor:pointer; padding:.85rem 1rem; background:#161b22; font-weight:600; color:#e1e4e8; list-style:none; }
+    .collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { padding:1rem 1.15rem 1.3rem; background:#0d1117; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>☕ Java Introduction</h1>
+      <p class="subtitle">Write once, run anywhere – master enterprise-grade development with Java.</p>
+      <div class="badge-row">
+        <span class="badge">OOP</span>
+        <span class="badge">CROSS-PLATFORM</span>
+        <span class="badge">JVM</span>
+        <span class="badge">ENTERPRISE</span>
+        <span class="badge">SCALABLE</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is Java?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Platform Independence:</strong> Java bytecode runs on any device with a JVM – desktop, mobile, cloud, or embedded systems.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is Java?</h2>
+      <p><strong>Java</strong> is a class-based, object-oriented programming language designed for portability and reliability. Created by Sun Microsystems (now Oracle) in 1995, Java powers billions of devices worldwide – from Android apps to enterprise backends, big data platforms to microservices.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Object-Oriented:</strong> Everything is an object with classes, inheritance, and polymorphism.</li>
+        <li><strong>Platform Independent:</strong> Compiled to bytecode, runs on any JVM.</li>
+        <li><strong>Automatic Memory Management:</strong> Garbage collection handles cleanup.</li>
+        <li><strong>Strongly Typed:</strong> Type safety enforced at compile time.</li>
+        <li><strong>Rich Standard Library:</strong> Collections, networking, I/O, concurrency built-in.</li>
+        <li><strong>Multithreading:</strong> Native support for concurrent programming.</li>
+      </ul>
+      <div class="info-box warning"><strong>Note:</strong> Java requires JDK (development) or JRE (runtime) installation. Modern versions include both in a single package.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use Java?</h2>
+      <p>Java dominates enterprise software, Android development, cloud services, and big data ecosystems. Its maturity, performance, and extensive tooling make it ideal for mission-critical applications.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Enterprise Apps</span>
+        <span class="topic">Android Development</span>
+        <span class="topic">Web Services</span>
+        <span class="topic">Microservices</span>
+        <span class="topic">Big Data (Hadoop)</span>
+        <span class="topic">Cloud Platforms</span>
+        <span class="topic">Scientific Computing</span>
+        <span class="topic">Financial Systems</span>
+        <span class="topic">E-commerce</span>
+        <span class="topic">IoT Backends</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Portability:</strong> Write once, deploy anywhere with JVM.</li>
+        <li><strong>Performance:</strong> JIT compilation optimizes runtime execution.</li>
+        <li><strong>Ecosystem:</strong> Maven, Gradle, Spring, Hibernate, vast library ecosystem.</li>
+        <li><strong>Community:</strong> Decades of expertise, extensive documentation.</li>
+        <li><strong>Job Market:</strong> High demand in enterprise and Android sectors.</li>
+        <li><strong>Security:</strong> Built-in security manager and bytecode verification.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Hello World</h3>
+      <pre><code>public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, DevSphere!");
+    }
+}</code><button class="copy-btn" data-copy="public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, DevSphere!\");\n    }\n}">COPY</button></pre>
+      
+      <h3>Classes & Objects</h3>
+      <pre><code>public class Person {
+    private String name;
+    private int age;
+    
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public void introduce() {
+        System.out.println("Hi, I'm " + name + ", " + age + " years old.");
+    }
+}
+
+// Usage
+Person p = new Person("Alice", 30);
+p.introduce();</code><button class="copy-btn" data-copy="public class Person {\n    private String name;\n    private int age;\n    \n    public Person(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n    \n    public void introduce() {\n        System.out.println(\"Hi, I'm \" + name + \", \" + age + \" years old.\");\n    }\n}\n\n// Usage\nPerson p = new Person(\"Alice\", 30);\np.introduce();">COPY</button></pre>
+
+      <h3>Collections Framework</h3>
+      <pre><code>import java.util.*;
+
+List&lt;String&gt; languages = new ArrayList&lt;&gt;();
+languages.add("Java");
+languages.add("Python");
+languages.add("Go");
+
+for (String lang : languages) {
+    System.out.println(lang);
+}
+
+// Map example
+Map&lt;String, Integer&gt; scores = new HashMap&lt;&gt;();
+scores.put("Alice", 95);
+scores.put("Bob", 87);
+System.out.println("Alice's score: " + scores.get("Alice"));</code><button class="copy-btn" data-copy="import java.util.*;\n\nList<String> languages = new ArrayList<>();\nlanguages.add(\"Java\");\nlanguages.add(\"Python\");\nlanguages.add(\"Go\");\n\nfor (String lang : languages) {\n    System.out.println(lang);\n}\n\n// Map example\nMap<String, Integer> scores = new HashMap<>();\nscores.put(\"Alice\", 95);\nscores.put(\"Bob\", 87);\nSystem.out.println(\"Alice's score: \" + scores.get(\"Alice\"));">COPY</button></pre>
+
+      <h3>Exception Handling</h3>
+      <pre><code>try {
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.err.println("Cannot divide by zero!");
+} finally {
+    System.out.println("Cleanup always runs");
+}</code><button class="copy-btn" data-copy="try {\n    int result = 10 / 0;\n} catch (ArithmeticException e) {\n    System.err.println(\"Cannot divide by zero!\");\n} finally {\n    System.out.println(\"Cleanup always runs\");\n}">COPY</button></pre>
+    </section>
+
+    <section id="examples" class="card">
+      <h2>Mini Examples</h2>
+      <div class="examples">
+        <h3>File I/O</h3>
+        <pre><code>import java.nio.file.*;
+import java.io.IOException;
+
+try {
+    String content = Files.readString(Path.of("data.txt"));
+    System.out.println(content);
+    
+    Files.writeString(Path.of("output.txt"), "Hello World");
+} catch (IOException e) {
+    e.printStackTrace();
+}</code><button class="copy-btn" data-copy="import java.nio.file.*;\nimport java.io.IOException;\n\ntry {\n    String content = Files.readString(Path.of(\"data.txt\"));\n    System.out.println(content);\n    \n    Files.writeString(Path.of(\"output.txt\"), \"Hello World\");\n} catch (IOException e) {\n    e.printStackTrace();\n}">COPY</button></pre>
+        
+        <h3>Streams API (Java 8+)</h3>
+        <pre><code>import java.util.stream.*;
+
+List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+int sum = numbers.stream()
+    .filter(n -> n % 2 == 0)
+    .mapToInt(Integer::intValue)
+    .sum();
+
+System.out.println("Sum of evens: " + sum);</code><button class="copy-btn" data-copy="import java.util.stream.*;\n\nList<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);\n\nint sum = numbers.stream()\n    .filter(n -> n % 2 == 0)\n    .mapToInt(Integer::intValue)\n    .sum();\n\nSystem.out.println(\"Sum of evens: \" + sum);">COPY</button></pre>
+
+        <h3>Multithreading</h3>
+        <pre><code>class Worker extends Thread {
+    public void run() {
+        System.out.println("Worker thread running");
+    }
+}
+
+// Usage
+Worker w = new Worker();
+w.start();
+w.join(); // Wait for completion</code><button class="copy-btn" data-copy="class Worker extends Thread {\n    public void run() {\n        System.out.println(\"Worker thread running\");\n    }\n}\n\n// Usage\nWorker w = new Worker();\nw.start();\nw.join(); // Wait for completion">COPY</button></pre>
+      </div>
+
+      <details class="collapsible">
+        <summary>Modern Java Features (Java 8-21)</summary>
+        <div class="collapsible-content">
+          <p><strong>Lambdas & Functional Interfaces (Java 8):</strong></p>
+          <pre><code>List&lt;String&gt; names = Arrays.asList("Alice", "Bob", "Charlie");
+names.forEach(name -> System.out.println(name));</code><button class="copy-btn" data-copy="List<String> names = Arrays.asList(\"Alice\", \"Bob\", \"Charlie\");\nnames.forEach(name -> System.out.println(name));">COPY</button></pre>
+          <p><strong>Records (Java 14+):</strong></p>
+          <pre><code>public record Point(int x, int y) {}
+Point p = new Point(10, 20);</code><button class="copy-btn" data-copy="public record Point(int x, int y) {}\nPoint p = new Point(10, 20);">COPY</button></pre>
+          <p><strong>Pattern Matching (Java 16+):</strong></p>
+          <pre><code>if (obj instanceof String s) {
+    System.out.println(s.toUpperCase());
+}</code><button class="copy-btn" data-copy="if (obj instanceof String s) {\n    System.out.println(s.toUpperCase());\n}">COPY</button></pre>
+          <p><strong>Text Blocks (Java 15+):</strong></p>
+          <pre><code>String json = """
+    {
+        "name": "DevSphere",
+        "type": "Education"
+    }
+    """;</code><button class="copy-btn" data-copy="String json = \"\"\"\n    {\n        \"name\": \"DevSphere\",\n        \"type\": \"Education\"\n    }\n    \"\"\";">COPY</button></pre>
+        </div>
+      </details>
+    </section>
+
+    <section id="ecosystem" class="card">
+      <h2>Java Ecosystem</h2>
+      <h3>Build Tools</h3>
+      <ul>
+        <li><strong>Maven:</strong> XML-based dependency management and build lifecycle.</li>
+        <li><strong>Gradle:</strong> Groovy/Kotlin DSL, faster builds, better flexibility.</li>
+        <li><strong>Ant:</strong> Legacy XML build tool.</li>
+      </ul>
+      <h3>Frameworks</h3>
+      <ul>
+        <li><strong>Spring Boot:</strong> Microservices and web applications.</li>
+        <li><strong>Hibernate:</strong> ORM (Object-Relational Mapping).</li>
+        <li><strong>Apache Struts:</strong> MVC framework.</li>
+        <li><strong>Quarkus:</strong> Cloud-native, Kubernetes-optimized Java.</li>
+        <li><strong>Micronaut:</strong> Lightweight microservices framework.</li>
+      </ul>
+      <h3>Testing</h3>
+      <ul>
+        <li><strong>JUnit:</strong> Unit testing standard.</li>
+        <li><strong>Mockito:</strong> Mocking framework.</li>
+        <li><strong>TestNG:</strong> Alternative testing framework.</li>
+      </ul>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <p>Move on to the <a href="install-guide.html">Java Installation Guide</a> to set up JDK, configure your IDE, and start building Java applications. Then explore:</p>
+      <ul>
+        <li>Design patterns: Singleton, Factory, Observer, Strategy</li>
+        <li>Concurrency utilities: ExecutorService, CompletableFuture</li>
+        <li>Spring Framework for enterprise applications</li>
+        <li>JDBC and JPA for database integration</li>
+        <li>RESTful web services with Spring Boot</li>
+        <li>Android development with Jetpack Compose</li>
+      </ul>
+      <div class="info-box"><strong>Pro Tip:</strong> Follow Java coding conventions (camelCase, meaningful names) and leverage IDE refactoring tools.</div>
+    </section>
+
+    <footer>
+      Java Intro • Internal CSS/JS • Dark Theme • Updated Nov 15 2025
+    </footer>
+  </div>
+
+  <div id="copyFeedback" class="copy-feedback">Copied!</div>
+  <script>
+    // Copy buttons
+    const feedback = document.getElementById('copyFeedback');
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 1400);
+        });
+      });
+    });
+    // Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Notes & PDF Library</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: Inter, system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0e14 0%, #1a1f2e 50%, #0f1419 100%);
+            color: #e1e4e8;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        header {
+            background: #161b22;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-top: 4px solid #f59e0b;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #30363d;
+        }
+        
+        h1 { font-size: 2.5rem; color: #e1e4e8; margin-bottom: 0.5rem; }
+        header p { font-size: 1.125rem; color: #8b92a0; margin: 0.5rem 0; }
+        .source-note { color: #f59e0b; font-weight: 600; font-size: 0.875rem; }
+        
+        section { margin-bottom: 3rem; }
+        h2 { font-size: 1.875rem; color: #e1e4e8; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid #8b5cf6; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .note-card {
+            display: block;
+            background: #161b22;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid #30363d;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .note-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px rgba(139, 92, 246, 0.3);
+            border-color: #8b5cf6;
+        }
+        
+        .note-card h3 {
+            font-size: 1.25rem;
+            color: #e1e4e8;
+            margin-bottom: 1rem;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background: #f59e0b;
+            color: white;
+            text-align: center;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .download-btn:hover { background: #d97706; }
+        
+        .help-section {
+            background: #8b5cf6;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin: 3rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .help-section h3 { font-size: 1.5rem; color: white; margin-bottom: 0.5rem; }
+        .help-section p { color: rgba(255,255,255,0.9); font-size: 0.875rem; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #8b5cf6;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            border: none;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <nav style="background: #161b22; border-bottom: 1px solid #30363d; padding: 1rem; margin-bottom: 2rem; border-radius: 0.5rem; max-width: 1400px; margin-left: auto; margin-right: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="../../index.html" style="color: #e1e4e8; text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; background: #0d1117; border-radius: 0.375rem; border: 1px solid #30363d; transition: all 0.2s;" onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='#30363d'">← Home</a>
+                <a href="Resources.html" style="color: #e1e4e8; text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; background: #0d1117; border-radius: 0.375rem; border: 1px solid #30363d; transition: all 0.2s;" onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='#30363d'">Resources</a>
+                <a href="projects.html" style="color: #e1e4e8; text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; background: #0d1117; border-radius: 0.375rem; border: 1px solid #30363d; transition: all 0.2s;" onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='#30363d'">Projects</a>
+                <a href="tools.html" style="color: #e1e4e8; text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; background: #0d1117; border-radius: 0.375rem; border: 1px solid #30363d; transition: all 0.2s;" onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='#30363d'">Tools</a>
+            </div>
+            <div style="color: #8b92a0; font-size: 0.875rem;">DevSphere Notes</div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-12 bg-white p-6 rounded-xl shadow-lg border-t-4 border-accent-orange">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-dark-gray mb-2">
+                📖 PDF Notes & Book Library
+            </h1>
+            <p class="text-lg text-gray-600">
+                A collection of free programming PDF notes and resources for quick reference.
+            </p>
+            <p class="mt-4 text-sm text-accent-orange font-semibold">
+                (All notes are sourced from goalkicker.com, opening in a new tab for download.)
+            </p>
+        </header>
+
+        <!-- Dynamic Notes Content -->
+        <div id="notes-container" class="space-y-12">
+            <!-- Categories and note cards will be injected here -->
+        </div>
+
+        <!-- Contribution Footer -->
+        <footer class="mt-12 p-6 bg-primary-blue text-white rounded-xl shadow-lg text-center">
+            <h3 class="text-xl font-bold mb-2">Want to add more resources?</h3>
+            <p class="text-sm">
+                If you know of a great free resource or note PDF we should include, please contribute by submitting a pull request to this project!
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const rawNoteData = [
+            { name: "Bash", link: "https://goalkicker.com/BashBook/" },
+            { name: "C", link: "https://goalkicker.com/CBook/" },
+            { name: "C++", link: "https://goalkicker.com/CPlusPlusBook/" },
+            { name: "Java", link: "https://goalkicker.com/JavaBook/" },
+            { name: "JavaScript", link: "https://goalkicker.com/JavaScriptBook/" },
+            { name: "Python", link: "https://goalkicker.com/PythonBook/" },
+            { name: "Typescript", link: "https://goalkicker.com/TypeScriptBook/" },
+            { name: "PostgreSQL", link: "https://goalkicker.com/PostgreSQLBook/" },
+            { name: "SQL", link: "https://goalkicker.com/SQLBook/" },
+            { name: "HTML", link: "https://goalkicker.com/HTMLBook/" },
+            { name: "CSS", link: "https://goalkicker.com/CSSBook/" },
+            { name: "R", link: "https://goalkicker.com/RBook/" },
+            { name: "PHP", link: "https://goalkicker.com/PHPBook/" },
+            { name: "MySQL", link: "https://goalkicker.com/MySQLBook/" },
+            { name: "Node JS", link: "https://goalkicker.com/NodeJSBook/" },
+            { name: "MongoDB", link: "https://goalkicker.com/MongoDBBook/" },
+            { name: "Git", link: "https://goalkicker.com/GitBook/" },
+            { name: "Spring Boot", link: "https://goalkicker.com/SpringFrameworkBook/" }
+        ];
+
+        // Categorize the notes for better organization
+        function categorizeNotes(notes) {
+            const categories = {
+                'Core Programming Languages': ['Python', 'Java', 'C', 'C++', 'JavaScript', 'Typescript', 'PHP', 'R'],
+                'Web & Frontend Technologies': ['HTML', 'CSS'],
+                'Database & Data Management': ['SQL', 'PostgreSQL', 'MySQL', 'MongoDB'],
+                'Backend, Frameworks & Tools': ['Node JS', 'Spring Boot', 'Git', 'Bash'],
+            };
+            
+            const categorized = {};
+            
+            // Initialize categorized object with empty arrays
+            Object.keys(categories).forEach(cat => {
+                categorized[cat] = [];
+            });
+
+            notes.forEach(note => {
+                let found = false;
+                for (const categoryName in categories) {
+                    if (categories[categoryName].includes(note.name.replace('My SQL', 'MySQL').replace('Node JS', 'Node JS'))) {
+                        categorized[categoryName].push(note);
+                        found = true;
+                        break;
+                    }
+                }
+                // Fallback for any uncategorized items
+                if (!found) {
+                    if (!categorized['Other']) categorized['Other'] = [];
+                    categorized['Other'].push(note);
+                }
+            });
+            return categorized;
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notes-container');
+            const categorized = categorizeNotes(rawNoteData);
+            
+            // Loop through categories and render sections
+            for (const category in categorized) {
+                if (categorized[category].length === 0) continue;
+
+                // Category Section Header
+                const section = document.createElement('section');
+                section.className = 'mb-10';
+                
+                const header = document.createElement('h2');
+                header.className = 'text-3xl font-bold text-dark-gray mb-6 border-b-2 border-primary-blue pb-2';
+                header.textContent = category;
+                section.appendChild(header);
+
+                // Grid for Note Cards
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6';
+
+                categorized[category].forEach(note => {
+                    const cardLink = document.createElement('a');
+                    cardLink.href = note.link;
+                    cardLink.target = '_blank';
+                    cardLink.rel = 'noopener noreferrer';
+                    cardLink.className = 'note-card block bg-white p-5 rounded-xl shadow-md hover:shadow-lg border border-gray-100 flex flex-col justify-between';
+
+                    const name = document.createElement('h3');
+                    name.className = 'text-xl font-bold text-dark-gray mb-3';
+                    name.textContent = note.name;
+                    
+                    const button = document.createElement('div');
+                    button.className = 'w-full mt-3 text-center px-4 py-2 bg-accent-orange text-white font-semibold rounded-lg text-sm hover:bg-orange-600 transition duration-150';
+                    button.textContent = 'Download PDF';
+
+                    cardLink.appendChild(name);
+                    cardLink.appendChild(button);
+                    grid.appendChild(cardLink);
+                });
+
+                section.appendChild(grid);
+                container.appendChild(section);
+            }
+        }
+
+        window.onload = renderNotes;
+    </script>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+        <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <!-- Floating Home Button -->
+    <a href="../../index.html" style="position: fixed; bottom: 6rem; right: 2rem; background: #f59e0b; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 600; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); transition: all 0.3s ease; z-index: 999;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(245, 158, 11, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(245, 158, 11, 0.4)'">
+        🏠 Home
+    </a>
+
+    <script>
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

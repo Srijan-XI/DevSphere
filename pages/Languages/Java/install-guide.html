@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java Installation Guide | DevSphere</title>
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Inter, system-ui, -apple-system, sans-serif; background:linear-gradient(135deg,#0a0e14,#1a1f2e 50%,#0f1419); color:#e1e4e8; line-height:1.65; }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .wrapper { max-width:1180px; margin:0 auto; padding:2.2rem 1.2rem 4rem; }
+    header.hero { background:#161b22; border:1px solid #30363d; border-top:4px solid #f59e0b; padding:2.1rem 2rem 2.35rem; border-radius:.85rem; margin-bottom:2.3rem; box-shadow:0 4px 14px rgba(0,0,0,.45); }
+    h1 { font-size:2.6rem; font-weight:800; margin-bottom:.6rem; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.05rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.5rem 0 .6rem; color:#f59e0b; }
+    h4 { font-size:1.05rem; font-weight:600; margin:1.2rem 0 .5rem; color:#8b5cf6; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin:.7rem 0 1rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    .grid { display:grid; gap:1.5rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid.two { grid-template-columns:repeat(2,1fr); } }
+    .panel { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.55rem 1.5rem 1.75rem; position:relative; transition:.25s; }
+    .panel:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .panel.accent { border-top:4px solid #8b5cf6; }
+    pre { background:#0d1117; border:1px solid #30363d; padding:1rem 1.1rem; border-radius:.6rem; overflow:auto; font-size:.85rem; position:relative; }
+    code, pre code { font-family:"JetBrains Mono","Cascadia Code", Menlo, monospace; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .steps { counter-reset: step; }
+    .steps li { position:relative; padding-left:2.1rem; }
+    .steps li::before { counter-increment: step; content:counter(step); position:absolute; left:0; top:.15rem; background:#8b5cf6; color:#fff; width:1.35rem; height:1.35rem; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:600; border-radius:.4rem; }
+    .info { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:.9rem 1rem 1rem; border-radius:.6rem; margin:1.1rem 0; font-size:.85rem; }
+    .info.warn { border-left-color:#f59e0b; }
+    .info.success { border-left-color:#10b981; }
+    .inline-badges { display:flex; flex-wrap:wrap; gap:.45rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .6rem; font-size:.65rem; letter-spacing:.05em; font-weight:600; border-radius:.45rem; }
+    details.collapsible { border:1px solid #30363d; border-radius:.7rem; overflow:hidden; margin:1.5rem 0; }
+    details.collapsible summary { cursor:pointer; list-style:none; padding:.85rem 1rem; background:#161b22; font-weight:600; }
+    details.collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { background:#0d1117; padding:1rem 1.15rem 1.3rem; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    nav.quick { display:flex; flex-wrap:wrap; gap:.55rem; margin:1.4rem 0 2rem; }
+    nav.quick a { background:#0d1117; border:1px solid #30363d; color:#8b92a0; font-size:.7rem; padding:.45rem .7rem; border-radius:.5rem; transition:.2s; }
+    nav.quick a:hover { color:#e1e4e8; border-color:#8b5cf6; }
+    footer { margin-top:3.6rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    table { width:100%; border-collapse:collapse; margin:1.2rem 0; }
+    th, td { padding:.65rem .8rem; border:1px solid #30363d; text-align:left; }
+    th { background:#161b22; color:#e1e4e8; font-weight:600; }
+    td { background:#0d1117; color:#8b92a0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="hero">
+      <h1>☕ Java Installation Guide</h1>
+      <p class="subtitle">Install JDK, configure environment variables, and set up your Java development environment.</p>
+      <div class="inline-badges">
+        <span class="badge">JDK 21</span>
+        <span class="badge">OPENJDK</span>
+        <span class="badge">ORACLE JDK</span>
+        <span class="badge">MAVEN</span>
+        <span class="badge">GRADLE</span>
+      </div>
+      <nav class="quick">
+        <a href="#windows">Windows</a>
+        <a href="#macos">macOS</a>
+        <a href="#linux">Linux</a>
+        <a href="#verify">Verify</a>
+        <a href="#build-tools">Build Tools</a>
+        <a href="#ides">IDEs</a>
+        <a href="#best-practices">Best Practices</a>
+      </nav>
+      <div class="info success"><strong>Recommendation:</strong> Use OpenJDK for most projects. Oracle JDK requires a commercial license for production use.</div>
+    </header>
+
+    <section id="windows" class="panel accent">
+      <h2>Windows Installation</h2>
+      
+      <h3>Option A: OpenJDK (Recommended)</h3>
+      <ol class="steps">
+        <li>Download <a href="https://adoptium.net/" target="_blank" rel="noopener">Eclipse Temurin (Adoptium)</a> – free, TCK-certified OpenJDK.</li>
+        <li>Run installer (.msi) and check "Add to PATH" and "Set JAVA_HOME".</li>
+        <li>Choose LTS version (Java 21 or 17).</li>
+      </ol>
+      <p><strong>Manual PATH Setup (if needed):</strong></p>
+      <pre><code># PowerShell (Admin)
+[System.Environment]::SetEnvironmentVariable("JAVA_HOME", "C:\Program Files\Eclipse Adoptium\jdk-21.0.1.12-hotspot", "Machine")
+[System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";%JAVA_HOME%\bin", "Machine")</code><button class="copy-btn" data-copy="[System.Environment]::SetEnvironmentVariable(\"JAVA_HOME\", \"C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.1.12-hotspot\", \"Machine\")\n[System.Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%JAVA_HOME%\\bin\", \"Machine\")">COPY</button></pre>
+
+      <h3>Option B: Oracle JDK</h3>
+      <ol class="steps">
+        <li>Download from <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" rel="noopener">Oracle JDK Downloads</a>.</li>
+        <li>Run installer and follow prompts.</li>
+        <li>Accept license terms (commercial use restrictions apply).</li>
+      </ol>
+
+      <h3>Option C: SDKMAN (WSL/Git Bash)</h3>
+      <pre><code># Install SDKMAN
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Install Java
+sdk install java 21-tem</code><button class="copy-btn" data-copy="curl -s \"https://get.sdkman.io\" | bash\nsource \"$HOME/.sdkman/bin/sdkman-init.sh\"\nsdk install java 21-tem">COPY</button></pre>
+      <div class="info warn"><strong>Note:</strong> Restart terminal after PATH changes to apply new settings.</div>
+    </section>
+
+    <section id="macos" class="panel">
+      <h2>macOS Installation</h2>
+      
+      <h3>Option A: Homebrew (Easiest)</h3>
+      <pre><code># Install Homebrew if missing
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install OpenJDK
+brew install openjdk@21
+
+# Symlink for system Java wrapper
+sudo ln -sfn $(brew --prefix)/opt/openjdk@21/libexec/openjdk.jdk \
+  /Library/Java/JavaVirtualMachines/openjdk-21.jdk</code><button class="copy-btn" data-copy="brew install openjdk@21\nsudo ln -sfn $(brew --prefix)/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk">COPY</button></pre>
+
+      <h3>Option B: SDKMAN</h3>
+      <pre><code>curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 21-tem</code><button class="copy-btn" data-copy="curl -s \"https://get.sdkman.io\" | bash\nsource \"$HOME/.sdkman/bin/sdkman-init.sh\"\nsdk install java 21-tem">COPY</button></pre>
+
+      <h3>Set JAVA_HOME (Add to ~/.zshrc or ~/.bash_profile)</h3>
+      <pre><code>export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH="$JAVA_HOME/bin:$PATH"</code><button class="copy-btn" data-copy="export JAVA_HOME=$(/usr/libexec/java_home -v 21)\nexport PATH=\"$JAVA_HOME/bin:$PATH\"">COPY</button></pre>
+      <p>Reload shell: <code>source ~/.zshrc</code></p>
+    </section>
+
+    <section id="linux" class="panel">
+      <h2>Linux Installation</h2>
+      
+      <h3>Debian/Ubuntu</h3>
+      <pre><code>sudo apt update
+sudo apt install openjdk-21-jdk -y</code><button class="copy-btn" data-copy="sudo apt update\nsudo apt install openjdk-21-jdk -y">COPY</button></pre>
+
+      <h3>Fedora/RHEL</h3>
+      <pre><code>sudo dnf install java-21-openjdk-devel -y</code><button class="copy-btn" data-copy="sudo dnf install java-21-openjdk-devel -y">COPY</button></pre>
+
+      <h3>Arch Linux</h3>
+      <pre><code>sudo pacman -S jdk-openjdk</code><button class="copy-btn" data-copy="sudo pacman -S jdk-openjdk">COPY</button></pre>
+
+      <h3>SDKMAN (Universal)</h3>
+      <pre><code>curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 21-tem</code><button class="copy-btn" data-copy="curl -s \"https://get.sdkman.io\" | bash\nsource \"$HOME/.sdkman/bin/sdkman-init.sh\"\nsdk install java 21-tem">COPY</button></pre>
+
+      <h3>Set JAVA_HOME (Add to ~/.bashrc)</h3>
+      <pre><code>export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+export PATH="$JAVA_HOME/bin:$PATH"</code><button class="copy-btn" data-copy="export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64\nexport PATH=\"$JAVA_HOME/bin:$PATH\"">COPY</button></pre>
+      <p>Reload: <code>source ~/.bashrc</code></p>
+    </section>
+
+    <section id="verify" class="panel">
+      <h2>Verification</h2>
+      <pre><code>java -version
+javac -version
+echo $JAVA_HOME  # Linux/macOS
+echo %JAVA_HOME% # Windows CMD</code><button class="copy-btn" data-copy="java -version\njavac -version\necho $JAVA_HOME">COPY</button></pre>
+      
+      <h3>Test Compilation</h3>
+      <p>Create <code>Test.java</code>:</p>
+      <pre><code>public class Test {
+    public static void main(String[] args) {
+        System.out.println("Java installed successfully!");
+    }
+}</code><button class="copy-btn" data-copy="public class Test {\n    public static void main(String[] args) {\n        System.out.println(\"Java installed successfully!\");\n    }\n}">COPY</button></pre>
+      <p>Compile and run:</p>
+      <pre><code>javac Test.java
+java Test</code><button class="copy-btn" data-copy="javac Test.java\njava Test">COPY</button></pre>
+      <div class="info success"><strong>Expected Output:</strong> <code>Java installed successfully!</code></div>
+    </section>
+
+    <section id="build-tools" class="panel">
+      <h2>Build Tools</h2>
+      
+      <h3>Maven</h3>
+      <h4>Install:</h4>
+      <p><strong>Windows:</strong> Download from <a href="https://maven.apache.org/download.cgi" target="_blank" rel="noopener">maven.apache.org</a>, extract, add <code>bin</code> to PATH.</p>
+      <p><strong>macOS:</strong> <code>brew install maven</code></p>
+      <p><strong>Linux:</strong> <code>sudo apt install maven</code> (Debian/Ubuntu)</p>
+      
+      <h4>Verify:</h4>
+      <pre><code>mvn -version</code><button class="copy-btn" data-copy="mvn -version">COPY</button></pre>
+
+      <h4>Create Project:</h4>
+      <pre><code>mvn archetype:generate -DgroupId=com.example -DartifactId=myapp \
+  -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+cd myapp
+mvn package
+java -cp target/myapp-1.0-SNAPSHOT.jar com.example.App</code><button class="copy-btn" data-copy="mvn archetype:generate -DgroupId=com.example -DartifactId=myapp -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false\ncd myapp\nmvn package\njava -cp target/myapp-1.0-SNAPSHOT.jar com.example.App">COPY</button></pre>
+
+      <h3>Gradle</h3>
+      <h4>Install:</h4>
+      <p><strong>Windows:</strong> Download from <a href="https://gradle.org/releases/" target="_blank" rel="noopener">gradle.org</a>, extract, add to PATH.</p>
+      <p><strong>macOS:</strong> <code>brew install gradle</code></p>
+      <p><strong>Linux:</strong> <code>sdk install gradle</code> (via SDKMAN)</p>
+      
+      <h4>Verify:</h4>
+      <pre><code>gradle -version</code><button class="copy-btn" data-copy="gradle -version">COPY</button></pre>
+
+      <h4>Create Project:</h4>
+      <pre><code>gradle init --type java-application
+gradle build
+gradle run</code><button class="copy-btn" data-copy="gradle init --type java-application\ngradle build\ngradle run">COPY</button></pre>
+    </section>
+
+    <section id="ides" class="panel">
+      <h2>Recommended IDEs</h2>
+      <table>
+        <thead>
+          <tr><th>IDE</th><th>Platform</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>IntelliJ IDEA</td><td>All</td><td>Industry standard, excellent tooling</td></tr>
+          <tr><td>Eclipse</td><td>All</td><td>Free, mature, plugin ecosystem</td></tr>
+          <tr><td>VS Code</td><td>All</td><td>Install "Extension Pack for Java"</td></tr>
+          <tr><td>NetBeans</td><td>All</td><td>Official Apache project</td></tr>
+          <tr><td>Android Studio</td><td>All</td><td>Based on IntelliJ, for Android</td></tr>
+        </tbody>
+      </table>
+
+      <h3>IntelliJ IDEA Setup (Quick)</h3>
+      <ol class="steps">
+        <li>Download <a href="https://www.jetbrains.com/idea/download/" target="_blank" rel="noopener">IntelliJ IDEA Community</a> (free).</li>
+        <li>Install and launch.</li>
+        <li>Create New Project → Java → Configure JDK (auto-detected or browse).</li>
+        <li>Choose build system (Maven/Gradle) and dependencies.</li>
+      </ol>
+      <div class="info"><strong>Tip:</strong> IntelliJ auto-imports dependencies and provides intelligent code completion.</div>
+    </section>
+
+    <section id="best-practices" class="panel">
+      <h2>Best Practices</h2>
+      <ul>
+        <li><strong>Use LTS versions:</strong> Java 21, 17, 11 for stability.</li>
+        <li><strong>Manage versions:</strong> Use SDKMAN to switch between JDKs easily.</li>
+        <li><strong>Build tools:</strong> Prefer Maven or Gradle over manual classpath management.</li>
+        <li><strong>Code style:</strong> Follow Oracle's Java conventions or Google Java Style Guide.</li>
+        <li><strong>Testing:</strong> Write unit tests with JUnit 5, integrate with CI/CD.</li>
+        <li><strong>Dependencies:</strong> Use Maven Central or JCenter for libraries.</li>
+        <li><strong>Security:</strong> Keep JDK updated for security patches.</li>
+      </ul>
+
+      <details class="collapsible">
+        <summary>Environment Variables Explained</summary>
+        <div class="collapsible-content">
+          <p><strong>JAVA_HOME:</strong> Points to JDK installation root (e.g., <code>/usr/lib/jvm/java-21</code>).</p>
+          <p><strong>PATH:</strong> Includes <code>$JAVA_HOME/bin</code> to make <code>java</code>, <code>javac</code> accessible.</p>
+          <p><strong>CLASSPATH:</strong> (Optional) Specifies where to find user classes. Build tools handle this automatically.</p>
+          <p><strong>Verification Commands:</strong></p>
+          <pre><code># Unix/macOS
+echo $JAVA_HOME
+echo $PATH | grep java
+
+# Windows
+echo %JAVA_HOME%
+echo %PATH% | findstr java</code><button class="copy-btn" data-copy="echo $JAVA_HOME\necho $PATH | grep java">COPY</button></pre>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary>Managing Multiple Java Versions</summary>
+        <div class="collapsible-content">
+          <p><strong>SDKMAN:</strong></p>
+          <pre><code>sdk list java
+sdk install java 17-tem
+sdk use java 17-tem
+sdk default java 21-tem</code><button class="copy-btn" data-copy="sdk list java\nsdk install java 17-tem\nsdk use java 17-tem\nsdk default java 21-tem">COPY</button></pre>
+          <p><strong>macOS java_home:</strong></p>
+          <pre><code>/usr/libexec/java_home -V  # List installed JVMs
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)</code><button class="copy-btn" data-copy="/usr/libexec/java_home -V\nexport JAVA_HOME=$(/usr/libexec/java_home -v 17)">COPY</button></pre>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      Java Install Guide • Internal CSS/JS • Dark Theme • Updated Nov 15 2025
+    </footer>
+  </div>
+
+  <div id="copyFeedback" class="copy-feedback">Copied!</div>
+  <script>
+    // Copy buttons
+    const feedback = document.getElementById('copyFeedback');
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          feedback.classList.add('show');
+          setTimeout(()=>feedback.classList.remove('show'),1400);
+        });
+      });
+    });
+    // Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>🐍 Python Introduction</h1>
+      <p class="subtitle">A powerful, versatile programming language for beginners and experts alike.</p>
+      <div class="badge-row">
+        <span class="badge">EASY TO LEARN</span>
+        <span class="badge">VERSATILE</span>
+        <span class="badge">BATTERIES INCLUDED</span>
+        <span class="badge">DYNAMIC</span>
+        <span class="badge">CROSS-PLATFORM</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is Python?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Beginner Friendly:</strong> Python's clean, readable syntax makes it the perfect first language while being powerful enough for advanced applications.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is Python?</h2>
+      <p><strong>Python</strong> is a high-level, interpreted, dynamically-typed programming language created by Guido van Rossum and first released in 1991. Known for its emphasis on code readability and simplicity, Python has become one of the most popular programming languages worldwide.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Readable Syntax:</strong> Clean, English-like syntax with meaningful indentation.</li>
+        <li><strong>Interpreted:</strong> No compilation step; code runs directly.</li>
+        <li><strong>Dynamically Typed:</strong> Variables don't need explicit type declarations.</li>
+        <li><strong>Multi-Paradigm:</strong> Supports procedural, object-oriented, and functional programming.</li>
+        <li><strong>Extensive Standard Library:</strong> "Batteries included" philosophy with built-in modules.</li>
+        <li><strong>Cross-Platform:</strong> Runs on Windows, macOS, Linux, and more.</li>
+      </ul>
+      <div class="info-box warning"><strong>Note:</strong> Python 2 reached end-of-life in 2020. Always use Python 3.x for new projects.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use Python?</h2>
+      <p>Python's versatility makes it suitable for web development, data science, automation, AI/ML, scientific computing, and more. Its vast ecosystem and active community provide solutions for almost any programming challenge.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Web Development</span>
+        <span class="topic">Data Science</span>
+        <span class="topic">Machine Learning</span>
+        <span class="topic">Automation</span>
+        <span class="topic">Scientific Computing</span>
+        <span class="topic">Backend APIs</span>
+        <span class="topic">DevOps</span>
+        <span class="topic">Testing</span>
+        <span class="topic">Game Development</span>
+        <span class="topic">Desktop Apps</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Easy to Learn:</strong> Intuitive syntax perfect for beginners.</li>
+        <li><strong>Rapid Development:</strong> Write less code to accomplish more.</li>
+        <li><strong>Rich Ecosystem:</strong> 400,000+ packages on PyPI.</li>
+        <li><strong>Community Support:</strong> Massive, helpful community worldwide.</li>
+        <li><strong>Libraries:</strong> NumPy, Pandas, Django, Flask, TensorFlow, PyTorch, and more.</li>
+        <li><strong>Versatility:</strong> From scripts to enterprise applications.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Hello World</h3>
+      <pre><code>print("Hello, DevSphere!")</code><button class="copy-btn" data-copy='print("Hello, DevSphere!")'>COPY</button></pre>
+      
+      <h3>Variables & Data Types</h3>
+      <pre><code># Variables (no type declaration needed)
+name = "Python"
+version = 3.12
+is_awesome = True
+
+# Multiple assignment
+x, y, z = 10, 20, 30
+
+# Type checking
+print(type(name))      # &lt;class 'str'&gt;
+print(type(version))   # &lt;class 'float'&gt;
+print(type(is_awesome)) # &lt;class 'bool'&gt;
+
+# Type conversion
+age = "25"
+age_int = int(age)  # Convert string to integer</code><button class="copy-btn" data-copy='name = "Python"\nversion = 3.12\nis_awesome = True'>COPY</button></pre>
+
+      <h3>Strings</h3>
+      <pre><code># String operations
+message = "Hello, Python!"
+upper_msg = message.upper()
+lower_msg = message.lower()
+
+# String formatting
+name = "Alice"
+age = 30
+
+# f-strings (Python 3.6+)
+greeting = f"My name is {name} and I'm {age} years old"
+
+# format method
+greeting2 = "My name is {} and I'm {} years old".format(name, age)
+
+# String slicing
+text = "Python"
+print(text[0])      # P
+print(text[1:4])    # yth
+print(text[::-1])   # nohtyP (reversed)</code><button class="copy-btn" data-copy='name = "Alice"\ngreeting = f"My name is {name}"'>COPY</button></pre>
+
+      <h3>Lists, Tuples & Dictionaries</h3>
+      <pre><code># Lists (mutable)
+fruits = ["apple", "banana", "cherry"]
+fruits.append("orange")
+fruits[0] = "grape"
+print(fruits[1:3])  # ['banana', 'cherry']
+
+# List comprehension
+squares = [x**2 for x in range(10)]
+evens = [x for x in range(20) if x % 2 == 0]
+
+# Tuples (immutable)
+coordinates = (10, 20)
+x, y = coordinates  # Unpacking
+
+# Dictionaries (key-value pairs)
+user = {
+    "name": "Bob",
+    "age": 25,
+    "email": "bob@example.com"
+}
+print(user["name"])
+user["age"] = 26  # Update value
+user["city"] = "NYC"  # Add new key
+
+# Dictionary methods
+print(user.keys())
+print(user.values())
+print(user.get("phone", "Not provided"))  # Default value</code><button class="copy-btn" data-copy='fruits = ["apple", "banana"]\nfruits.append("cherry")\n\nuser = {"name": "Bob", "age": 25}'>COPY</button></pre>
+
+      <h3>Control Flow</h3>
+      <pre><code># If-elif-else
+age = 18
+
+if age &lt; 18:
+    print("Minor")
+elif age == 18:
+    print("Just became an adult!")
+else:
+    print("Adult")
+
+# For loops
+for fruit in ["apple", "banana", "cherry"]:
+    print(fruit)
+
+for i in range(5):  # 0 to 4
+    print(i)
+
+# While loops
+count = 0
+while count &lt; 5:
+    print(count)
+    count += 1
+
+# Break and continue
+for i in range(10):
+    if i == 3:
+        continue  # Skip 3
+    if i == 7:
+        break     # Stop at 7
+    print(i)</code><button class="copy-btn" data-copy='if age >= 18:\n    print("Adult")\nelse:\n    print("Minor")'>COPY</button></pre>
+
+      <h3>Functions</h3>
+      <pre><code># Basic function
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("Alice"))
+
+# Default parameters
+def power(base, exponent=2):
+    return base ** exponent
+
+print(power(3))      # 9 (3^2)
+print(power(3, 3))   # 27 (3^3)
+
+# Multiple return values
+def min_max(numbers):
+    return min(numbers), max(numbers)
+
+minimum, maximum = min_max([1, 5, 3, 9, 2])
+
+# *args and **kwargs
+def sum_all(*args):
+    return sum(args)
+
+def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print(sum_all(1, 2, 3, 4, 5))  # 15
+print_info(name="Bob", age=25, city="NYC")
+
+# Lambda functions (anonymous)
+square = lambda x: x ** 2
+print(square(5))  # 25
+
+# Higher-order functions
+numbers = [1, 2, 3, 4, 5]
+doubled = list(map(lambda x: x * 2, numbers))
+evens = list(filter(lambda x: x % 2 == 0, numbers))</code><button class="copy-btn" data-copy='def greet(name):\n    return f"Hello, {name}!"\n\nprint(greet("Alice"))'>COPY</button></pre>
+
+      <h3>Classes & Objects</h3>
+      <pre><code># Class definition
+class Person:
+    # Class variable
+    species = "Homo sapiens"
+    
+    # Constructor
+    def __init__(self, name, age):
+        self.name = name  # Instance variable
+        self.age = age
+    
+    # Instance method
+    def greet(self):
+        return f"Hi, I'm {self.name} and I'm {self.age} years old"
+    
+    # Class method
+    @classmethod
+    def from_birth_year(cls, name, birth_year):
+        age = 2025 - birth_year
+        return cls(name, age)
+    
+    # Static method
+    @staticmethod
+    def is_adult(age):
+        return age >= 18
+
+# Create instances
+person1 = Person("Alice", 30)
+person2 = Person.from_birth_year("Bob", 2000)
+
+print(person1.greet())
+print(Person.is_adult(person1.age))
+
+# Inheritance
+class Student(Person):
+    def __init__(self, name, age, student_id):
+        super().__init__(name, age)
+        self.student_id = student_id
+    
+    def study(self):
+        return f"{self.name} is studying"
+
+student = Student("Charlie", 20, "S12345")
+print(student.greet())   # Inherited method
+print(student.study())   # Own method</code><button class="copy-btn" data-copy='class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def greet(self):\n        return f"Hi, I\'m {self.name}"'>COPY</button></pre>
+
+      <h3>File Operations</h3>
+      <pre><code># Reading files
+with open('file.txt', 'r') as file:
+    content = file.read()
+    print(content)
+
+# Reading lines
+with open('file.txt', 'r') as file:
+    for line in file:
+        print(line.strip())
+
+# Writing files
+with open('output.txt', 'w') as file:
+    file.write("Hello, World!\n")
+    file.write("Python is awesome!")
+
+# Append mode
+with open('output.txt', 'a') as file:
+    file.write("\nNew line added")</code><button class="copy-btn" data-copy="with open('file.txt', 'r') as file:\n    content = file.read()">COPY</button></pre>
+
+      <h3>Exception Handling</h3>
+      <pre><code># Try-except
+try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+
+# Multiple exceptions
+try:
+    value = int("abc")
+except ValueError:
+    print("Invalid integer")
+except Exception as e:
+    print(f"Error: {e}")
+
+# Try-except-else-finally
+try:
+    file = open('data.txt', 'r')
+    data = file.read()
+except FileNotFoundError:
+    print("File not found")
+else:
+    print("File read successfully")
+finally:
+    print("Cleanup completed")
+
+# Raising exceptions
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Divisor cannot be zero")
+    return a / b</code><button class="copy-btn" data-copy='try:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print("Cannot divide by zero!")'>COPY</button></pre>
+
+      <h3>List Comprehensions & Generators</h3>
+      <pre><code># List comprehension
+squares = [x**2 for x in range(10)]
+evens = [x for x in range(20) if x % 2 == 0]
+matrix = [[i*j for j in range(3)] for i in range(3)]
+
+# Dictionary comprehension
+squares_dict = {x: x**2 for x in range(5)}
+
+# Set comprehension
+unique_lengths = {len(word) for word in ["hello", "world", "python"]}
+
+# Generator expression (memory efficient)
+squares_gen = (x**2 for x in range(1000000))
+
+# Generator function
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+for num in fibonacci(10):
+    print(num)</code><button class="copy-btn" data-copy='squares = [x**2 for x in range(10)]\nevens = [x for x in range(20) if x % 2 == 0]'>COPY</button></pre>
+    </section>
+
+    <section id="ecosystem" class="card">
+      <h2>Ecosystem & Popular Libraries</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Web Development</h3>
+          <ul>
+            <li><strong>Django:</strong> Full-featured web framework.</li>
+            <li><strong>Flask:</strong> Lightweight, flexible micro-framework.</li>
+            <li><strong>FastAPI:</strong> Modern, fast API framework.</li>
+            <li><strong>Streamlit:</strong> Data apps and dashboards.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Data Science & ML</h3>
+          <ul>
+            <li><strong>NumPy:</strong> Numerical computing.</li>
+            <li><strong>Pandas:</strong> Data manipulation and analysis.</li>
+            <li><strong>Matplotlib/Seaborn:</strong> Data visualization.</li>
+            <li><strong>Scikit-learn:</strong> Machine learning.</li>
+            <li><strong>TensorFlow/PyTorch:</strong> Deep learning.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <h3>Installing Packages with pip</h3>
+      <pre><code># Install package
+pip install requests
+
+# Install specific version
+pip install django==4.2
+
+# Install from requirements.txt
+pip install -r requirements.txt
+
+# List installed packages
+pip list
+
+# Show package info
+pip show numpy
+
+# Uninstall package
+pip uninstall flask</code><button class="copy-btn" data-copy="pip install requests">COPY</button></pre>
+
+      <h3>Virtual Environments</h3>
+      <pre><code># Create virtual environment
+python -m venv myenv
+
+# Activate (Windows)
+myenv\Scripts\activate
+
+# Activate (macOS/Linux)
+source myenv/bin/activate
+
+# Install packages in venv
+pip install django pandas
+
+# Deactivate
+deactivate
+
+# Generate requirements.txt
+pip freeze &gt; requirements.txt</code><button class="copy-btn" data-copy="python -m venv myenv">COPY</button></pre>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li>📦 <a href="install-guide.html">Install Python & Set Up Development Environment</a></li>
+        <li>🐍 Practice Python basics on platforms like LeetCode or HackerRank</li>
+        <li>🌐 Build a web app with Flask or Django</li>
+        <li>📊 Learn data analysis with Pandas and NumPy</li>
+        <li>🤖 Explore machine learning with Scikit-learn</li>
+        <li>⚡ Build APIs with FastAPI</li>
+        <li>🧪 Master testing with pytest</li>
+      </ul>
+      <div class="info-box">
+        <strong>Learning Resources:</strong> Python's official documentation, Real Python, Python Crash Course book, and Automate the Boring Stuff are excellent starting points.
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

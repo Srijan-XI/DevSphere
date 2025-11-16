@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Amazon DynamoDB Introduction | DevSphere</title>
+	<style>
+		* { box-sizing: border-box; margin:0; padding:0; }
+		body { font-family: Inter, system-ui, -apple-system, sans-serif; background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%); color:#e1e4e8; line-height:1.7; min-height:100vh; }
+		a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+		a:hover { text-decoration:underline; color:#a78bfa; }
+		.page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+		header.page-header { background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6; padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+		h1 { font-size:2.6rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+		.subtitle { color:#8b92a0; font-size:1.1rem; }
+		.grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+		@media(min-width:900px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+		.card { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem; position:relative; transition:.25s; overflow:hidden; }
+		.card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+		.card.accent { border-top:4px solid #f59e0b; }
+		h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+		h3 { font-size:1.15rem; font-weight:600; margin:1.2rem 0 .55rem; color:#f59e0b; }
+		p { margin:.7rem 0; color:#8b92a0; }
+		ul,ol { margin:.6rem 0 .9rem 1.35rem; }
+		li { margin:.45rem 0; color:#8b92a0; }
+		code, pre code { font-family: "JetBrains Mono","Cascadia Code",Menlo,monospace; font-size:.85rem; }
+		pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; margin:.85rem 0; }
+		pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+		pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+		.badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+		.badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+		.info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem; border-radius:.6rem; margin:1.1rem 0; }
+		.info-box.warning { border-left-color:#f59e0b; }
+		.section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+		.section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+		.section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+		.topic-grid { display:grid; gap:.75rem; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); }
+		.topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.82rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+		.topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+		footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+		.copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+		.copy-feedback.show { opacity:1; transform:translateY(0); }
+	</style>
+</head>
+<body>
+	<div class="page-wrapper">
+		<header class="page-header">
+			<h1>Amazon DynamoDB — Introduction</h1>
+			<p class="subtitle">A fully managed, serverless NoSQL key–value and document database delivering single-digit millisecond performance at any scale.</p>
+			<div class="badge-row">
+				<span class="badge">SERVERLESS</span>
+				<span class="badge">KEY-VALUE</span>
+				<span class="badge">GLOBAL TABLES</span>
+				<span class="badge">AUTO SCALING</span>
+				<span class="badge">PAY-PER-REQUEST</span>
+			</div>
+			<nav class="section-nav">
+				<a href="#what">What is DynamoDB</a>
+				<a href="#concepts">Core Concepts</a>
+				<a href="#modeling">Data Modeling</a>
+				<a href="#examples">Code Examples</a>
+				<a href="#ecosystem">Ecosystem</a>
+				<a href="#next">Next Steps</a>
+			</nav>
+			<div class="info-box"><strong>Tip:</strong> Start with a clear access pattern list (who reads/writes what) before choosing partition and sort keys.</div>
+		</header>
+
+		<section id="what" class="card accent">
+			<h2>What is DynamoDB?</h2>
+			<p>DynamoDB is AWS’s fully managed NoSQL database that provides predictable performance and seamless scaling. It offers global replication, point-in-time restore, in-memory acceleration with DAX, and integrated security with AWS IAM.</p>
+			<h3>Why DynamoDB?</h3>
+			<ul>
+				<li><strong>Performance:</strong> Single-digit ms latency at any scale.</li>
+				<li><strong>Operationally simple:</strong> No servers to manage. Automatic scaling and fault tolerance.</li>
+				<li><strong>Cost efficient:</strong> Provisioned or on-demand capacity modes.</li>
+				<li><strong>Global:</strong> Global Tables for multi-region, active-active replication.</li>
+			</ul>
+		</section>
+
+		<section id="concepts" class="card">
+			<h2>Core Concepts</h2>
+			<div class="topic-grid">
+				<div class="topic"><strong>Table</strong> — collection of items</div>
+				<div class="topic"><strong>Item</strong> — set of attributes (row)</div>
+				<div class="topic"><strong>Attribute</strong> — key–value (column)</div>
+				<div class="topic"><strong>Partition key</strong> — hash key</div>
+				<div class="topic"><strong>Sort key</strong> — range key (optional)</div>
+				<div class="topic"><strong>GSI</strong> — Global Secondary Index</div>
+				<div class="topic"><strong>LSI</strong> — Local Secondary Index</div>
+				<div class="topic"><strong>TTL</strong> — Time-to-live auto-expiration</div>
+				<div class="topic"><strong>Streams</strong> — Change data capture</div>
+				<div class="topic"><strong>Transactions</strong> — ACID ops across items</div>
+			</div>
+			<div class="info-box warning"><strong>Modeling note:</strong> Design for your <em>access patterns</em>, not for relational joins.</div>
+		</section>
+
+		<section id="modeling" class="card">
+			<h2>Data Modeling Basics</h2>
+			<h3>Single-table design</h3>
+			<p>Group related entity types into one table using composite keys and type prefixes to answer queries with a small number of indexed lookups.</p>
+			<pre><code>{
+	"PK": "USER#42",
+	"SK": "PROFILE#2025-01-01",
+	"Type": "UserProfile",
+	"Name": "Ada",
+	"City": "London"
+}
+{
+	"PK": "USER#42",
+	"SK": "ORDER#A1001",
+	"Type": "Order",
+	"Total": 79.90
+}</code><button class="copy-btn" data-copy='{"PK":"USER#42","SK":"PROFILE#2025-01-01","Type":"UserProfile"}'>COPY</button></pre>
+		</section>
+
+		<section id="examples" class="card">
+			<h2>Code Examples</h2>
+			<h3>Python (boto3)</h3>
+			<pre><code>import boto3
+
+ddb = boto3.resource("dynamodb")
+table = ddb.Table("users")
+
+# Put item
+table.put_item(Item={"PK": "USER#42", "SK": "PROFILE#2025", "name": "Ada"})
+
+# Get item
+resp = table.get_item(Key={"PK": "USER#42", "SK": "PROFILE#2025"})
+print(resp.get("Item"))</code><button class="copy-btn" data-copy='table.put_item(Item={"PK":"USER#42","SK":"PROFILE#2025","name":"Ada"})'>COPY</button></pre>
+
+			<h3>Node.js (AWS SDK v3)</h3>
+			<pre><code>import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, PutCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
+
+const client = new DynamoDBClient({});
+const doc = DynamoDBDocumentClient.from(client);
+
+await doc.send(new PutCommand({
+	TableName: "users",
+	Item: { PK: "USER#42", SK: "PROFILE#2025", name: "Ada" }
+}));
+
+const { Item } = await doc.send(new GetCommand({
+	TableName: "users",
+	Key: { PK: "USER#42", SK: "PROFILE#2025" }
+}));
+console.log(Item);</code><button class="copy-btn" data-copy='npm i @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb'>COPY</button></pre>
+		</section>
+
+		<section id="ecosystem" class="card">
+			<h2>Ecosystem</h2>
+			<ul>
+				<li><strong>DAX:</strong> in-memory cache for microsecond read latency</li>
+				<li><strong>Global Tables:</strong> multi-region active-active</li>
+				<li><strong>Streams + Lambda:</strong> event-driven patterns</li>
+				<li><strong>PartiQL:</strong> SQL-compatible query language</li>
+				<li><strong>CloudWatch:</strong> metrics and alarms</li>
+			</ul>
+		</section>
+
+		<section id="next" class="card">
+			<h2>Next Steps</h2>
+			<ul>
+				<li>📦 <a href="install-guide.html">Install and set up DynamoDB</a> (Local + AWS)</li>
+				<li>📝 List your access patterns</li>
+				<li>🗝️ Choose partition/sort keys and indexes</li>
+				<li>🧪 Load sample data and test query latency</li>
+			</ul>
+		</section>
+
+		<footer>
+			<p>&copy; 2025 DevSphere</p>
+		</footer>
+	</div>
+
+	<div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+	<script>
+		document.querySelectorAll('.copy-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				const txt = btn.getAttribute('data-copy');
+				navigator.clipboard.writeText(txt).then(() => {
+					const fb = document.getElementById('copyFeedback');
+					fb.classList.add('show');
+					setTimeout(() => fb.classList.remove('show'), 1800);
+				});
+			});
+		});
+		document.querySelectorAll('a[href^="#"]').forEach(a => {
+			a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); });
+		});
+	</script>
+</body>
+</html>

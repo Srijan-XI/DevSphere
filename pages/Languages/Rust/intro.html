@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rust Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>🦀 Rust Introduction</h1>
+      <p class="subtitle">A language empowering everyone to build reliable and efficient software.</p>
+      <div class="badge-row">
+        <span class="badge">MEMORY SAFE</span>
+        <span class="badge">BLAZING FAST</span>
+        <span class="badge">ZERO-COST ABSTRACTIONS</span>
+        <span class="badge">CONCURRENT</span>
+        <span class="badge">SYSTEMS</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is Rust?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Memory Safety Without Garbage Collection:</strong> Rust guarantees memory safety and thread safety at compile time without runtime overhead.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is Rust?</h2>
+      <p><strong>Rust</strong> is a modern systems programming language focused on safety, speed, and concurrency. Created by Mozilla Research and first released in 2010, Rust prevents common programming errors like null pointer dereferencing, buffer overflows, and data races through its innovative ownership system.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Memory Safety:</strong> No null pointers, dangling pointers, or data races.</li>
+        <li><strong>Zero-Cost Abstractions:</strong> High-level features with no runtime overhead.</li>
+        <li><strong>Ownership System:</strong> Unique compile-time memory management without GC.</li>
+        <li><strong>Fearless Concurrency:</strong> Thread safety guaranteed by the type system.</li>
+        <li><strong>Performance:</strong> C/C++ level performance with modern ergonomics.</li>
+        <li><strong>Rich Type System:</strong> Expressive types, pattern matching, generics.</li>
+      </ul>
+      <div class="info-box warning"><strong>Note:</strong> Rust has a steeper learning curve than many languages, but the compiler's helpful error messages make learning easier.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use Rust?</h2>
+      <p>Rust excels in systems programming, web services, embedded systems, and anywhere performance and reliability are critical. It's been voted the "most loved programming language" in Stack Overflow surveys for 8 consecutive years.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Systems Programming</span>
+        <span class="topic">Web Servers</span>
+        <span class="topic">CLI Tools</span>
+        <span class="topic">Embedded Systems</span>
+        <span class="topic">Game Engines</span>
+        <span class="topic">Operating Systems</span>
+        <span class="topic">WebAssembly</span>
+        <span class="topic">Blockchain</span>
+        <span class="topic">Network Services</span>
+        <span class="topic">Databases</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Safety:</strong> Eliminates entire classes of bugs at compile time.</li>
+        <li><strong>Performance:</strong> Comparable to C/C++ with modern features.</li>
+        <li><strong>Concurrency:</strong> Write parallel code without fear of data races.</li>
+        <li><strong>Tooling:</strong> Cargo (build system + package manager), rustfmt, clippy.</li>
+        <li><strong>Documentation:</strong> Built-in documentation generator with examples.</li>
+        <li><strong>Community:</strong> Friendly, inclusive community with excellent resources.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Hello World</h3>
+      <pre><code>fn main() {
+    println!("Hello, DevSphere!");
+}</code><button class="copy-btn" data-copy="fn main() {\n    println!(\"Hello, DevSphere!\");\n}">COPY</button></pre>
+      
+      <h3>Variables & Mutability</h3>
+      <pre><code>fn main() {
+    // Immutable by default
+    let x = 5;
+    // x = 6;  // ❌ Error: cannot assign twice to immutable variable
+    
+    // Mutable variable
+    let mut y = 10;
+    y = 15;  // ✅ OK
+    
+    // Constants (always immutable, type required)
+    const MAX_POINTS: u32 = 100_000;
+    
+    // Shadowing (redefining variable)
+    let z = 5;
+    let z = z + 1;
+    let z = z * 2;  // z = 12
+}</code><button class="copy-btn" data-copy="let x = 5;  // immutable\nlet mut y = 10;  // mutable\ny = 15;">COPY</button></pre>
+
+      <h3>Data Types</h3>
+      <pre><code>fn main() {
+    // Scalar types
+    let integer: i32 = 42;
+    let float: f64 = 3.14;
+    let boolean: bool = true;
+    let character: char = '🦀';
+    
+    // Compound types
+    let tuple: (i32, f64, char) = (500, 6.4, 'R');
+    let (x, y, z) = tuple;  // Destructuring
+    
+    let array: [i32; 5] = [1, 2, 3, 4, 5];
+    let first = array[0];
+    
+    // Strings
+    let string_literal: &str = "Hello";
+    let string_owned: String = String::from("World");
+}</code><button class="copy-btn" data-copy="let integer: i32 = 42;\nlet float: f64 = 3.14;\nlet tuple: (i32, f64, char) = (500, 6.4, 'R');">COPY</button></pre>
+
+      <h3>Ownership System</h3>
+      <pre><code>fn main() {
+    // Ownership rules:
+    // 1. Each value has an owner
+    // 2. There can only be one owner at a time
+    // 3. When owner goes out of scope, value is dropped
+    
+    let s1 = String::from("hello");
+    let s2 = s1;  // s1 is moved to s2, s1 no longer valid
+    // println!("{}", s1);  // ❌ Error: value borrowed after move
+    
+    let s3 = String::from("world");
+    let s4 = s3.clone();  // Deep copy
+    println!("{} {}", s3, s4);  // ✅ Both valid
+    
+    // References (borrowing)
+    let s5 = String::from("hello");
+    let len = calculate_length(&s5);  // Borrow s5
+    println!("Length of '{}' is {}", s5, len);  // s5 still valid
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}</code><button class="copy-btn" data-copy="let s1 = String::from(\"hello\");\nlet s2 = s1;  // s1 moved to s2\n\nlet s3 = String::from(\"world\");\nlet len = calculate_length(&s3);  // borrow">COPY</button></pre>
+
+      <h3>Functions</h3>
+      <pre><code>// Function with parameters and return value
+fn add(a: i32, b: i32) -> i32 {
+    a + b  // No semicolon = return value
+}
+
+// Expression vs Statement
+fn example() -> i32 {
+    let x = 5;
+    let y = {
+        let z = 3;
+        z + 1  // Expression (no semicolon)
+    };  // y = 4
+    
+    x + y  // Return 9
+}
+
+fn main() {
+    let result = add(5, 3);
+    println!("5 + 3 = {}", result);
+}</code><button class="copy-btn" data-copy="fn add(a: i32, b: i32) -> i32 {\n    a + b\n}\n\nlet result = add(5, 3);">COPY</button></pre>
+
+      <h3>Structs & Enums</h3>
+      <pre><code>// Struct
+struct User {
+    username: String,
+    email: String,
+    active: bool,
+}
+
+// Enum
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+impl User {
+    fn new(username: String, email: String) -> User {
+        User {
+            username,
+            email,
+            active: true,
+        }
+    }
+    
+    fn greet(&self) {
+        println!("Hello, {}!", self.username);
+    }
+}
+
+fn main() {
+    let user = User::new(
+        String::from("rustacean"),
+        String::from("rust@example.com")
+    );
+    user.greet();
+}</code><button class="copy-btn" data-copy="struct User {\n    username: String,\n    email: String,\n    active: bool,\n}\n\nimpl User {\n    fn greet(&self) {\n        println!(\"Hello, {}!\", self.username);\n    }\n}">COPY</button></pre>
+
+      <h3>Pattern Matching</h3>
+      <pre><code>enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter => 25,
+    }
+}
+
+// Option type (no null in Rust!)
+fn divide(a: f64, b: f64) -> Option<f64> {
+    if b == 0.0 {
+        None
+    } else {
+        Some(a / b)
+    }
+}
+
+fn main() {
+    match divide(10.0, 2.0) {
+        Some(result) => println!("Result: {}", result),
+        None => println!("Cannot divide by zero!"),
+    }
+}</code><button class="copy-btn" data-copy="match coin {\n    Coin::Penny => 1,\n    Coin::Nickel => 5,\n    Coin::Dime => 10,\n    Coin::Quarter => 25,\n}">COPY</button></pre>
+
+      <h3>Error Handling</h3>
+      <pre><code>use std::fs::File;
+use std::io::ErrorKind;
+
+fn main() {
+    // Result type for recoverable errors
+    let file_result = File::open("hello.txt");
+    
+    let file = match file_result {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+            ErrorKind::NotFound => {
+                println!("File not found!");
+                return;
+            }
+            other_error => {
+                panic!("Error opening file: {:?}", other_error);
+            }
+        },
+    };
+    
+    // Using ? operator for error propagation
+    fn read_username() -> Result<String, std::io::Error> {
+        let mut username = String::new();
+        File::open("username.txt")?.read_to_string(&mut username)?;
+        Ok(username)
+    }
+}</code><button class="copy-btn" data-copy="let file = File::open(\"hello.txt\");\nmatch file {\n    Ok(f) => f,\n    Err(e) => panic!(\"Error: {:?}\", e),\n}">COPY</button></pre>
+
+      <h3>Iterators & Closures</h3>
+      <pre><code>fn main() {
+    // Iterators
+    let v = vec![1, 2, 3, 4, 5];
+    let sum: i32 = v.iter().sum();
+    
+    let doubled: Vec<i32> = v.iter()
+        .map(|x| x * 2)
+        .collect();
+    
+    let evens: Vec<&i32> = v.iter()
+        .filter(|x| *x % 2 == 0)
+        .collect();
+    
+    // Closures
+    let add_one = |x| x + 1;
+    println!("{}", add_one(5));  // 6
+    
+    let expensive_closure = |num| {
+        println!("Calculating slowly...");
+        std::thread::sleep(std::time::Duration::from_secs(2));
+        num
+    };
+}</code><button class="copy-btn" data-copy="let doubled: Vec<i32> = v.iter()\n    .map(|x| x * 2)\n    .collect();\n\nlet add_one = |x| x + 1;">COPY</button></pre>
+    </section>
+
+    <section id="ecosystem" class="card">
+      <h2>Ecosystem & Tools</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Web Frameworks</h3>
+          <ul>
+            <li><strong>Actix-web:</strong> Fast, pragmatic web framework.</li>
+            <li><strong>Rocket:</strong> Type-safe, ergonomic web framework.</li>
+            <li><strong>Axum:</strong> Modern, modular web framework.</li>
+            <li><strong>Warp:</strong> Composable web framework.</li>
+            <li><strong>Tokio:</strong> Async runtime for networking.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Popular Crates</h3>
+          <ul>
+            <li><strong>Serde:</strong> Serialization/deserialization.</li>
+            <li><strong>Diesel:</strong> Safe, extensible ORM.</li>
+            <li><strong>Clap:</strong> Command-line argument parser.</li>
+            <li><strong>Rayon:</strong> Data parallelism library.</li>
+            <li><strong>Tokio:</strong> Async runtime.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <h3>Cargo - Build System & Package Manager</h3>
+      <pre><code># Create new project
+cargo new my_project
+cd my_project
+
+# Build project
+cargo build
+
+# Run project
+cargo run
+
+# Run tests
+cargo test
+
+# Build optimized release
+cargo build --release
+
+# Add dependency (edit Cargo.toml)
+[dependencies]
+serde = "1.0"
+tokio = { version = "1", features = ["full"] }</code><button class="copy-btn" data-copy="cargo new my_project\ncd my_project\ncargo run">COPY</button></pre>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li>📦 <a href="install-guide.html">Install Rust & Set Up Development Environment</a></li>
+        <li>📚 Read "The Rust Programming Language" book (free online)</li>
+        <li>🎯 Complete Rustlings exercises for hands-on practice</li>
+        <li>🔧 Build a CLI tool using clap and serde</li>
+        <li>🌐 Create a web API with Actix-web or Rocket</li>
+        <li>⚡ Learn async programming with Tokio</li>
+        <li>🧪 Master testing and documentation</li>
+      </ul>
+      <div class="info-box">
+        <strong>Learning Resources:</strong> The Rust Book, Rust by Example, and Rustlings are all free and excellent for learning Rust systematically.
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

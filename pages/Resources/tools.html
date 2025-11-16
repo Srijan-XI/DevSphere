@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Essential Developer Toolkit - DevSphere</title>
+    <link rel="stylesheet" href="../../main.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e14;
+            --text: #e1e4e8;
+            --muted: #8b92a0;
+            --card: #161b22;
+            --card2: #0d1117;
+            --border: #30363d;
+            --primary: #8b5cf6;
+            --primary-hover: #a78bfa;
+            --warn: #f59e0b;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e14 0%, #1a1f2e 50%, #0f1419 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .tool-card {
+            background: var(--card) !important;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .tools-nav {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .tools-nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tools-nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .tools-nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            background: var(--card2);
+            border-radius: 0.375rem;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .tools-nav-link:hover {
+            border-color: var(--primary);
+        }
+
+        .tools-nav-label {
+            color: var(--muted);
+            font-size: 0.875rem;
+        }
+
+        .tools-header {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tools-heading {
+            color: var(--text);
+        }
+
+        .tools-heading-accent {
+            color: var(--primary);
+        }
+
+        .tools-description {
+            color: var(--muted);
+        }
+
+        .section-title {
+            color: var(--primary-hover);
+        }
+
+        .tool-card-border {
+            border-top: 4px solid var(--primary);
+        }
+
+        .tool-card-border-green {
+            border-top: 4px solid #10b981;
+        }
+
+        .tool-card-border-red {
+            border-top: 4px solid #ef4444;
+        }
+
+        .tool-card-border-orange {
+            border-top: 4px solid var(--warn);
+        }
+
+        .tool-card-border-cyan {
+            border-top: 4px solid #06b6d4;
+        }
+
+        .tool-card-border-pink {
+            border-top: 4px solid #ec4899;
+        }
+
+        .tool-card-border-indigo {
+            border-top: 4px solid #6366f1;
+        }
+
+        .tools-footer {
+            border-top: 1px solid var(--border);
+        }
+
+        .tools-footer-text {
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h3 {
+            color: var(--text);
+        }
+
+        .tool-card p {
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Navigation Header -->
+    <nav class="tools-nav">
+        <div class="max-w-6xl mx-auto tools-nav-inner">
+            <div class="tools-nav-links">
+                <a href="../../index.html" class="tools-nav-link">← Home</a>
+                <a href="Resources.html" class="tools-nav-link">Resources</a>
+            </div>
+            <div class="tools-nav-label">DevSphere Toolkit</div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto">
+        
+        <!-- Header Section -->
+        <header class="text-center py-10 mb-10 tools-header">
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-3 tools-heading">
+                The <span class="tools-heading-accent">Essential</span> Developer Toolkit
+            </h1>
+            <p class="text-xl max-w-2xl mx-auto tools-description">
+                A curated list of core tools every developer needs, regardless of their specialization.
+            </p>
+        </header>
+
+        <!-- Categories Container -->
+        <main class="space-y-16">
+
+            <!-- 1. Universal Tools Section -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    Universal Essentials
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 1: VS Code -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border">
+                        <h3 class="text-2xl font-semibold mb-2">VS Code</h3>
+                        <p class="text-sm">
+                            The go-to code editor. Lightweight, powerful, and backed by a massive ecosystem of extensions for every language.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 2: Git & GitHub -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border">
+                        <h3 class="text-2xl font-semibold mb-2">Git & GitHub</h3>
+                        <p class="text-sm">
+                            Version control system (Git) and the world's leading collaboration platform (GitHub). Non-negotiable for team projects.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 3: Docker -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border">
+                        <h3 class="text-2xl font-semibold mb-2">Docker</h3>
+                        <p class="text-sm">
+                            Containerization platform to package applications with dependencies, ensuring consistent environments everywhere.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 4: Terminal / Shell -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border">
+                        <h3 class="text-2xl font-semibold mb-2">Terminal / Shell</h3>
+                        <p class="text-sm">
+                            The command line interface (CLI) is essential for scripts, server interaction, package management, and efficiency.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Front-End Development Section -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.5 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.5-3-9s1.343-9 3-9"></path></svg>
+                    Front-End Specialists
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 5: Modern Framework (React/Vue) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-green">
+                        <h3 class="text-2xl font-semibold mb-2">React / Vue / Angular</h3>
+                        <p class="text-sm">
+                            A declarative JavaScript framework is the backbone of modern, scalable user interfaces and SPAs.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 6: Chrome DevTools -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-green">
+                        <h3 class="text-2xl font-semibold mb-2">Browser DevTools</h3>
+                        <p class="text-sm">
+                            Debugging JavaScript, inspecting/editing CSS, checking network performance, and profiling memory usage.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 7: Figma / Sketch -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-green">
+                        <h3 class="text-2xl font-semibold mb-2">Figma / Sketch</h3>
+                        <p class="text-sm">
+                            UI/UX design tools crucial for collaborating with designers and turning mockups into responsive code.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 8: npm / Yarn / pnpm -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-green">
+                        <h3 class="text-2xl font-semibold mb-2">Package Managers</h3>
+                        <p class="text-sm">
+                            Essential for installing, managing, and updating the vast library ecosystem that powers JavaScript development.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Back-End Development Section -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.094 3.49M12 21l2.094-3.49M16.906 5.51L14 7.502M19 12a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    Back-End Specialists
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 9: Postman / Insomnia -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-red">
+                        <h3 class="text-2xl font-semibold mb-2">Postman / Insomnia</h3>
+                        <p class="text-sm">
+                            API client tools used to test, document, and monitor HTTP requests and responses for services.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 10: Server-Side Frameworks -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-red">
+                        <h3 class="text-2xl font-semibold mb-2">Frameworks (Express, Django, Spring)</h3>
+                        <p class="text-sm">
+                            Structured libraries that provide the foundation for building robust and maintainable server-side applications.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 11: Monitoring & Logging -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-red">
+                        <h3 class="text-2xl font-semibold mb-2">Monitoring (Prometheus/Grafana)</h3>
+                        <p class="text-sm">
+                            Tools for collecting metrics and visualizing system health, crucial for understanding production performance.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 12: ORM / ODM -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-red">
+                        <h3 class="text-2xl font-semibold mb-2">ORM / ODM</h3>
+                        <p class="text-sm">
+                            Libraries (like Hibernate or Mongoose) that simplify database interaction using object-oriented code.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 4. NEW: DevOps & Cloud Engineering -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.82 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.82 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.82-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.82-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    DevOps & Cloud Engineering
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 13: Terraform / Ansible -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-orange">
+                        <h3 class="text-2xl font-semibold mb-2">Terraform / Ansible</h3>
+                        <p class="text-sm">
+                            Infrastructure as Code (IaC) tools for provisioning and managing cloud resources and server configurations reliably.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 14: Kubernetes (K8s) / Helm -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-orange">
+                        <h3 class="text-2xl font-semibold mb-2">Kubernetes / Helm</h3>
+                        <p class="text-sm">
+                            Container orchestration platforms for automating deployment, scaling, and management of containerized applications.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 15: CI/CD Pipelines -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-orange">
+                        <h3 class="text-2xl font-semibold mb-2">CI/CD (Jenkins, GitHub Actions)</h3>
+                        <p class="text-sm">
+                            Automation servers and services essential for building, testing, and deploying code changes automatically.
+                        </p>
+                    </div>
+                    
+                    <!-- Tool Card 16: Cloud Platforms -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-orange">
+                        <h3 class="text-2xl font-semibold mb-2">Cloud Providers (AWS/GCP/Azure)</h3>
+                        <p class="text-sm">
+                            The fundamental infrastructure and platform services upon which all modern cloud-native applications are built.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 5. Data Science & AI/ML Specialists (Updated Index) -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.293 8.293L13 12.586V19h6.414l-4.293-4.293a1 1 0 00-1.414 0z"></path></svg>
+                    Data Science & AI/ML Specialists
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 17: TensorFlow / PyTorch -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border">
+                        <h3 class="text-2xl font-semibold mb-2">TensorFlow / PyTorch</h3>
+                        <p class="text-sm">
+                            Leading deep learning frameworks for building, training, and deploying large-scale machine learning models.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 18: Jupyter Notebooks -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border">
+                        <h3 class="text-2xl font-semibold mb-2">Jupyter Notebooks</h3>
+                        <p class="text-sm">
+                            An indispensable web-based environment for interactive computing, data cleaning, modeling, and visualization.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 19: NumPy / Pandas -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border">
+                        <h3 class="text-2xl font-semibold mb-2">NumPy / Pandas</h3>
+                        <p class="text-sm">
+                            Core Python libraries essential for efficient numerical computing, data structure management, and analysis.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Cybersecurity & Computer Networks (Updated Index) -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a12 12 0 00-8.513 19.123c1.942-1.939 4.314-3.5 6.486-4.908l1.43 1.43a2 2 0 11-2.828 2.828l-1.43-1.43c-1.61 1.09-3.2 2.15-4.75 3.16M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Cybersecurity & Computer Networks
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 20: Wireshark -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-cyan">
+                        <h3 class="text-2xl font-semibold mb-2">Wireshark</h3>
+                        <p class="text-sm">
+                            The standard for network protocol analysis, allowing developers and security professionals to inspect traffic.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 21: Nmap -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-cyan">
+                        <h3 class="text-2xl font-semibold mb-2">Nmap</h3>
+                        <p class="text-sm">
+                            An indispensable tool for network discovery and security auditing, used to map networks and find vulnerabilities.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 22: Metasploit -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-cyan">
+                        <h3 class="text-2xl font-semibold mb-2">Metasploit</h3>
+                        <p class="text-sm">
+                            A powerful penetration testing framework for developing and executing exploit code against remote target machines.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 7. Database & Data Engineers (Updated Index) -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10M10 7H4M10 7h4M10 7v10M16 17v-4M16 13H6M16 13h4M16 13v4M20 7v10M4 17h16M4 7h16"></path></svg>
+                    Database & Data Engineers
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 23: DBeaver / SQL Clients -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-pink">
+                        <h3 class="text-2xl font-semibold mb-2">DBeaver / SQL Clients</h3>
+                        <p class="text-sm">
+                            Universal database management tools for querying, scripting, and managing various SQL and NoSQL platforms.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 24: ETL/Workflow (Airflow) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-pink">
+                        <h3 class="text-2xl font-semibold mb-2">ETL Tools (e.g., Apache Airflow)</h3>
+                        <p class="text-sm">
+                            Used by data engineers for orchestrating complex data pipelines, extraction, transformation, and loading.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 25: Caching Layer (Redis) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-pink">
+                        <h3 class="text-2xl font-semibold mb-2">Caching (Redis / Memcached)</h3>
+                        <p class="text-sm">
+                            In-memory data stores vital for building high-speed, high-availability caching and session layers.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Mobile Specialists (Updated Index) -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    Mobile Specialists (iOS, Android, Cross-Platform)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 26: Xcode (iOS) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-orange">
+                        <h3 class="text-2xl font-semibold mb-2">Xcode</h3>
+                        <p class="text-sm">
+                            The required integrated development environment for native iOS, macOS, watchOS, and tvOS development, including simulators.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 27: Android Studio -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-orange">
+                        <h3 class="text-2xl font-semibold mb-2">Android Studio</h3>
+                        <p class="text-sm">
+                            The official IDE for Android development, providing tools for app building, debugging, and performance analysis.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 28: Cross-Platform Frameworks -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-orange">
+                        <h3 class="text-2xl font-semibold mb-2">Flutter / React Native</h3>
+                        <p class="text-sm">
+                            Frameworks that allow developers to build native applications for multiple platforms from a single codebase.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. Platform & Language Ecosystems (Updated Index) -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6" class="section-title">
+                    <svg class="w-8 h-8 inline-block mr-3 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    Platform & Language Ecosystems
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tool Card 29: Java IDE (IntelliJ / Eclipse) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-indigo">
+                        <h3 class="text-2xl font-semibold mb-2">Java IDEs (IntelliJ / Eclipse)</h3>
+                        <p class="text-sm">
+                            Feature-rich IDEs providing sophisticated refactoring, debugging, and enterprise-grade support for Java.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 30: .NET IDE (Visual Studio) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-indigo">
+                        <h3 class="text-2xl font-semibold mb-2">Visual Studio (.NET)</h3>
+                        <p class="text-sm">
+                            Microsoft's comprehensive IDE for building Windows and cross-platform applications using the .NET framework.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 31: Ruby (Bundler) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-indigo">
+                        <h3 class="text-2xl font-semibold mb-2">Bundler (Ruby)</h3>
+                        <p class="text-sm">
+                            The primary dependency manager for Ruby, ensuring that the necessary gems are available in the correct versions.
+                        </p>
+                    </div>
+
+                    <!-- Tool Card 32: Linux Tools (GDB/strace) -->
+                    <div class="tool-card p-6 rounded-xl" tool-card-border-indigo">
+                        <h3 class="text-2xl font-semibold mb-2">Linux CLI Tools (GDB / strace)</h3>
+                        <p class="text-sm">
+                            Essential command-line utilities for low-level debugging, performance analysis, and system call tracing on Linux.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+
+        </main>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-20 pt-8 tools-footer">
+            <p class="text-sm tools-footer-text">
+                The best tool, however, is continuous learning and curiosity. Happy coding!
+            </p>
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                <p style="color: var(--muted); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                    &copy; DevSphere. Licensed under <a href="https://github.com/Srijan-XI/Install-and-Learn-DevLangs/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none;">MIT License</a>.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                    <a href="../../index.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">Home</a>
+                    <a href="Resources.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">Resources</a>
+                    <a href="notes.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">Notes</a>
+                    <a href="projects.html" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">Projects</a>
+                    <a href="https://github.com/Srijan-XI/Install-and-Learn-DevLangs" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">GitHub</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+        <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <!-- Floating Home Button -->
+    <a href="../../index.html" style="position: fixed; bottom: 6rem; right: 2rem; background: var(--warn); color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 600; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); transition: all 0.3s ease; z-index: 999;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(245, 158, 11, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(245, 158, 11, 0.4)'">
+        🏠 Home
+    </a>
+
+    <script>
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+

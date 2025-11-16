@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KQL Installation Guide | DevSphere</title>
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Inter, system-ui, -apple-system, sans-serif; background:linear-gradient(135deg,#0a0e14,#1a1f2e 50%,#0f1419); color:#e1e4e8; line-height:1.65; }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .wrapper { max-width:1180px; margin:0 auto; padding:2.2rem 1.2rem 4rem; }
+    header.hero { background:#161b22; border:1px solid #30363d; border-top:4px solid #f59e0b; padding:2.1rem 2rem 2.35rem; border-radius:.85rem; margin-bottom:2.3rem; box-shadow:0 4px 14px rgba(0,0,0,.45); }
+    h1 { font-size:2.6rem; font-weight:800; margin-bottom:.6rem; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.05rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.5rem 0 .6rem; color:#f59e0b; }
+    h4 { font-size:1.05rem; font-weight:600; margin:1.2rem 0 .5rem; color:#8b5cf6; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin:.7rem 0 1rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    .grid { display:grid; gap:1.5rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid.two { grid-template-columns:repeat(2,1fr); } }
+    .panel { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.55rem 1.5rem 1.75rem; position:relative; transition:.25s; }
+    .panel:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .panel.accent { border-top:4px solid #8b5cf6; }
+    pre { background:#0d1117; border:1px solid #30363d; padding:1rem 1.1rem; border-radius:.6rem; overflow:auto; font-size:.85rem; position:relative; }
+    code, pre code { font-family:"JetBrains Mono","Cascadia Code", Menlo, monospace; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .steps { counter-reset: step; }
+    .steps li { position:relative; padding-left:2.1rem; }
+    .steps li::before { counter-increment: step; content:counter(step); position:absolute; left:0; top:.15rem; background:#8b5cf6; color:#fff; width:1.35rem; height:1.35rem; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:600; border-radius:.4rem; }
+    .info { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:.9rem 1rem 1rem; border-radius:.6rem; margin:1.1rem 0; font-size:.85rem; }
+    .info.warn { border-left-color:#f59e0b; }
+    .info.success { border-left-color:#10b981; }
+    .inline-badges { display:flex; flex-wrap:wrap; gap:.45rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .6rem; font-size:.65rem; letter-spacing:.05em; font-weight:600; border-radius:.45rem; }
+    details.collapsible { border:1px solid #30363d; border-radius:.7rem; overflow:hidden; margin:1.5rem 0; }
+    details.collapsible summary { cursor:pointer; list-style:none; padding:.85rem 1rem; background:#161b22; font-weight:600; }
+    details.collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { background:#0d1117; padding:1rem 1.15rem 1.3rem; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    nav.quick { display:flex; flex-wrap:wrap; gap:.55rem; margin:1.4rem 0 2rem; }
+    nav.quick a { background:#0d1117; border:1px solid #30363d; color:#8b92a0; font-size:.7rem; padding:.45rem .7rem; border-radius:.5rem; transition:.2s; }
+    nav.quick a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    footer { margin-top:3.6rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    table { width:100%; border-collapse:collapse; margin:1.2rem 0; }
+    th, td { padding:.65rem .8rem; border:1px solid #30363d; text-align:left; }
+    th { background:#161b22; color:#e1e4e8; font-weight:600; }
+    td { background:#0d1117; color:#8b92a0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="hero">
+      <h1>📊 KQL Installation Guide</h1>
+      <p class="subtitle">Set up Azure Data Explorer, Log Analytics, and tools to start querying with KQL.</p>
+      <div class="inline-badges">
+        <span class="badge">AZURE PORTAL</span>
+        <span class="badge">DATA EXPLORER</span>
+        <span class="badge">LOG ANALYTICS</span>
+        <span class="badge">KUSTO CLI</span>
+        <span class="badge">VS CODE</span>
+      </div>
+      <nav class="quick">
+        <a href="#azure-setup">Azure Setup</a>
+        <a href="#log-analytics">Log Analytics</a>
+        <a href="#data-explorer">Data Explorer</a>
+        <a href="#tools">Development Tools</a>
+        <a href="#cli">Kusto CLI</a>
+        <a href="#practice">Practice</a>
+      </nav>
+      <div class="info success"><strong>No Installation Required:</strong> KQL runs in the cloud – you only need an Azure account and browser to start querying.</div>
+    </header>
+
+    <section id="azure-setup" class="panel accent">
+      <h2>Azure Account Setup</h2>
+      <p>KQL is primarily used within Azure services. You'll need an Azure subscription to access most KQL environments.</p>
+      
+      <h3>Create Azure Account</h3>
+      <ol class="steps">
+        <li>Visit <a href="https://azure.microsoft.com/free/" target="_blank" rel="noopener">Azure Free Account</a>.</li>
+        <li>Sign up with Microsoft account (or create one).</li>
+        <li>Get $200 free credit for 30 days + 12 months of free services.</li>
+        <li>Provide payment method (for identity verification only).</li>
+      </ol>
+
+      <h3>Access Azure Portal</h3>
+      <ol class="steps">
+        <li>Navigate to <a href="https://portal.azure.com" target="_blank" rel="noopener">portal.azure.com</a>.</li>
+        <li>Sign in with your Azure credentials.</li>
+        <li>You're now ready to create KQL-enabled services.</li>
+      </ol>
+
+      <div class="info warn"><strong>Note:</strong> Some Azure services have free tiers, but others may incur charges. Monitor your usage and set up billing alerts.</div>
+    </section>
+
+    <section id="log-analytics" class="panel">
+      <h2>Azure Log Analytics Workspace</h2>
+      <p>Log Analytics workspaces are the most common place to use KQL for querying logs and metrics.</p>
+      
+      <h3>Create Log Analytics Workspace</h3>
+      <ol class="steps">
+        <li>In Azure Portal, search for <strong>"Log Analytics workspaces"</strong>.</li>
+        <li>Click <strong>"+ Create"</strong>.</li>
+        <li>Fill in details:
+          <ul style="margin-top:.5rem;">
+            <li><strong>Subscription:</strong> Choose your subscription</li>
+            <li><strong>Resource Group:</strong> Create new or select existing</li>
+            <li><strong>Name:</strong> Give it a unique name</li>
+            <li><strong>Region:</strong> Select nearest region</li>
+          </ul>
+        </li>
+        <li>Click <strong>"Review + Create"</strong> → <strong>"Create"</strong>.</li>
+      </ol>
+
+      <h3>Access Query Editor</h3>
+      <ol class="steps">
+        <li>Navigate to your Log Analytics workspace.</li>
+        <li>Click <strong>"Logs"</strong> in the left menu.</li>
+        <li>Close any welcome dialogs.</li>
+        <li>Start writing KQL queries in the editor!</li>
+      </ol>
+
+      <h3>Sample Query</h3>
+      <pre><code>// Query workspace heartbeat data
+Heartbeat
+| where TimeGenerated > ago(24h)
+| summarize Count=count() by Computer
+| order by Count desc
+| take 10</code><button class="copy-btn" data-copy="Heartbeat\n| where TimeGenerated > ago(24h)\n| summarize Count=count() by Computer\n| order by Count desc\n| take 10">COPY</button></pre>
+
+      <div class="info"><strong>Tip:</strong> Enable sample data in Log Analytics to practice queries without needing real log sources.</div>
+    </section>
+
+    <section id="data-explorer" class="panel">
+      <h2>Azure Data Explorer (ADX)</h2>
+      <p>Azure Data Explorer is a fast, fully managed data analytics service optimized for KQL queries on large datasets.</p>
+      
+      <h3>Create ADX Cluster</h3>
+      <ol class="steps">
+        <li>Search for <strong>"Azure Data Explorer Clusters"</strong> in Azure Portal.</li>
+        <li>Click <strong>"+ Create"</strong>.</li>
+        <li>Configure cluster:
+          <ul style="margin-top:.5rem;">
+            <li><strong>Cluster name:</strong> Unique name (e.g., mycluster)</li>
+            <li><strong>Workload:</strong> Choose Dev/Test or Production</li>
+            <li><strong>Compute specification:</strong> Select VM size</li>
+          </ul>
+        </li>
+        <li>Create a <strong>Database</strong> within the cluster.</li>
+      </ol>
+
+      <h3>Access ADX Web UI</h3>
+      <p>Visit <a href="https://dataexplorer.azure.com/" target="_blank" rel="noopener">dataexplorer.azure.com</a> and connect to your cluster.</p>
+      <pre><code>// Example: Query sample data
+StormEvents
+| where StartTime > ago(7d)
+| summarize EventCount=count() by State
+| top 10 by EventCount desc</code><button class="copy-btn" data-copy="StormEvents\n| where StartTime > ago(7d)\n| summarize EventCount=count() by State\n| top 10 by EventCount desc">COPY</button></pre>
+
+      <h3>Free Demo Environment</h3>
+      <p>No Azure account needed! Try KQL with sample data:</p>
+      <p>👉 <a href="https://dataexplorer.azure.com/clusters/help/databases/Samples" target="_blank" rel="noopener">ADX Help Cluster (Free Practice)</a></p>
+    </section>
+
+    <section id="tools" class="panel">
+      <h2>Development Tools</h2>
+      
+      <h3>VS Code Extension (Recommended)</h3>
+      <ol class="steps">
+        <li>Install <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a>.</li>
+        <li>Search for <strong>"Kusto"</strong> or <strong>"Azure Data Explorer"</strong> in Extensions.</li>
+        <li>Install <strong>"Azure Data Explorer (Kusto)"</strong> extension by Microsoft.</li>
+        <li>Connect to your ADX cluster or Log Analytics workspace.</li>
+      </ol>
+
+      <h4>VS Code Features:</h4>
+      <ul>
+        <li>✅ IntelliSense and autocomplete</li>
+        <li>✅ Syntax highlighting</li>
+        <li>✅ Query execution and results viewer</li>
+        <li>✅ Direct connection to Azure</li>
+      </ul>
+
+      <h3>Azure Data Studio</h3>
+      <p>Microsoft's database management tool with KQL support.</p>
+      <ol class="steps">
+        <li>Download <a href="https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio" target="_blank" rel="noopener">Azure Data Studio</a>.</li>
+        <li>Install the <strong>Kusto (KQL)</strong> extension.</li>
+        <li>Connect to Azure Data Explorer clusters.</li>
+      </ol>
+
+      <h3>Web-Based Query Editors</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>URL</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Azure Portal Logs</td>
+            <td><code>portal.azure.com</code></td>
+            <td>Log Analytics queries</td>
+          </tr>
+          <tr>
+            <td>ADX Web UI</td>
+            <td><code>dataexplorer.azure.com</code></td>
+            <td>Data Explorer queries</td>
+          </tr>
+          <tr>
+            <td>Demo Environment</td>
+            <td><code>aka.ms/kustofree</code></td>
+            <td>Practice without account</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="cli" class="panel">
+      <h2>Kusto CLI (Command Line)</h2>
+      <p>For advanced users who prefer terminal-based interactions.</p>
+      
+      <h3>Install Kusto.Cli (Windows/macOS/Linux)</h3>
+      <pre><code># Download from NuGet as .NET tool
+dotnet tool install -g Microsoft.Azure.Kusto.Tools
+
+# Verify installation
+Kusto.Cli --version</code><button class="copy-btn" data-copy="dotnet tool install -g Microsoft.Azure.Kusto.Tools\nKusto.Cli --version">COPY</button></pre>
+
+      <h3>Connect to Cluster</h3>
+      <pre><code>Kusto.Cli "https://help.kusto.windows.net;Fed=true"</code><button class="copy-btn" data-copy="Kusto.Cli \"https://help.kusto.windows.net;Fed=true\"">COPY</button></pre>
+
+      <h3>Run Queries</h3>
+      <pre><code># Once connected, run KQL queries directly
+Samples> StormEvents | take 10</code><button class="copy-btn" data-copy="StormEvents | take 10">COPY</button></pre>
+
+      <div class="info warn"><strong>Prerequisite:</strong> Requires .NET SDK 6.0+ to be installed. Download from <a href="https://dotnet.microsoft.com/download" target="_blank" rel="noopener">dotnet.microsoft.com</a>.</div>
+    </section>
+
+    <section id="practice" class="panel">
+      <h2>Practice Environments</h2>
+      
+      <h3>1. Free ADX Help Cluster</h3>
+      <p>No sign-up required! Access sample datasets instantly:</p>
+      <p>🔗 <a href="https://dataexplorer.azure.com/clusters/help/databases/Samples" target="_blank" rel="noopener">https://dataexplorer.azure.com/clusters/help/databases/Samples</a></p>
+      <p><strong>Sample Databases:</strong></p>
+      <ul>
+        <li><code>Samples</code> – StormEvents, COVID-19 data</li>
+        <li><code>ContosoSales</code> – Retail sales data</li>
+      </ul>
+
+      <h3>2. Microsoft Learn Sandbox</h3>
+      <p>Follow interactive KQL tutorials with temporary Azure environments:</p>
+      <p>🔗 <a href="https://learn.microsoft.com/en-us/training/modules/write-first-query-kusto-query-language/" target="_blank" rel="noopener">Write your first KQL query (Microsoft Learn)</a></p>
+
+      <h3>3. KQL Playground</h3>
+      <p>Browser-based KQL practice with instant feedback:</p>
+      <p>🔗 <a href="https://aka.ms/lademo" target="_blank" rel="noopener">Log Analytics Demo</a></p>
+
+      <h3>Sample Practice Queries</h3>
+      <pre><code>// 1. Basic filtering
+StormEvents
+| where State == "TEXAS"
+| project StartTime, EventType, DamageProperty
+
+// 2. Aggregation
+StormEvents
+| summarize TotalDamage=sum(DamageProperty) by State
+| top 10 by TotalDamage desc
+
+// 3. Time analysis
+StormEvents
+| where StartTime > ago(365d)
+| summarize Count=count() by bin(StartTime, 30d)
+| render timechart</code><button class="copy-btn" data-copy="StormEvents\n| where State == \"TEXAS\"\n| project StartTime, EventType, DamageProperty">COPY</button></pre>
+    </section>
+
+    <section id="resources" class="panel">
+      <h2>Learning Resources</h2>
+      <ul>
+        <li>📚 <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/" target="_blank" rel="noopener">Official KQL Documentation</a></li>
+        <li>🎓 <a href="https://learn.microsoft.com/en-us/training/paths/kusto-query-language/" target="_blank" rel="noopener">Microsoft Learn KQL Path</a></li>
+        <li>📖 <a href="https://github.com/rod-trent/MustLearnKQL" target="_blank" rel="noopener">Must Learn KQL (GitHub)</a></li>
+        <li>🎥 <a href="https://www.youtube.com/playlist?list=PLv2BtOtLblH0YtR-KfiupF5hwmIpQr2sJ" target="_blank" rel="noopener">KQL Tutorial Series (YouTube)</a></li>
+        <li>🔍 <a href="https://github.com/Azure/Azure-Sentinel" target="_blank" rel="noopener">Microsoft Sentinel KQL Queries</a></li>
+      </ul>
+
+      <h3>Interactive Tutorials</h3>
+      <p>In Azure Data Explorer Web UI, run:</p>
+      <pre><code>.show queries</code><button class="copy-btn" data-copy=".show queries">COPY</button></pre>
+      <p>Then explore built-in sample queries and documentation.</p>
+    </section>
+
+    <section id="best-practices" class="panel">
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Start with <code>where</code> clauses to filter data early.</li>
+        <li>✅ Use <code>project</code> to select only needed columns.</li>
+        <li>✅ Limit result sets with <code>take</code> or <code>top</code> during development.</li>
+        <li>✅ Use <code>ago()</code> for relative time ranges instead of absolute dates.</li>
+        <li>✅ Add comments (<code>//</code>) to document complex queries.</li>
+        <li>✅ Test queries on small time ranges before expanding.</li>
+        <li>✅ Use <code>summarize</code> instead of <code>distinct</code> for better performance.</li>
+        <li>✅ Leverage <code>render</code> operators for visualizations.</li>
+      </ul>
+
+      <h3>Query Optimization Tips</h3>
+      <pre><code>// ❌ Slow - filters after aggregation
+TableName
+| summarize Count=count() by Column1
+| where Count > 100
+
+// ✅ Fast - filters before aggregation
+TableName
+| where SomeCondition
+| summarize Count=count() by Column1
+| where Count > 100</code><button class="copy-btn" data-copy="TableName\n| where SomeCondition\n| summarize Count=count() by Column1\n| where Count > 100">COPY</button></pre>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

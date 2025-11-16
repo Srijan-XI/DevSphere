@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R Installation Guide | DevSphere</title>
+  <link rel="stylesheet" href="../../../components/breadcrumb.css" />
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; margin:.85rem 0; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .step { background:#0d1117; border:1px solid #30363d; padding:1.2rem; border-radius:.6rem; margin:.85rem 0; }
+    .step-number { display:inline-block; width:1.75rem; height:1.75rem; background:#8b5cf6; color:#fff; text-align:center; line-height:1.75rem; border-radius:50%; font-weight:700; font-size:.85rem; margin-right:.5rem; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    summary { cursor:pointer; font-weight:600; color:#f59e0b; padding:.55rem 0; user-select:none; }
+    summary:hover { color:#fbbf24; }
+    details { margin:.85rem 0; }
+    details[open] summary { margin-bottom:.6rem; }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <nav id="breadcrumb" class="breadcrumb-container"></nav>
+    <header class="page-header">
+      <h1>📊 R Installation Guide</h1>
+      <p class="subtitle">Install R and RStudio for statistical computing and data visualization.</p>
+      <div class="badge-row">
+        <span class="badge">R 4.3+</span>
+        <span class="badge">RSTUDIO</span>
+        <span class="badge">CRAN</span>
+        <span class="badge">STATISTICAL COMPUTING</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#prerequisites">Prerequisites</a>
+        <a href="#windows">Windows</a>
+        <a href="#macos">macOS</a>
+        <a href="#linux">Linux</a>
+        <a href="#rstudio">RStudio</a>
+        <a href="#verify">Verify</a>
+        <a href="#next">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Recommended:</strong> Install both R and RStudio. R is the language, RStudio is the powerful IDE that makes working with R much easier.
+      </div>
+    </header>
+
+    <section id="prerequisites" class="card accent">
+      <h2>Prerequisites</h2>
+      <ul>
+        <li><strong>All Platforms:</strong> Admin/sudo privileges for system-wide installation</li>
+        <li><strong>Windows:</strong> Windows 10 or later recommended</li>
+        <li><strong>macOS:</strong> macOS 10.13+ (High Sierra or later)</li>
+        <li><strong>Linux:</strong> Most distributions supported</li>
+        <li><strong>Internet:</strong> For downloading R, RStudio, and packages</li>
+      </ul>
+      <div class="info-box">
+        <strong>What You'll Install:</strong> R (the programming language) + RStudio (the IDE for R development)
+      </div>
+    </section>
+
+    <section id="windows" class="card">
+      <h2>Windows Installation</h2>
+      
+      <h3>Step 1: Download R</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        Visit the CRAN (Comprehensive R Archive Network) website:
+      </div>
+      <pre><code>https://cran.r-project.org/bin/windows/base/</code><button class="copy-btn" data-copy="https://cran.r-project.org/bin/windows/base/">COPY</button></pre>
+      
+      <div class="step">
+        <span class="step-number">2</span>
+        Click <strong>"Download R-4.x.x for Windows"</strong> (latest version)
+      </div>
+      
+      <div class="step">
+        <span class="step-number">3</span>
+        Run the downloaded <code>.exe</code> installer
+      </div>
+      
+      <div class="step">
+        <span class="step-number">4</span>
+        Follow the installation wizard:
+        <ul>
+          <li>Select language</li>
+          <li>Accept license agreement</li>
+          <li>Choose installation directory (default is fine)</li>
+          <li>Select components (install all)</li>
+          <li>Choose startup options (default is fine)</li>
+        </ul>
+      </div>
+
+      <h3>Step 2: Add R to PATH (Optional but Recommended)</h3>
+      <div class="info-box">
+        The installer usually adds R to PATH automatically. If not, add <code>C:\Program Files\R\R-4.x.x\bin</code> to your system PATH.
+      </div>
+    </section>
+
+    <section id="macos" class="card">
+      <h2>macOS Installation</h2>
+      
+      <h3>Method 1: Download from CRAN (Recommended)</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        Visit the CRAN macOS page:
+      </div>
+      <pre><code>https://cran.r-project.org/bin/macosx/</code><button class="copy-btn" data-copy="https://cran.r-project.org/bin/macosx/">COPY</button></pre>
+      
+      <div class="step">
+        <span class="step-number">2</span>
+        Download the appropriate <code>.pkg</code> file for your macOS version
+      </div>
+      
+      <div class="step">
+        <span class="step-number">3</span>
+        Open the <code>.pkg</code> file and follow the installation instructions
+      </div>
+
+      <h3>Method 2: Using Homebrew</h3>
+      <pre><code># Install Homebrew if not already installed
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install R
+brew install r</code><button class="copy-btn" data-copy="brew install r">COPY</button></pre>
+      
+      <div class="info-box warning">
+        <strong>Apple Silicon (M1/M2/M3):</strong> Make sure to download the ARM64 version for better performance.
+      </div>
+    </section>
+
+    <section id="linux" class="card">
+      <h2>Linux Installation</h2>
+      
+      <h3>Ubuntu/Debian</h3>
+      <pre><code># Update package list
+sudo apt update
+
+# Install R
+sudo apt install r-base r-base-dev
+
+# Install additional dependencies for packages
+sudo apt install build-essential libcurl4-openssl-dev libssl-dev libxml2-dev</code><button class="copy-btn" data-copy="sudo apt update && sudo apt install r-base r-base-dev">COPY</button></pre>
+
+      <h3>Fedora/RHEL/CentOS</h3>
+      <pre><code># Install R
+sudo dnf install R
+
+# Or for older systems
+sudo yum install R</code><button class="copy-btn" data-copy="sudo dnf install R">COPY</button></pre>
+
+      <h3>Arch Linux</h3>
+      <pre><code># Install R
+sudo pacman -S r</code><button class="copy-btn" data-copy="sudo pacman -S r">COPY</button></pre>
+    </section>
+
+    <section id="rstudio" class="card accent">
+      <h2>Installing RStudio (Highly Recommended)</h2>
+      <p>RStudio is the most popular IDE for R, providing a much better development experience than the basic R console.</p>
+      
+      <h3>Download RStudio Desktop</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        Visit the RStudio download page:
+      </div>
+      <pre><code>https://posit.co/download/rstudio-desktop/</code><button class="copy-btn" data-copy="https://posit.co/download/rstudio-desktop/">COPY</button></pre>
+      
+      <div class="step">
+        <span class="step-number">2</span>
+        Download the appropriate installer for your OS:
+        <ul>
+          <li><strong>Windows:</strong> <code>.exe</code> installer</li>
+          <li><strong>macOS:</strong> <code>.dmg</code> file</li>
+          <li><strong>Linux:</strong> <code>.deb</code> or <code>.rpm</code> package</li>
+        </ul>
+      </div>
+      
+      <div class="step">
+        <span class="step-number">3</span>
+        Run the installer and follow the instructions
+      </div>
+      
+      <div class="info-box success">
+        <strong>Note:</strong> RStudio requires R to be installed first. Make sure you've installed R before installing RStudio.
+      </div>
+    </section>
+
+    <section id="verify" class="card">
+      <h2>Verify Installation</h2>
+      
+      <h3>Check R Version</h3>
+      <p>Open a terminal/command prompt and run:</p>
+      <pre><code>R --version</code><button class="copy-btn" data-copy="R --version">COPY</button></pre>
+      
+      <p>Expected output (version may vary):</p>
+      <pre><code>R version 4.3.2 (2023-10-31) -- "Eye Holes"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)</code></pre>
+
+      <h3>Run R Interactive Session</h3>
+      <p>Type <code>R</code> to enter the R console:</p>
+      <pre><code>R</code><button class="copy-btn" data-copy="R">COPY</button></pre>
+      
+      <p>You should see the R prompt <code>&gt;</code>. Try a simple command:</p>
+      <pre><code>&gt; print("Hello from R!")
+[1] "Hello from R!"
+
+&gt; 2 + 2
+[1] 4
+
+&gt; q()  # Quit R</code><button class="copy-btn" data-copy='print("Hello from R!")'>COPY</button></pre>
+
+      <h3>Test RStudio</h3>
+      <p>Launch RStudio and verify you can see the console, editor, environment, and plots panels.</p>
+      
+      <div class="info-box success">
+        <strong>Success!</strong> If you can run R commands and see output, your installation is complete.
+      </div>
+    </section>
+
+    <section id="packages" class="card">
+      <h2>Installing R Packages</h2>
+      
+      <h3>Install Packages from CRAN</h3>
+      <p>R packages extend R's functionality. Install them using <code>install.packages()</code>:</p>
+      <pre><code># Install a single package
+install.packages("ggplot2")
+
+# Install multiple packages
+install.packages(c("dplyr", "tidyr", "readr"))
+
+# Install with dependencies
+install.packages("tidyverse", dependencies = TRUE)</code><button class="copy-btn" data-copy='install.packages("ggplot2")'>COPY</button></pre>
+
+      <h3>Load Packages</h3>
+      <pre><code># Load a package
+library(ggplot2)
+
+# Or
+require(ggplot2)</code><button class="copy-btn" data-copy="library(ggplot2)">COPY</button></pre>
+
+      <h3>Essential Packages for Beginners</h3>
+      <pre><code># The Tidyverse (collection of data science packages)
+install.packages("tidyverse")
+
+# Data manipulation
+install.packages("dplyr")
+
+# Data visualization
+install.packages("ggplot2")
+
+# Reading data files
+install.packages("readr")
+
+# Working with dates
+install.packages("lubridate")</code><button class="copy-btn" data-copy='install.packages("tidyverse")'>COPY</button></pre>
+    </section>
+
+    <section id="next" class="card accent">
+      <h2>Next Steps</h2>
+      <ul>
+        <li><strong>Learn R Basics:</strong> Variables, data types, functions, and control structures</li>
+        <li><strong>Explore RStudio:</strong> Familiarize yourself with the IDE layout and features</li>
+        <li><strong>Install Tidyverse:</strong> A collection of R packages for data science</li>
+        <li><strong>Practice Data Analysis:</strong> Work with built-in datasets like <code>mtcars</code> and <code>iris</code></li>
+        <li><strong>Learn ggplot2:</strong> Create beautiful visualizations</li>
+        <li><strong>Read Documentation:</strong> Use <code>?function_name</code> to get help</li>
+      </ul>
+      
+      <div class="info-box">
+        <strong>Resources:</strong>
+        <ul>
+          <li><a href="https://www.r-project.org/" target="_blank">Official R Website</a></li>
+          <li><a href="https://posit.co/resources/cheatsheets/" target="_blank">RStudio Cheat Sheets</a></li>
+          <li><a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html" target="_blank">Introduction to R Manual</a></li>
+          <li><a href="https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/R/R%20programming%20questions" target="_blank">Practice Questions</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere | <a href="../../../index.html">Back to Home</a> | <a href="../languages.html">All Languages</a></p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback">Copied!</div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          const feedback = document.querySelector('.copy-feedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+  </script>
+  <script src="../../../components/breadcrumb.js"></script>
+</body>
+</html>

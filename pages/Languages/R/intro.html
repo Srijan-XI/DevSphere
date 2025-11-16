@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R Introduction | DevSphere</title>
+  <link rel="stylesheet" href="../../../components/breadcrumb.css" />
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <nav id="breadcrumb" class="breadcrumb-container"></nav>
+    <header class="page-header">
+      <h1>📊 R Introduction</h1>
+      <p class="subtitle">A powerful language for statistical computing, data analysis, and visualization.</p>
+      <div class="badge-row">
+        <span class="badge">STATISTICAL COMPUTING</span>
+        <span class="badge">DATA VISUALIZATION</span>
+        <span class="badge">OPEN SOURCE</span>
+        <span class="badge">CROSS-PLATFORM</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is R?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#packages">Packages</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Ideal For:</strong> Data scientists, statisticians, researchers, and anyone working with data analysis and visualization.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is R?</h2>
+      <p><strong>R</strong> is a programming language and free software environment for statistical computing and graphics. Created by Ross Ihaka and Robert Gentleman in 1993, R has become the lingua franca of data science and statistical analysis.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Statistical Focus:</strong> Built specifically for statistical analysis and data manipulation.</li>
+        <li><strong>Interpreted Language:</strong> Interactive coding with immediate feedback.</li>
+        <li><strong>Vectorized:</strong> Operations work on entire vectors/arrays without loops.</li>
+        <li><strong>Extensive Packages:</strong> 19,000+ packages on CRAN for specialized tasks.</li>
+        <li><strong>Powerful Graphics:</strong> Industry-leading data visualization capabilities.</li>
+        <li><strong>Open Source:</strong> Free to use with active community development.</li>
+      </ul>
+      <div class="info-box">
+        <strong>Fun Fact:</strong> R is named partly after its creators (Ross and Robert) and partly as a play on the S language, which R is based on.
+      </div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use R?</h2>
+      <p>R excels at data analysis, statistical modeling, and creating publication-quality graphics. It's the preferred choice for statisticians, data scientists, and researchers worldwide.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Statistical Analysis</span>
+        <span class="topic">Data Visualization</span>
+        <span class="topic">Machine Learning</span>
+        <span class="topic">Data Mining</span>
+        <span class="topic">Bioinformatics</span>
+        <span class="topic">Financial Analysis</span>
+        <span class="topic">Academic Research</span>
+        <span class="topic">Time Series</span>
+        <span class="topic">Reporting</span>
+        <span class="topic">GIS Mapping</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Statistical Power:</strong> Unmatched capabilities for statistical analysis.</li>
+        <li><strong>ggplot2:</strong> The most elegant and powerful data visualization library.</li>
+        <li><strong>RStudio:</strong> Best-in-class IDE for data science.</li>
+        <li><strong>Reproducible Research:</strong> R Markdown for combining code, results, and narrative.</li>
+        <li><strong>Huge Ecosystem:</strong> 19,000+ packages covering every statistical method.</li>
+        <li><strong>Academic Support:</strong> Widely used in research and academia.</li>
+        <li><strong>Tidyverse:</strong> Modern, coherent collection of data science tools.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Hello World</h3>
+      <pre><code>print("Hello from R!")
+# Output: [1] "Hello from R!"</code><button class="copy-btn" data-copy='print("Hello from R!")'>COPY</button></pre>
+      
+      <h3>Variables & Data Types</h3>
+      <pre><code># Variables (use <- for assignment)
+name <- "R Programming"
+version <- 4.3
+is_powerful <- TRUE
+
+# Vectors (fundamental data structure)
+numbers <- c(1, 2, 3, 4, 5)
+names <- c("Alice", "Bob", "Charlie")
+
+# Check type
+class(numbers)   # "numeric"
+class(names)     # "character"
+class(is_powerful)  # "logical"</code><button class="copy-btn" data-copy='name <- "R Programming"'>COPY</button></pre>
+
+      <h3>Vectors & Operations</h3>
+      <pre><code># Create vectors
+x <- c(1, 2, 3, 4, 5)
+y <- c(10, 20, 30, 40, 50)
+
+# Vectorized operations (no loops needed!)
+x + y        # Element-wise addition
+x * 2        # Multiply each element by 2
+x > 3        # Logical comparison
+
+# Sequence generation
+1:10         # 1 2 3 4 5 6 7 8 9 10
+seq(0, 1, by=0.1)  # 0.0 0.1 0.2 ... 1.0
+rep(5, times=3)    # 5 5 5</code><button class="copy-btn" data-copy='x <- c(1, 2, 3, 4, 5)'>COPY</button></pre>
+
+      <h3>Data Frames</h3>
+      <pre><code># Create a data frame (like a table)
+df <- data.frame(
+  name = c("Alice", "Bob", "Charlie"),
+  age = c(25, 30, 35),
+  score = c(85, 90, 88)
+)
+
+# View the data frame
+print(df)
+#      name age score
+# 1   Alice  25    85
+# 2     Bob  30    90
+# 3 Charlie  35    88
+
+# Access columns
+df$name          # "Alice" "Bob" "Charlie"
+df[["age"]]      # 25 30 35
+df[, "score"]    # 85 90 88
+
+# Filter rows
+df[df$age > 27, ]  # Rows where age > 27</code><button class="copy-btn" data-copy='df <- data.frame(name = c("Alice", "Bob", "Charlie"), age = c(25, 30, 35))'>COPY</button></pre>
+    </section>
+
+    <section id="examples" class="card">
+      <h2>Practical Examples</h2>
+      
+      <h3>Basic Statistics</h3>
+      <pre><code># Summary statistics
+data <- c(23, 45, 67, 89, 34, 56, 78, 90, 12)
+
+mean(data)      # Average: 54.88889
+median(data)    # Middle value: 56
+sd(data)        # Standard deviation: 27.74887
+summary(data)   # Min, 1st Qu, Median, Mean, 3rd Qu, Max</code><button class="copy-btn" data-copy="mean(c(23, 45, 67, 89, 34, 56, 78, 90, 12))">COPY</button></pre>
+
+      <h3>Data Visualization with Base R</h3>
+      <pre><code># Scatter plot
+plot(mtcars$wt, mtcars$mpg, 
+     main = "Car Weight vs MPG",
+     xlab = "Weight", 
+     ylab = "Miles Per Gallon",
+     col = "blue", 
+     pch = 19)
+
+# Histogram
+hist(mtcars$mpg, 
+     main = "Distribution of MPG",
+     xlab = "Miles Per Gallon",
+     col = "lightblue",
+     breaks = 10)
+
+# Box plot
+boxplot(mpg ~ cyl, data = mtcars,
+        main = "MPG by Number of Cylinders",
+        xlab = "Cylinders",
+        ylab = "MPG")</code><button class="copy-btn" data-copy="plot(mtcars$wt, mtcars$mpg)">COPY</button></pre>
+
+      <h3>Using ggplot2 (Modern Visualization)</h3>
+      <pre><code>library(ggplot2)
+
+# Create a beautiful scatter plot
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Car Weight vs MPG by Cylinders",
+       x = "Weight (1000 lbs)",
+       y = "Miles Per Gallon",
+       color = "Cylinders") +
+  theme_minimal()</code><button class="copy-btn" data-copy='library(ggplot2)'>COPY</button></pre>
+
+      <h3>Data Manipulation with dplyr</h3>
+      <pre><code>library(dplyr)
+
+# Filter, select, and summarize data
+mtcars %>%
+  filter(mpg > 20) %>%
+  select(mpg, cyl, hp) %>%
+  group_by(cyl) %>%
+  summarize(
+    avg_mpg = mean(mpg),
+    avg_hp = mean(hp),
+    count = n()
+  )</code><button class="copy-btn" data-copy='library(dplyr)'>COPY</button></pre>
+    </section>
+
+    <section id="packages" class="card accent">
+      <h2>Essential R Packages</h2>
+      
+      <h3>Tidyverse (Collection of Modern R Packages)</h3>
+      <pre><code>install.packages("tidyverse")
+library(tidyverse)
+
+# Includes:
+# - ggplot2: Data visualization
+# - dplyr: Data manipulation
+# - tidyr: Data tidying
+# - readr: Reading data
+# - purrr: Functional programming
+# - tibble: Modern data frames
+# - stringr: String manipulation
+# - forcats: Factor handling</code><button class="copy-btn" data-copy='install.packages("tidyverse")'>COPY</button></pre>
+
+      <h3>Popular Packages by Category</h3>
+      <div class="grid-2">
+        <div class="info-box">
+          <strong>Data Visualization:</strong>
+          <ul>
+            <li><code>ggplot2</code> - Grammar of graphics</li>
+            <li><code>plotly</code> - Interactive plots</li>
+            <li><code>shiny</code> - Web applications</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <strong>Data Manipulation:</strong>
+          <ul>
+            <li><code>dplyr</code> - Data transformation</li>
+            <li><code>data.table</code> - Fast data handling</li>
+            <li><code>tidyr</code> - Tidy data</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <strong>Machine Learning:</strong>
+          <ul>
+            <li><code>caret</code> - ML framework</li>
+            <li><code>randomForest</code> - Random forests</li>
+            <li><code>xgboost</code> - Gradient boosting</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <strong>Reporting:</strong>
+          <ul>
+            <li><code>rmarkdown</code> - R Markdown documents</li>
+            <li><code>knitr</code> - Dynamic reports</li>
+            <li><code>bookdown</code> - Books and long documents</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li><strong>Install RStudio:</strong> Get the best IDE for R development</li>
+        <li><strong>Learn the Basics:</strong> Variables, vectors, data frames, functions</li>
+        <li><strong>Master dplyr:</strong> Essential for data manipulation</li>
+        <li><strong>Practice ggplot2:</strong> Create stunning visualizations</li>
+        <li><strong>Explore Built-in Datasets:</strong> <code>mtcars</code>, <code>iris</code>, <code>diamonds</code></li>
+        <li><strong>Try R Markdown:</strong> Combine code, output, and narrative</li>
+        <li><strong>Join the Community:</strong> R-bloggers, Stack Overflow, RStudio Community</li>
+      </ul>
+      
+      <div class="info-box">
+        <strong>Learning Resources:</strong>
+        <ul>
+          <li><a href="https://www.r-project.org/" target="_blank">Official R Website</a></li>
+          <li><a href="https://r4ds.had.co.nz/" target="_blank">R for Data Science (Free Book)</a></li>
+          <li><a href="https://posit.co/resources/cheatsheets/" target="_blank">RStudio Cheat Sheets</a></li>
+          <li><a href="https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/R/R%20programming%20questions" target="_blank">Practice Questions</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere | <a href="../../../index.html">Back to Home</a> | <a href="../languages.html">All Languages</a></p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback">Copied!</div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          const feedback = document.querySelector('.copy-feedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+  </script>
+  <script src="../../../components/breadcrumb.js"></script>
+</body>
+</html>

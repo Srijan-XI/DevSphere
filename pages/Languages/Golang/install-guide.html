@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go (Golang) Installation Guide | DevSphere</title>
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Inter, system-ui, -apple-system, sans-serif; background:linear-gradient(135deg,#0a0e14,#1a1f2e 50%,#0f1419); color:#e1e4e8; line-height:1.65; }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .wrapper { max-width:1180px; margin:0 auto; padding:2.2rem 1.2rem 4rem; }
+    header.hero { background:#161b22; border:1px solid #30363d; border-top:4px solid #f59e0b; padding:2.1rem 2rem 2.35rem; border-radius:.85rem; margin-bottom:2.3rem; box-shadow:0 4px 14px rgba(0,0,0,.45); }
+    h1 { font-size:2.6rem; font-weight:800; margin-bottom:.6rem; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.05rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.5rem 0 .6rem; color:#f59e0b; }
+    h4 { font-size:1.05rem; font-weight:600; margin:1.2rem 0 .5rem; color:#8b5cf6; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin:.7rem 0 1rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    .grid { display:grid; gap:1.5rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid.two { grid-template-columns:repeat(2,1fr); } }
+    .panel { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.55rem 1.5rem 1.75rem; position:relative; transition:.25s; }
+    .panel:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .panel.accent { border-top:4px solid #8b5cf6; }
+    pre { background:#0d1117; border:1px solid #30363d; padding:1rem 1.1rem; border-radius:.6rem; overflow:auto; font-size:.85rem; position:relative; }
+    code, pre code { font-family:"JetBrains Mono","Cascadia Code", Menlo, monospace; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .steps { counter-reset: step; }
+    .steps li { position:relative; padding-left:2.1rem; }
+    .steps li::before { counter-increment: step; content:counter(step); position:absolute; left:0; top:.15rem; background:#8b5cf6; color:#fff; width:1.35rem; height:1.35rem; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:600; border-radius:.4rem; }
+    .info { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:.9rem 1rem 1rem; border-radius:.6rem; margin:1.1rem 0; font-size:.85rem; }
+    .info.warn { border-left-color:#f59e0b; }
+    .info.success { border-left-color:#10b981; }
+    .inline-badges { display:flex; flex-wrap:wrap; gap:.45rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .6rem; font-size:.65rem; letter-spacing:.05em; font-weight:600; border-radius:.45rem; }
+    details.collapsible { border:1px solid #30363d; border-radius:.7rem; overflow:hidden; margin:1.5rem 0; }
+    details.collapsible summary { cursor:pointer; list-style:none; padding:.85rem 1rem; background:#161b22; font-weight:600; }
+    details.collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { background:#0d1117; padding:1rem 1.15rem 1.3rem; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    nav.quick { display:flex; flex-wrap:wrap; gap:.55rem; margin:1.4rem 0 2rem; }
+    nav.quick a { background:#0d1117; border:1px solid #30363d; color:#8b92a0; font-size:.7rem; padding:.45rem .7rem; border-radius:.5rem; transition:.2s; }
+    nav.quick a:hover { color:#e1e4e8; border-color:#8b5cf6; }
+    footer { margin-top:3.6rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="hero">
+      <h1>🐹 Go Installation Guide</h1>
+      <p class="subtitle">Install Go, configure workspace, and set up your development environment for cloud-native applications.</p>
+      <div class="inline-badges">
+        <span class="badge">GO 1.21+</span>
+        <span class="badge">MODULES</span>
+        <span class="badge">GOFMT</span>
+        <span class="badge">CROSS-PLATFORM</span>
+      </div>
+      <nav class="quick">
+        <a href="#windows">Windows</a>
+        <a href="#macos">macOS</a>
+        <a href="#linux">Linux</a>
+        <a href="#verify">Verify</a>
+        <a href="#workspace">Workspace</a>
+        <a href="#tools">Tools</a>
+        <a href="#best-practices">Best Practices</a>
+      </nav>
+      <div class="info success"><strong>Recommendation:</strong> Install the latest stable version from golang.org for best compatibility.</div>
+    </header>
+
+    <section id="windows" class="panel accent">
+      <h2>Windows Installation</h2>
+      
+      <h3>Option A: Official Installer (Recommended)</h3>
+      <ol class="steps">
+        <li>Download from <a href="https://go.dev/dl/" target="_blank" rel="noopener">go.dev/dl/</a> – choose Windows MSI installer.</li>
+        <li>Run installer (e.g., <code>go1.21.5.windows-amd64.msi</code>).</li>
+        <li>Accept default installation path: <code>C:\Program Files\Go</code></li>
+        <li>Installer automatically sets <code>PATH</code> and <code>GOPATH</code>.</li>
+      </ol>
+      <p>Restart terminal to apply changes.</p>
+
+      <h3>Option B: Chocolatey</h3>
+      <pre><code>choco install golang -y</code><button class="copy-btn" data-copy="choco install golang -y">COPY</button></pre>
+
+      <h3>Option C: Scoop</h3>
+      <pre><code>scoop install go</code><button class="copy-btn" data-copy="scoop install go">COPY</button></pre>
+
+      <h3>Manual Environment Variables (if needed)</h3>
+      <pre><code># PowerShell (Admin)
+[System.Environment]::SetEnvironmentVariable("GOPATH", "$HOME\go", "User")
+[System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Program Files\Go\bin;$HOME\go\bin", "User")</code><button class="copy-btn" data-copy="[System.Environment]::SetEnvironmentVariable(\"GOPATH\", \"$HOME\\go\", \"User\")\n[System.Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\Program Files\\Go\\bin;$HOME\\go\\bin\", \"User\")">COPY</button></pre>
+      <div class="info warn"><strong>Note:</strong> Restart terminal after PATH changes to apply settings.</div>
+    </section>
+
+    <section id="macos" class="panel">
+      <h2>macOS Installation</h2>
+      
+      <h3>Option A: Official Installer</h3>
+      <ol class="steps">
+        <li>Download from <a href="https://go.dev/dl/" target="_blank" rel="noopener">go.dev/dl/</a> – choose macOS PKG installer.</li>
+        <li>Open package and follow installation wizard.</li>
+        <li>Default install: <code>/usr/local/go</code></li>
+      </ol>
+
+      <h3>Option B: Homebrew (Recommended)</h3>
+      <pre><code>brew install go</code><button class="copy-btn" data-copy="brew install go">COPY</button></pre>
+
+      <h3>Set Environment Variables (Add to ~/.zshrc or ~/.bash_profile)</h3>
+      <pre><code>export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin</code><button class="copy-btn" data-copy="export GOPATH=$HOME/go\nexport PATH=$PATH:/usr/local/go/bin:$GOPATH/bin">COPY</button></pre>
+      <p>Reload shell: <code>source ~/.zshrc</code></p>
+      <div class="info"><strong>Note:</strong> With Go 1.11+, modules are default; GOPATH is less critical but still used for installed binaries.</div>
+    </section>
+
+    <section id="linux" class="panel">
+      <h2>Linux Installation</h2>
+      
+      <h3>Option A: Official Tarball (Recommended)</h3>
+      <ol class="steps">
+        <li>Download latest version:</li>
+      </ol>
+      <pre><code>wget https://go.dev/dl/go1.21.5.linux-amd64.tar.gz</code><button class="copy-btn" data-copy="wget https://go.dev/dl/go1.21.5.linux-amd64.tar.gz">COPY</button></pre>
+      <ol class="steps">
+        <li>Remove old installation and extract:</li>
+      </ol>
+      <pre><code>sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz</code><button class="copy-btn" data-copy="sudo rm -rf /usr/local/go\nsudo tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz">COPY</button></pre>
+      <ol class="steps">
+        <li>Add to PATH (edit <code>~/.bashrc</code> or <code>~/.profile</code>):</li>
+      </ol>
+      <pre><code>export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin</code><button class="copy-btn" data-copy="export PATH=$PATH:/usr/local/go/bin\nexport GOPATH=$HOME/go\nexport PATH=$PATH:$GOPATH/bin">COPY</button></pre>
+      <ol class="steps">
+        <li>Reload: <code>source ~/.bashrc</code></li>
+      </ol>
+
+      <h3>Option B: Package Manager</h3>
+      <h4>Debian/Ubuntu (may be outdated):</h4>
+      <pre><code>sudo apt update
+sudo apt install golang-go -y</code><button class="copy-btn" data-copy="sudo apt update\nsudo apt install golang-go -y">COPY</button></pre>
+      <h4>Fedora:</h4>
+      <pre><code>sudo dnf install golang -y</code><button class="copy-btn" data-copy="sudo dnf install golang -y">COPY</button></pre>
+      <h4>Arch:</h4>
+      <pre><code>sudo pacman -S go</code><button class="copy-btn" data-copy="sudo pacman -S go">COPY</button></pre>
+      <div class="info warn"><strong>Warning:</strong> Distro packages may lag behind official releases. Use tarball for latest version.</div>
+    </section>
+
+    <section id="verify" class="panel">
+      <h2>Verification</h2>
+      <pre><code>go version
+go env GOPATH
+go env GOROOT</code><button class="copy-btn" data-copy="go version\ngo env GOPATH\ngo env GOROOT">COPY</button></pre>
+      
+      <h3>Test Installation</h3>
+      <p>Create <code>hello.go</code>:</p>
+      <pre><code>package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Go is installed!")
+}</code><button class="copy-btn" data-copy="package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Go is installed!\")\n}">COPY</button></pre>
+      <p>Run directly:</p>
+      <pre><code>go run hello.go</code><button class="copy-btn" data-copy="go run hello.go">COPY</button></pre>
+      <p>Or build executable:</p>
+      <pre><code>go build hello.go
+./hello  # Linux/macOS
+hello.exe # Windows</code><button class="copy-btn" data-copy="go build hello.go\n./hello">COPY</button></pre>
+      <div class="info success"><strong>Expected Output:</strong> <code>Go is installed!</code></div>
+    </section>
+
+    <section id="workspace" class="panel">
+      <h2>Workspace Setup</h2>
+      <h3>Go Modules (Modern Approach)</h3>
+      <p>Create a new project:</p>
+      <pre><code>mkdir myproject && cd myproject
+go mod init github.com/yourusername/myproject</code><button class="copy-btn" data-copy="mkdir myproject && cd myproject\ngo mod init github.com/yourusername/myproject">COPY</button></pre>
+      <p>This creates <code>go.mod</code> file for dependency management.</p>
+
+      <h3>Project Structure</h3>
+      <pre><code>myproject/
+├── go.mod
+├── go.sum
+├── main.go
+├── internal/
+│   └── utils/
+│       └── helper.go
+└── pkg/
+    └── service/
+        └── api.go</code><button class="copy-btn" data-copy="myproject/\n├── go.mod\n├── go.sum\n├── main.go\n├── internal/\n│   └── utils/\n│       └── helper.go\n└── pkg/\n    └── service/\n        └── api.go">COPY</button></pre>
+
+      <h3>Add Dependencies</h3>
+      <pre><code>go get github.com/gin-gonic/gin
+go get -u github.com/some/package  # Update to latest</code><button class="copy-btn" data-copy="go get github.com/gin-gonic/gin\ngo get -u github.com/some/package">COPY</button></pre>
+
+      <h3>Tidy Dependencies</h3>
+      <pre><code>go mod tidy  # Remove unused, add missing</code><button class="copy-btn" data-copy="go mod tidy">COPY</button></pre>
+    </section>
+
+    <section id="tools" class="panel">
+      <h2>Essential Tools</h2>
+      
+      <h3>Formatting & Linting</h3>
+      <pre><code># Format code (standard style)
+go fmt ./...
+
+# Vet for common issues
+go vet ./...
+
+# Install golangci-lint (meta-linter)
+go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+golangci-lint run</code><button class="copy-btn" data-copy="go fmt ./...\ngo vet ./...\ngo install github.com/golangci/golangci-lint/cmd/golangci-lint@latest\ngolangci-lint run">COPY</button></pre>
+
+      <h3>Testing</h3>
+      <pre><code># Run all tests
+go test ./...
+
+# With coverage
+go test -cover ./...
+
+# Verbose output
+go test -v ./...
+
+# Benchmarks
+go test -bench=.</code><button class="copy-btn" data-copy="go test ./...\ngo test -cover ./...\ngo test -v ./...\ngo test -bench=.">COPY</button></pre>
+
+      <h3>Build & Install</h3>
+      <pre><code># Build executable
+go build -o myapp
+
+# Build for different platforms
+GOOS=linux GOARCH=amd64 go build -o myapp-linux
+GOOS=windows GOARCH=amd64 go build -o myapp.exe
+
+# Install to $GOPATH/bin
+go install</code><button class="copy-btn" data-copy="go build -o myapp\nGOOS=linux GOARCH=amd64 go build -o myapp-linux\nGOOS=windows GOARCH=amd64 go build -o myapp.exe\ngo install">COPY</button></pre>
+
+      <h3>Popular Tools</h3>
+      <pre><code># gopls (language server for IDEs)
+go install golang.org/x/tools/gopls@latest
+
+# delve (debugger)
+go install github.com/go-delve/delve/cmd/dlv@latest
+
+# staticcheck (linter)
+go install honnef.co/go/tools/cmd/staticcheck@latest</code><button class="copy-btn" data-copy="go install golang.org/x/tools/gopls@latest\ngo install github.com/go-delve/delve/cmd/dlv@latest\ngo install honnef.co/go/tools/cmd/staticcheck@latest">COPY</button></pre>
+    </section>
+
+    <section id="best-practices" class="panel">
+      <h2>Best Practices</h2>
+      <ul>
+        <li><strong>Use Go Modules:</strong> Always init with <code>go mod init</code>.</li>
+        <li><strong>Format automatically:</strong> Run <code>gofmt</code> or <code>go fmt</code> before commits.</li>
+        <li><strong>Follow conventions:</strong> Package names lowercase, no underscores.</li>
+        <li><strong>Error handling:</strong> Check every error explicitly.</li>
+        <li><strong>Testing:</strong> Write tests in <code>*_test.go</code> files.</li>
+        <li><strong>Documentation:</strong> Use godoc comments (<code>// Package pkg ...</code>).</li>
+        <li><strong>Vendoring:</strong> Use <code>go mod vendor</code> for offline builds.</li>
+      </ul>
+
+      <details class="collapsible">
+        <summary>IDE Setup</summary>
+        <div class="collapsible-content">
+          <p><strong>VS Code:</strong></p>
+          <ol class="steps">
+            <li>Install <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VS Code</a>.</li>
+            <li>Install "Go" extension by Go Team at Google.</li>
+            <li>Install recommended tools when prompted (gopls, dlv, etc.).</li>
+          </ol>
+          <p><strong>GoLand:</strong> JetBrains IDE with full Go support (commercial).</p>
+          <p><strong>Vim/Neovim:</strong> Install vim-go plugin or use LSP with gopls.</p>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary>Environment Variables</summary>
+        <div class="collapsible-content">
+          <p><strong>GOROOT:</strong> Go installation directory (set automatically).</p>
+          <p><strong>GOPATH:</strong> Workspace for installed binaries and cached modules (default: <code>~/go</code>).</p>
+          <p><strong>GOBIN:</strong> Directory for installed executables (default: <code>$GOPATH/bin</code>).</p>
+          <p><strong>GO111MODULE:</strong> Enable modules (default: <code>on</code> since Go 1.16).</p>
+          <p><strong>GOPROXY:</strong> Module proxy (default: <code>https://proxy.golang.org</code>).</p>
+          <p><strong>View all:</strong> <code>go env</code></p>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary>Cross-Compilation</summary>
+        <div class="collapsible-content">
+          <pre><code># Linux AMD64
+GOOS=linux GOARCH=amd64 go build -o app-linux
+
+# Windows AMD64
+GOOS=windows GOARCH=amd64 go build -o app.exe
+
+# macOS ARM64 (M1/M2)
+GOOS=darwin GOARCH=arm64 go build -o app-macos-arm64
+
+# List all platforms
+go tool dist list</code><button class="copy-btn" data-copy="GOOS=linux GOARCH=amd64 go build -o app-linux\nGOOS=windows GOARCH=amd64 go build -o app.exe\nGOOS=darwin GOARCH=arm64 go build -o app-macos-arm64\ngo tool dist list">COPY</button></pre>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      Go Install Guide • Internal CSS/JS • Dark Theme • Updated Nov 15 2025
+    </footer>
+  </div>
+
+  <div id="copyFeedback" class="copy-feedback">Copied!</div>
+  <script>
+    // Copy buttons
+    const feedback = document.getElementById('copyFeedback');
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          feedback.classList.add('show');
+          setTimeout(()=>feedback.classList.remove('show'),1400);
+        });
+      });
+    });
+    // Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+  </script>
+</body>
+</html>

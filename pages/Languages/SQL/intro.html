@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL Introduction | DevSphere</title>
+  <link rel="stylesheet" href="../../../components/breadcrumb.css" />
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <nav id="breadcrumb" class="breadcrumb-container"></nav>
+    <header class="page-header">
+      <h1>🗄️ SQL Introduction</h1>
+      <p class="subtitle">The standard language for managing and querying relational databases.</p>
+      <div class="badge-row">
+        <span class="badge">DECLARATIVE</span>
+        <span class="badge">RELATIONAL</span>
+        <span class="badge">UNIVERSAL</span>
+        <span class="badge">DATA MANAGEMENT</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is SQL?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#databases">Database Systems</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Essential Skill:</strong> SQL is one of the most in-demand tech skills. It's used by data analysts, backend developers, data scientists, and database administrators.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is SQL?</h2>
+      <p><strong>SQL (Structured Query Language)</strong> is a standardized programming language specifically designed for managing and manipulating relational databases. Created in the 1970s, SQL has become the universal language for database interaction.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Declarative:</strong> You specify what you want, not how to get it.</li>
+        <li><strong>Standardized:</strong> ANSI/ISO standard with wide adoption.</li>
+        <li><strong>Set-Based:</strong> Operates on entire sets of data, not individual records.</li>
+        <li><strong>Portable:</strong> Works across different database systems with minor variations.</li>
+        <li><strong>Powerful:</strong> Handles simple queries to complex analytical operations.</li>
+        <li><strong>English-Like:</strong> Readable syntax using keywords like SELECT, WHERE, JOIN.</li>
+      </ul>
+      <div class="info-box">
+        <strong>Pronunciation:</strong> SQL can be pronounced as "S-Q-L" or "sequel" — both are widely accepted.
+      </div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use SQL?</h2>
+      <p>SQL is the backbone of data management in applications worldwide. From small websites to enterprise systems, SQL powers data storage, retrieval, and analysis.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Web Applications</span>
+        <span class="topic">Data Analysis</span>
+        <span class="topic">Business Intelligence</span>
+        <span class="topic">E-commerce</span>
+        <span class="topic">Banking Systems</span>
+        <span class="topic">Healthcare Records</span>
+        <span class="topic">Inventory Management</span>
+        <span class="topic">Reporting</span>
+        <span class="topic">Data Warehousing</span>
+        <span class="topic">Analytics</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Universal:</strong> Works with MySQL, PostgreSQL, SQL Server, Oracle, and more.</li>
+        <li><strong>Efficient:</strong> Optimized for working with large datasets.</li>
+        <li><strong>Reliable:</strong> ACID compliance ensures data integrity.</li>
+        <li><strong>Easy to Learn:</strong> Readable syntax similar to English.</li>
+        <li><strong>In-Demand:</strong> Essential skill for many tech roles.</li>
+        <li><strong>Mature Ecosystem:</strong> Decades of development and optimization.</li>
+      </ul>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      
+      <h3>Tables (Relations)</h3>
+      <p>Data is organized in tables with rows (records) and columns (fields):</p>
+      <pre><code>-- Example: users table
++----+---------+-----+------------------+
+| id | name    | age | email            |
++----+---------+-----+------------------+
+|  1 | Alice   |  25 | alice@email.com  |
+|  2 | Bob     |  30 | bob@email.com    |
+|  3 | Charlie |  35 | charlie@email.com|
++----+---------+-----+------------------+</code></pre>
+
+      <h3>Basic SQL Commands</h3>
+      <pre><code>-- SELECT: Retrieve data
+SELECT name, email FROM users;
+
+-- WHERE: Filter results
+SELECT * FROM users WHERE age > 25;
+
+-- INSERT: Add new records
+INSERT INTO users (name, age, email)
+VALUES ('David', 28, 'david@email.com');
+
+-- UPDATE: Modify existing records
+UPDATE users SET age = 26 WHERE name = 'Alice';
+
+-- DELETE: Remove records
+DELETE FROM users WHERE id = 3;</code><button class="copy-btn" data-copy="SELECT * FROM users;">COPY</button></pre>
+
+      <h3>SQL Statement Categories</h3>
+      <div class="grid-2">
+        <div class="info-box">
+          <strong>DDL (Data Definition Language)</strong>
+          <ul>
+            <li><code>CREATE</code> - Create tables/databases</li>
+            <li><code>ALTER</code> - Modify structure</li>
+            <li><code>DROP</code> - Delete tables/databases</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <strong>DML (Data Manipulation Language)</strong>
+          <ul>
+            <li><code>SELECT</code> - Query data</li>
+            <li><code>INSERT</code> - Add data</li>
+            <li><code>UPDATE</code> - Modify data</li>
+            <li><code>DELETE</code> - Remove data</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="examples" class="card">
+      <h2>Practical Examples</h2>
+      
+      <h3>Creating a Table</h3>
+      <pre><code>CREATE TABLE employees (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    salary DECIMAL(10, 2),
+    hire_date DATE,
+    department_id INT
+);</code><button class="copy-btn" data-copy="CREATE TABLE employees (id INT PRIMARY KEY AUTO_INCREMENT, first_name VARCHAR(50) NOT NULL);">COPY</button></pre>
+
+      <h3>Inserting Data</h3>
+      <pre><code>-- Insert single record
+INSERT INTO employees (first_name, last_name, email, salary, hire_date)
+VALUES ('John', 'Doe', 'john.doe@company.com', 75000, '2024-01-15');
+
+-- Insert multiple records
+INSERT INTO employees (first_name, last_name, email, salary, hire_date)
+VALUES 
+    ('Jane', 'Smith', 'jane.smith@company.com', 80000, '2024-02-01'),
+    ('Mike', 'Johnson', 'mike.j@company.com', 65000, '2024-03-10');</code><button class="copy-btn" data-copy="INSERT INTO employees (first_name, last_name) VALUES ('John', 'Doe');">COPY</button></pre>
+
+      <h3>Querying with Conditions</h3>
+      <pre><code>-- Find high earners
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary > 70000
+ORDER BY salary DESC;
+
+-- Filter with multiple conditions
+SELECT *
+FROM employees
+WHERE salary BETWEEN 60000 AND 80000
+  AND hire_date >= '2024-01-01';
+
+-- Pattern matching
+SELECT *
+FROM employees
+WHERE email LIKE '%@company.com';</code><button class="copy-btn" data-copy="SELECT * FROM employees WHERE salary > 70000;">COPY</button></pre>
+
+      <h3>Aggregation & Grouping</h3>
+      <pre><code>-- Count employees
+SELECT COUNT(*) AS total_employees
+FROM employees;
+
+-- Average salary by department
+SELECT department_id, 
+       AVG(salary) AS avg_salary,
+       COUNT(*) AS employee_count
+FROM employees
+GROUP BY department_id
+HAVING AVG(salary) > 70000;</code><button class="copy-btn" data-copy="SELECT COUNT(*) FROM employees;">COPY</button></pre>
+
+      <h3>Joining Tables</h3>
+      <pre><code>-- Inner Join: Get employee names with department names
+SELECT e.first_name, e.last_name, d.department_name
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id;
+
+-- Left Join: Include employees without departments
+SELECT e.first_name, e.last_name, d.department_name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id;</code><button class="copy-btn" data-copy="SELECT * FROM employees e INNER JOIN departments d ON e.department_id = d.id;">COPY</button></pre>
+    </section>
+
+    <section id="databases" class="card accent">
+      <h2>Popular Database Systems</h2>
+      
+      <div class="grid-2">
+        <div class="info-box">
+          <h3>MySQL</h3>
+          <p>Most popular open-source database</p>
+          <ul>
+            <li>Used by Facebook, Twitter, YouTube</li>
+            <li>Great for web applications</li>
+            <li>Fast read operations</li>
+          </ul>
+        </div>
+        
+        <div class="info-box">
+          <h3>PostgreSQL</h3>
+          <p>Advanced open-source database</p>
+          <ul>
+            <li>ACID compliant, highly reliable</li>
+            <li>Advanced features (JSON, arrays)</li>
+            <li>Excellent for complex queries</li>
+          </ul>
+        </div>
+        
+        <div class="info-box">
+          <h3>SQLite</h3>
+          <p>Lightweight, file-based database</p>
+          <ul>
+            <li>No server setup required</li>
+            <li>Perfect for mobile apps</li>
+            <li>Great for learning SQL</li>
+          </ul>
+        </div>
+        
+        <div class="info-box">
+          <h3>Microsoft SQL Server</h3>
+          <p>Enterprise database system</p>
+          <ul>
+            <li>Tight integration with .NET</li>
+            <li>Powerful analytics tools</li>
+            <li>Used in enterprise environments</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>SQL Dialects</h3>
+      <p>While SQL is standardized, each database has slight variations:</p>
+      <ul>
+        <li><strong>MySQL:</strong> <code>LIMIT</code>, <code>AUTO_INCREMENT</code></li>
+        <li><strong>PostgreSQL:</strong> <code>LIMIT</code>, <code>SERIAL</code>, advanced data types</li>
+        <li><strong>SQL Server:</strong> <code>TOP</code>, <code>IDENTITY</code>, T-SQL extensions</li>
+        <li><strong>Oracle:</strong> <code>ROWNUM</code>, PL/SQL</li>
+      </ul>
+    </section>
+
+    <section id="advanced" class="card">
+      <h2>Advanced SQL Concepts</h2>
+      
+      <h3>Subqueries</h3>
+      <pre><code>-- Find employees earning above average
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);</code><button class="copy-btn" data-copy="SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees);">COPY</button></pre>
+
+      <h3>Indexes (Performance)</h3>
+      <pre><code>-- Create index for faster queries
+CREATE INDEX idx_email ON employees(email);
+CREATE INDEX idx_dept_salary ON employees(department_id, salary);</code><button class="copy-btn" data-copy="CREATE INDEX idx_email ON employees(email);">COPY</button></pre>
+
+      <h3>Transactions</h3>
+      <pre><code>-- Ensure data consistency
+START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+
+COMMIT;  -- Or ROLLBACK to undo changes</code><button class="copy-btn" data-copy="START TRANSACTION;">COPY</button></pre>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li><strong>Install a Database:</strong> Start with SQLite or MySQL</li>
+        <li><strong>Practice Basics:</strong> SELECT, INSERT, UPDATE, DELETE</li>
+        <li><strong>Learn Joins:</strong> Master INNER, LEFT, RIGHT, FULL joins</li>
+        <li><strong>Understand Indexes:</strong> Optimize query performance</li>
+        <li><strong>Practice Online:</strong> SQLZoo, LeetCode, HackerRank</li>
+        <li><strong>Study Normalization:</strong> Database design best practices</li>
+        <li><strong>Learn Transactions:</strong> ACID properties and concurrency</li>
+      </ul>
+      
+      <div class="info-box">
+        <strong>Learning Resources:</strong>
+        <ul>
+          <li><a href="https://www.w3schools.com/sql/" target="_blank">W3Schools SQL Tutorial</a></li>
+          <li><a href="https://sqlzoo.net/" target="_blank">SQLZoo Interactive Tutorials</a></li>
+          <li><a href="https://mode.com/sql-tutorial/" target="_blank">Mode SQL Tutorial</a></li>
+          <li><a href="https://github.com/Srijan-XI/Install-and-Learn-DevLangs/tree/main/SQL/questions" target="_blank">Practice Questions</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere | <a href="../../../index.html">Back to Home</a> | <a href="../languages.html">All Languages</a></p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback">Copied!</div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          const feedback = document.querySelector('.copy-feedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+  </script>
+  <script src="../../../components/breadcrumb.js"></script>
+</body>
+</html>

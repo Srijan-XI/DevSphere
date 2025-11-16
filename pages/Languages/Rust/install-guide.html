@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rust Installation Guide | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; margin:.85rem 0; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .step { background:#0d1117; border:1px solid #30363d; padding:1.2rem; border-radius:.6rem; margin:.85rem 0; }
+    .step-number { display:inline-block; width:1.75rem; height:1.75rem; background:#8b5cf6; color:#fff; text-align:center; line-height:1.75rem; border-radius:50%; font-weight:700; font-size:.85rem; margin-right:.5rem; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    summary { cursor:pointer; font-weight:600; color:#f59e0b; padding:.55rem 0; user-select:none; }
+    summary:hover { color:#fbbf24; }
+    details { margin:.85rem 0; }
+    details[open] summary { margin-bottom:.6rem; }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>🦀 Rust Installation Guide</h1>
+      <p class="subtitle">Install Rust toolchain and set up your development environment for systems programming.</p>
+      <div class="badge-row">
+        <span class="badge">RUSTUP</span>
+        <span class="badge">CARGO</span>
+        <span class="badge">CROSS-PLATFORM</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#prerequisites">Prerequisites</a>
+        <a href="#windows">Windows</a>
+        <a href="#macos">macOS</a>
+        <a href="#linux">Linux</a>
+        <a href="#verify">Verify</a>
+        <a href="#tooling">Tooling</a>
+        <a href="#next">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Recommended Method:</strong> Use <code>rustup</code> - the official Rust toolchain installer and version manager. It handles installation, updates, and managing multiple Rust versions.
+      </div>
+    </header>
+
+    <section id="prerequisites" class="card accent">
+      <h2>Prerequisites</h2>
+      <ul>
+        <li><strong>Windows:</strong> Visual Studio 2022 with C++ build tools or MinGW-w64</li>
+        <li><strong>macOS:</strong> Xcode Command Line Tools (installs automatically)</li>
+        <li><strong>Linux:</strong> GCC or Clang compiler and linker</li>
+        <li><strong>All Platforms:</strong> Internet connection for downloading components</li>
+      </ul>
+      <div class="info-box warning">
+        <strong>Important:</strong> Rust requires a C linker and sometimes C compiler. On Windows, you'll be prompted to install Visual Studio Build Tools if not present.
+      </div>
+    </section>
+
+    <section id="windows" class="card">
+      <h2>Windows Installation</h2>
+      
+      <h3>Method 1: Rustup (Recommended)</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        <strong>Download Rustup Installer</strong>
+        <p>Visit <a href="https://rustup.rs/" target="_blank">https://rustup.rs/</a> and download <code>rustup-init.exe</code></p>
+      </div>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <strong>Run Installer</strong>
+        <p>Double-click the downloaded file. You'll be prompted to install Visual Studio C++ Build Tools if needed.</p>
+        <pre><code># Choose option 1 for default installation
+# Or option 2 to customize installation</code><button class="copy-btn" data-copy="# Default installation - press 1">COPY</button></pre>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <strong>Install Visual Studio Build Tools (if prompted)</strong>
+        <p>Follow the link provided by rustup to install Microsoft C++ Build Tools. Select "Desktop development with C++" workload.</p>
+      </div>
+
+      <div class="step">
+        <span class="step-number">4</span>
+        <strong>Complete Installation</strong>
+        <p>After VS Build Tools installation, re-run rustup-init.exe and select default installation.</p>
+      </div>
+
+      <div class="step">
+        <span class="step-number">5</span>
+        <strong>Add to PATH</strong>
+        <p>Rustup automatically adds Rust to PATH. Restart your terminal or PowerShell.</p>
+        <pre><code># Verify PATH (PowerShell)
+$env:PATH -split ';' | Select-String cargo</code><button class="copy-btn" data-copy="$env:PATH -split ';' | Select-String cargo">COPY</button></pre>
+      </div>
+
+      <h3>Method 2: Windows Package Manager (winget)</h3>
+      <pre><code># Install Rustup via winget
+winget install Rustlang.Rustup
+
+# Restart terminal and complete setup
+rustup-init</code><button class="copy-btn" data-copy="winget install Rustlang.Rustup">COPY</button></pre>
+
+      <h3>Method 3: Chocolatey</h3>
+      <pre><code># Install via Chocolatey
+choco install rust
+
+# Update Rust
+rustup update</code><button class="copy-btn" data-copy="choco install rust">COPY</button></pre>
+    </section>
+
+    <section id="macos" class="card">
+      <h2>macOS Installation</h2>
+
+      <h3>Method 1: Rustup via Terminal (Recommended)</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        <strong>Install Xcode Command Line Tools (if not already installed)</strong>
+        <pre><code>xcode-select --install</code><button class="copy-btn" data-copy="xcode-select --install">COPY</button></pre>
+      </div>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <strong>Install Rustup</strong>
+        <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code><button class="copy-btn" data-copy="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh">COPY</button></pre>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <strong>Follow Installation Prompts</strong>
+        <p>Select option 1 for default installation. The installer will configure your PATH automatically.</p>
+      </div>
+
+      <div class="step">
+        <span class="step-number">4</span>
+        <strong>Activate Rust Environment</strong>
+        <pre><code># Add to current shell
+source "$HOME/.cargo/env"
+
+# Or restart terminal</code><button class="copy-btn" data-copy='source "$HOME/.cargo/env"'>COPY</button></pre>
+      </div>
+
+      <h3>Method 2: Homebrew</h3>
+      <pre><code># Install Rust via Homebrew
+brew install rust
+
+# Note: Homebrew installation doesn't include rustup
+# For full toolchain management, use rustup method instead</code><button class="copy-btn" data-copy="brew install rust">COPY</button></pre>
+      <div class="info-box warning">
+        <strong>Note:</strong> Homebrew installs Rust but not rustup. Using rustup (Method 1) is recommended for easier updates and toolchain management.
+      </div>
+    </section>
+
+    <section id="linux" class="card">
+      <h2>Linux Installation</h2>
+
+      <h3>Method 1: Rustup (Recommended for all distros)</h3>
+      <div class="step">
+        <span class="step-number">1</span>
+        <strong>Install Build Essentials</strong>
+        <pre><code># Ubuntu/Debian
+sudo apt update
+sudo apt install build-essential
+
+# Fedora/RHEL/CentOS
+sudo dnf install gcc gcc-c++
+
+# Arch Linux
+sudo pacman -S base-devel
+
+# openSUSE
+sudo zypper install -t pattern devel_basis</code><button class="copy-btn" data-copy="sudo apt install build-essential">COPY</button></pre>
+      </div>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <strong>Install Rustup</strong>
+        <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code><button class="copy-btn" data-copy="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh">COPY</button></pre>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <strong>Select Installation Options</strong>
+        <p>Choose option 1 for default installation. Rustup will modify your shell profile (~/.bashrc, ~/.zshrc, etc.)</p>
+      </div>
+
+      <div class="step">
+        <span class="step-number">4</span>
+        <strong>Activate Environment</strong>
+        <pre><code># Add to current shell
+source "$HOME/.cargo/env"
+
+# Or restart terminal</code><button class="copy-btn" data-copy='source "$HOME/.cargo/env"'>COPY</button></pre>
+      </div>
+
+      <h3>Method 2: Package Managers</h3>
+      <details>
+        <summary>Ubuntu/Debian (apt)</summary>
+        <pre><code>sudo apt update
+sudo apt install rustc cargo
+
+# Note: May not be latest version
+# Use rustup for latest releases</code><button class="copy-btn" data-copy="sudo apt install rustc cargo">COPY</button></pre>
+      </details>
+
+      <details>
+        <summary>Fedora/RHEL (dnf)</summary>
+        <pre><code>sudo dnf install rust cargo</code><button class="copy-btn" data-copy="sudo dnf install rust cargo">COPY</button></pre>
+      </details>
+
+      <details>
+        <summary>Arch Linux (pacman)</summary>
+        <pre><code>sudo pacman -S rust</code><button class="copy-btn" data-copy="sudo pacman -S rust">COPY</button></pre>
+      </details>
+    </section>
+
+    <section id="verify" class="card">
+      <h2>Verify Installation</h2>
+      <pre><code># Check Rust compiler version
+rustc --version
+# Output: rustc 1.XX.X (hash YYYY-MM-DD)
+
+# Check Cargo version
+cargo --version
+# Output: cargo 1.XX.X (hash YYYY-MM-DD)
+
+# Check Rustup version
+rustup --version
+# Output: rustup 1.XX.X (hash YYYY-MM-DD)</code><button class="copy-btn" data-copy="rustc --version\ncargo --version\nrustup --version">COPY</button></pre>
+
+      <h3>Create and Run Hello World</h3>
+      <pre><code># Create new project
+cargo new hello_rust
+cd hello_rust
+
+# View generated code
+cat src/main.rs
+
+# Build and run
+cargo run
+
+# Expected output: Hello, world!</code><button class="copy-btn" data-copy="cargo new hello_rust\ncd hello_rust\ncargo run">COPY</button></pre>
+    </section>
+
+    <section id="tooling" class="card">
+      <h2>Essential Tooling & Setup</h2>
+
+      <h3>Update Rust</h3>
+      <pre><code># Update Rust to latest stable
+rustup update
+
+# Check for updates
+rustup check
+
+# View installed toolchains
+rustup show</code><button class="copy-btn" data-copy="rustup update">COPY</button></pre>
+
+      <h3>Install Additional Components</h3>
+      <pre><code># Install Rust formatter
+rustup component add rustfmt
+
+# Install Clippy (linter)
+rustup component add clippy
+
+# Install Rust Language Server (for IDE support)
+rustup component add rust-analyzer
+
+# View all components
+rustup component list</code><button class="copy-btn" data-copy="rustup component add rustfmt\nrustup component add clippy">COPY</button></pre>
+
+      <h3>Toolchain Management</h3>
+      <pre><code># Install nightly toolchain
+rustup toolchain install nightly
+
+# Set default toolchain
+rustup default stable
+
+# Use nightly for specific project
+cd my_project
+rustup override set nightly
+
+# Install specific version
+rustup install 1.75.0</code><button class="copy-btn" data-copy="rustup toolchain install nightly">COPY</button></pre>
+
+      <h3>IDE Setup - VS Code</h3>
+      <div class="info-box">
+        <strong>Recommended Extensions:</strong>
+        <ul>
+          <li><strong>rust-analyzer:</strong> Official Rust language server with IntelliSense, refactoring, code completion</li>
+          <li><strong>CodeLLDB:</strong> Native debugger support</li>
+          <li><strong>Better TOML:</strong> Syntax highlighting for Cargo.toml</li>
+          <li><strong>crates:</strong> Dependency version management</li>
+        </ul>
+      </div>
+      <pre><code># Install rust-analyzer via rustup
+rustup component add rust-analyzer
+
+# VS Code will auto-detect and use it</code><button class="copy-btn" data-copy="rustup component add rust-analyzer">COPY</button></pre>
+
+      <h3>Useful Cargo Commands</h3>
+      <pre><code># Create new binary project
+cargo new my_app
+
+# Create new library
+cargo new --lib my_lib
+
+# Build project
+cargo build
+
+# Build with optimizations
+cargo build --release
+
+# Run project
+cargo run
+
+# Run with arguments
+cargo run -- arg1 arg2
+
+# Run tests
+cargo test
+
+# Check code without building
+cargo check
+
+# Format code
+cargo fmt
+
+# Run linter
+cargo clippy
+
+# Build documentation
+cargo doc --open
+
+# Add dependency
+cargo add serde
+
+# Update dependencies
+cargo update</code><button class="copy-btn" data-copy="cargo new my_app\ncargo run\ncargo test">COPY</button></pre>
+
+      <h3>Install Popular Tools</h3>
+      <pre><code># Install cargo-edit (for cargo add/rm/upgrade)
+cargo install cargo-edit
+
+# Install cargo-watch (auto-rebuild on changes)
+cargo install cargo-watch
+
+# Install cargo-expand (expand macros)
+cargo install cargo-expand
+
+# Install cargo-audit (security vulnerability scan)
+cargo install cargo-audit
+
+# Usage examples
+cargo watch -x run          # Auto-run on file changes
+cargo audit                 # Check for vulnerabilities
+cargo upgrade               # Update dependencies in Cargo.toml</code><button class="copy-btn" data-copy="cargo install cargo-edit\ncargo install cargo-watch">COPY</button></pre>
+    </section>
+
+    <section id="next" class="card">
+      <h2>Next Steps</h2>
+      <ul>
+        <li>✅ <strong>Installation Complete!</strong> You're ready to write Rust code.</li>
+        <li>📘 Read <a href="intro.html">Rust Introduction</a> to learn core concepts</li>
+        <li>📚 Work through "The Rust Programming Language" book: <code>rustup docs --book</code></li>
+        <li>🎯 Complete Rustlings exercises: <code>git clone https://github.com/rust-lang/rustlings</code></li>
+        <li>🔧 Build a CLI tool with <code>clap</code> crate</li>
+        <li>🌐 Create a web server with Actix-web or Rocket</li>
+        <li>💬 Join the Rust community: <a href="https://users.rust-lang.org/" target="_blank">Rust Users Forum</a></li>
+      </ul>
+
+      <div class="info-box success">
+        <strong>Pro Tip:</strong> Run <code>rustup docs</code> to open offline documentation including The Rust Book, standard library docs, and more!
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spring Boot — Introduction | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden;margin-bottom:1.25rem}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    footer{margin-top:3.5rem;text-align:center;font-size:.8rem;color:#8b92a0}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Spring Boot — Introduction</h1>
+      <p class="subtitle">Opinionated Java framework: starter dependencies, auto-configuration, embedded servers, and production-ready features.</p>
+      <div class="badge-row">
+        <span class="badge">Starters</span>
+        <span class="badge">Auto-Config</span>
+        <span class="badge">REST</span>
+        <span class="badge">Actuator</span>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#starters">Starters</a>
+        <a href="#autoconfig">Auto-Configuration</a>
+        <a href="#rest">REST APIs</a>
+        <a href="#docker">Docker Dev</a>
+        <a href="#structure">Folder Structure</a>
+        <a href="#pitfalls">Common Pitfalls</a>
+      </nav>
+    </header>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>Spring Boot simplifies Spring application development with convention-over-configuration, embedded servers (Tomcat/Jetty/Undertow), and production-ready defaults.</p>
+      <pre><code>@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}</code><button class="copy-btn" data-copy="@SpringBootApplication">COPY</button></pre>
+    </section>
+
+    <section id="starters" class="card">
+      <h2>Starters</h2>
+      <p>Starter dependencies bundle related libraries for common use cases: web, data, security, messaging, etc.</p>
+      <pre><code>&lt;!-- pom.xml --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;</code><button class="copy-btn" data-copy="spring-boot-starter-web">COPY</button></pre>
+      <ul>
+        <li><code>spring-boot-starter-web</code>: REST APIs, embedded Tomcat, Jackson</li>
+        <li><code>spring-boot-starter-data-jpa</code>: Hibernate, Spring Data repositories</li>
+        <li><code>spring-boot-starter-security</code>: Authentication & authorization</li>
+      </ul>
+    </section>
+
+    <section id="autoconfig" class="card">
+      <h2>Auto-Configuration</h2>
+      <p>Spring Boot auto-configures beans based on classpath dependencies and properties. Customize via <code>application.properties</code> or <code>application.yml</code>.</p>
+      <pre><code># application.properties
+server.port=8080
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydb
+spring.datasource.username=user
+spring.datasource.password=pass
+spring.jpa.hibernate.ddl-auto=update</code><button class="copy-btn" data-copy="server.port=8080">COPY</button></pre>
+    </section>
+
+    <section id="rest" class="card">
+      <h2>REST APIs</h2>
+      <p>Build REST controllers with <code>@RestController</code>, <code>@GetMapping</code>, <code>@PostMapping</code>, etc. Spring Boot auto-serializes to JSON.</p>
+      <pre><code>@RestController
+@RequestMapping("/api/items")
+public class ItemController {
+    
+    @GetMapping
+    public List&lt;Item&gt; getAll() {
+        return itemRepository.findAll();
+    }
+    
+    @GetMapping("/{id}")
+    public Item getById(@PathVariable Long id) {
+        return itemRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+    
+    @PostMapping
+    public Item create(@RequestBody Item item) {
+        return itemRepository.save(item);
+    }
+}</code><button class="copy-btn" data-copy="@RestController\n@RequestMapping(\"/api/items\")">COPY</button></pre>
+    </section>
+
+    <section id="actuator" class="card">
+      <h2>Actuator</h2>
+      <p>Actuator provides production-ready endpoints for monitoring and management: health, metrics, info, env, etc.</p>
+      <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code><button class="copy-btn" data-copy="spring-boot-starter-actuator">COPY</button></pre>
+      <pre><code># application.properties
+management.endpoints.web.exposure.include=health,info,metrics
+management.endpoint.health.show-details=always</code><button class="copy-btn" data-copy="management.endpoints.web.exposure.include=health,info,metrics">COPY</button></pre>
+      <pre><code># Access endpoints
+curl http://localhost:8080/actuator/health
+curl http://localhost:8080/actuator/metrics</code><button class="copy-btn" data-copy="curl http://localhost:8080/actuator/health">COPY</button></pre>
+    </section>
+
+    <section id="docker" class="card">
+      <h2>Docker Dev Environment</h2>
+      <pre><code># Dockerfile (multi-stage)
+FROM eclipse-temurin:17-jdk-alpine AS build
+WORKDIR /app
+COPY mvnw pom.xml ./
+COPY .mvn .mvn
+RUN ./mvnw dependency:go-offline
+COPY src ./src
+RUN ./mvnw package -DskipTests
+
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+CMD ["java", "-jar", "app.jar"]
+
+# docker-compose.yml
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/appdb
+    depends_on:
+      - db
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:</code><button class="copy-btn" data-copy="docker compose up">COPY</button></pre>
+    </section>
+
+    <section id="structure" class="card">
+      <h2>Folder Structure</h2>
+      <pre><code>project/
+  src/
+    main/
+      java/
+        com/example/app/
+          Application.java
+          config/
+          controller/
+          service/
+          repository/
+          model/
+          dto/
+          exception/
+      resources/
+        application.properties
+        application-dev.yml
+        application-prod.yml
+        static/
+        templates/
+    test/
+      java/
+  pom.xml
+  Dockerfile
+  .env</code><button class="copy-btn" data-copy="src/main/java/">COPY</button></pre>
+    </section>
+
+    <section id="pitfalls" class="card">
+      <h2>Common Pitfalls</h2>
+      <ul>
+        <li><strong>Missing @SpringBootApplication:</strong> Main class needs <code>@SpringBootApplication</code> to enable auto-config and component scanning.</li>
+        <li><strong>Wrong package structure:</strong> Controllers/services must be in or under the main class package for auto-detection.</li>
+        <li><strong>N+1 queries:</strong> Use <code>@EntityGraph</code> or <code>JOIN FETCH</code> in JPQL to avoid lazy loading issues.</li>
+        <li><strong>Hardcoded ports/URLs:</strong> Use <code>application.properties</code> and <code>@Value</code> for configuration.</li>
+        <li><strong>No exception handling:</strong> Use <code>@ControllerAdvice</code> with <code>@ExceptionHandler</code> for global error handling.</li>
+      </ul>
+      <p>Next: <a href="install-guide.html">Install Guide</a></p>
+    </section>
+
+    <footer>&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>

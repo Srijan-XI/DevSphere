@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jest — Installation Guide | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul,ol{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Jest — Installation Guide</h1>
+      <p class="subtitle">Set up Jest for JavaScript and TypeScript projects. Configure scripts, TypeScript, Babel, coverage, and debug.</p>
+      <div class="badge-row">
+        <span class="badge">NODE</span>
+        <span class="badge">TS</span>
+        <span class="badge">BABEL</span>
+        <span class="badge">COVERAGE</span>
+      </div>
+      <nav>
+        <a href="#setup">Setup</a>
+        <a href="#run">Run</a>
+        <a href="#typescript">TypeScript</a>
+        <a href="#babel">Babel</a>
+        <a href="#coverage">Coverage</a>
+        <a href="#debug">Debug</a>
+      </nav>
+    </header>
+
+    <section id="setup" class="card">
+      <h2>Setup</h2>
+      <pre><code># Initialize project
+npm init -y
+
+# Install Jest	npm i -D jest
+
+# Or yarn/pnpm
+yarn add -D jest
+pnpm add -D jest
+
+# Optional: create config
+npx jest --init</code><button class="copy-btn" data-copy="npm i -D jest">COPY</button></pre>
+      <h3>Package Scripts</h3>
+      <pre><code>{
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci"
+  }
+}</code><button class="copy-btn" data-copy="jest --watch">COPY</button></pre>
+    </section>
+
+    <section id="run" class="card">
+      <h2>Run Tests</h2>
+      <pre><code># Run all tests
+npm test
+
+# Watch changed tests
+npm run test:watch
+
+# CI mode + JUnit report (example)
+jest --ci --reporters=default --reporters=jest-junit</code><button class="copy-btn" data-copy="npm test">COPY</button></pre>
+    </section>
+
+    <section id="typescript" class="card">
+      <h2>TypeScript</h2>
+      <pre><code># Option A: ts-jest (no Babel)
+npm i -D ts-jest @types/jest typescript
+npx ts-jest config:init
+
+# jest.config.ts
+export default {
+  testEnvironment: 'node',
+  preset: 'ts-jest',
+}</code><button class="copy-btn" data-copy="npm i -D ts-jest @types/jest typescript">COPY</button></pre>
+      <pre><code># Option B: Babel + TS
+npm i -D @babel/core @babel/preset-env @babel/preset-typescript babel-jest @types/jest typescript
+
+# babel.config.json
+{
+  "presets": ["@babel/preset-env", "@babel/preset-typescript"]
+}</code><button class="copy-btn" data-copy="npm i -D @babel/core @babel/preset-env @babel/preset-typescript babel-jest">COPY</button></pre>
+    </section>
+
+    <section id="babel" class="card">
+      <h2>Babel (JS/TS)</h2>
+      <pre><code>// jest.config.js
+module.exports = {
+  transform: { '^.+\\.[tj]sx?$': ['babel-jest', { rootMode: 'upward' }] },
+  testEnvironment: 'node',
+}</code><button class="copy-btn" data-copy="babel-jest">COPY</button></pre>
+    </section>
+
+    <section id="coverage" class="card">
+      <h2>Coverage</h2>
+      <pre><code>// jest.config.js
+module.exports = {
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.{js,ts}'],
+  coverageReporters: ['text', 'lcov'],
+}</code><button class="copy-btn" data-copy="collectCoverage: true">COPY</button></pre>
+    </section>
+
+    <section id="debug" class="card">
+      <h2>Debug in VS Code</h2>
+      <pre><code>{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest Tests",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "args": ["--runInBand"],
+      "console": "integratedTerminal"
+    }
+  ]
+}</code><button class="copy-btn" data-copy="Jest Tests">COPY</button></pre>
+      <p>Next: <a href="intro.html">Jest Introduction</a></p>
+    </section>
+
+    <footer class="page-footer">&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C & C++ Installation Guide | DevSphere</title>
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Inter, system-ui, -apple-system, sans-serif; background:linear-gradient(135deg,#0a0e14,#1a1f2e 50%,#0f1419); color:#e1e4e8; line-height:1.65; }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .wrapper { max-width:1180px; margin:0 auto; padding:2.2rem 1.2rem 4rem; }
+    header.hero { background:#161b22; border:1px solid #30363d; border-top:4px solid #f59e0b; padding:2.1rem 2rem 2.35rem; border-radius:.85rem; margin-bottom:2.3rem; box-shadow:0 4px 14px rgba(0,0,0,.45); }
+    h1 { font-size:2.6rem; font-weight:800; margin-bottom:.6rem; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.05rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.5rem 0 .6rem; color:#f59e0b; }
+    h4 { font-size:1.05rem; font-weight:600; margin:1.2rem 0 .5rem; color:#8b5cf6; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin:.7rem 0 1rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    .grid { display:grid; gap:1.5rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid.two { grid-template-columns:repeat(2,1fr); } }
+    .panel { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.55rem 1.5rem 1.75rem; position:relative; transition:.25s; }
+    .panel:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .panel.accent { border-top:4px solid #8b5cf6; }
+    pre { background:#0d1117; border:1px solid #30363d; padding:1rem 1.1rem; border-radius:.6rem; overflow:auto; font-size:.85rem; position:relative; }
+    code, pre code { font-family:"JetBrains Mono","Cascadia Code", Menlo, monospace; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .steps { counter-reset: step; }
+    .steps li { position:relative; padding-left:2.1rem; }
+    .steps li::before { counter-increment: step; content:counter(step); position:absolute; left:0; top:.15rem; background:#8b5cf6; color:#fff; width:1.35rem; height:1.35rem; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:600; border-radius:.4rem; }
+    .info { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:.9rem 1rem 1rem; border-radius:.6rem; margin:1.1rem 0; font-size:.85rem; }
+    .info.warn { border-left-color:#f59e0b; }
+    .info.success { border-left-color:#10b981; }
+    .inline-badges { display:flex; flex-wrap:wrap; gap:.45rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .6rem; font-size:.65rem; letter-spacing:.05em; font-weight:600; border-radius:.45rem; }
+    details.collapsible { border:1px solid #30363d; border-radius:.7rem; overflow:hidden; margin:1.5rem 0; }
+    details.collapsible summary { cursor:pointer; list-style:none; padding:.85rem 1rem; background:#161b22; font-weight:600; }
+    details.collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { background:#0d1117; padding:1rem 1.15rem 1.3rem; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    nav.quick { display:flex; flex-wrap:wrap; gap:.55rem; margin:1.4rem 0 2rem; }
+    nav.quick a { background:#0d1117; border:1px solid #30363d; color:#8b92a0; font-size:.7rem; padding:.45rem .7rem; border-radius:.5rem; transition:.2s; }
+    nav.quick a:hover { color:#e1e4e8; border-color:#8b5cf6; }
+    footer { margin-top:3.6rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    table { width:100%; border-collapse:collapse; margin:1.2rem 0; }
+    th, td { padding:.65rem .8rem; border:1px solid #30363d; text-align:left; }
+    th { background:#161b22; color:#e1e4e8; font-weight:600; }
+    td { background:#0d1117; color:#8b92a0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="hero">
+      <h1>🛠️ C & C++ Installation Guide</h1>
+      <p class="subtitle">Install compilers, build tools, and IDEs for C and C++ development across all platforms.</p>
+      <div class="inline-badges">
+        <span class="badge">GCC</span>
+        <span class="badge">CLANG</span>
+        <span class="badge">MSVC</span>
+        <span class="badge">CMAKE</span>
+        <span class="badge">CROSS-PLATFORM</span>
+      </div>
+      <nav class="quick">
+        <a href="#windows">Windows</a>
+        <a href="#macos">macOS</a>
+        <a href="#linux">Linux</a>
+        <a href="#verify">Verify</a>
+        <a href="#build-tools">Build Tools</a>
+        <a href="#ides">IDEs</a>
+        <a href="#best-practices">Best Practices</a>
+      </nav>
+      <div class="info success"><strong>Tip:</strong> Choose GCC or Clang for cross-platform portability; MSVC for Windows-specific development.</div>
+    </header>
+
+    <section id="windows" class="panel accent">
+      <h2>Windows Installation</h2>
+      
+      <h3>Option A: MinGW-w64 (GCC on Windows)</h3>
+      <ol class="steps">
+        <li>Download from <a href="https://www.mingw-w64.org/" target="_blank" rel="noopener">mingw-w64.org</a> or use <a href="https://winlibs.com/" target="_blank" rel="noopener">WinLibs</a> standalone builds.</li>
+        <li>Extract archive to <code>C:\mingw64</code></li>
+        <li>Add to PATH: <code>C:\mingw64\bin</code></li>
+      </ol>
+      <pre><code># Verify installation (PowerShell/CMD)
+gcc --version
+g++ --version</code><button class="copy-btn" data-copy="gcc --version\ng++ --version">COPY</button></pre>
+
+      <h3>Option B: MSVC (Microsoft Visual C++)</h3>
+      <ol class="steps">
+        <li>Download <a href="https://visualstudio.microsoft.com/downloads/" target="_blank" rel="noopener">Visual Studio 2022 Community</a> (free).</li>
+        <li>During install, select "Desktop development with C++" workload.</li>
+        <li>Launch <strong>Developer Command Prompt</strong> or <strong>Developer PowerShell</strong>.</li>
+      </ol>
+      <pre><code># Verify (Developer Command Prompt)
+cl
+nmake</code><button class="copy-btn" data-copy="cl\nnmake">COPY</button></pre>
+
+      <h3>Option C: Clang/LLVM</h3>
+      <ol class="steps">
+        <li>Download from <a href="https://releases.llvm.org/" target="_blank" rel="noopener">LLVM releases</a>.</li>
+        <li>Run installer and add to PATH.</li>
+      </ol>
+      <pre><code>clang --version
+clang++ --version</code><button class="copy-btn" data-copy="clang --version\nclang++ --version">COPY</button></pre>
+
+      <h3>Option D: WSL (Windows Subsystem for Linux)</h3>
+      <p>Install Ubuntu/Debian via WSL, then follow Linux instructions below.</p>
+      <pre><code>wsl --install
+# After reboot, inside WSL:
+sudo apt update && sudo apt install build-essential -y</code><button class="copy-btn" data-copy="wsl --install\nsudo apt update && sudo apt install build-essential -y">COPY</button></pre>
+      <div class="info warn"><strong>PATH Configuration:</strong> After installing MinGW/Clang, restart terminal to apply PATH changes.</div>
+    </section>
+
+    <section id="macos" class="panel">
+      <h2>macOS Installation</h2>
+      
+      <h3>Xcode Command Line Tools (Clang)</h3>
+      <p>macOS ships with Clang compiler via Xcode Command Line Tools:</p>
+      <pre><code>xcode-select --install</code><button class="copy-btn" data-copy="xcode-select --install">COPY</button></pre>
+      <p>Follow prompts to install. Verify:</p>
+      <pre><code>clang --version
+clang++ --version</code><button class="copy-btn" data-copy="clang --version\nclang++ --version">COPY</button></pre>
+
+      <h3>GCC via Homebrew</h3>
+      <p>For true GCC (not Clang alias):</p>
+      <ol class="steps">
+        <li>Install Homebrew if missing:</li>
+      </ol>
+      <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code><button class="copy-btn" data-copy="/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"">COPY</button></pre>
+      <ol class="steps">
+        <li>Install GCC:</li>
+      </ol>
+      <pre><code>brew install gcc</code><button class="copy-btn" data-copy="brew install gcc">COPY</button></pre>
+      <ol class="steps">
+        <li>Use explicit version (e.g., <code>gcc-13</code>, <code>g++-13</code>):</li>
+      </ol>
+      <pre><code>gcc-13 --version
+g++-13 --version</code><button class="copy-btn" data-copy="gcc-13 --version\ng++-13 --version">COPY</button></pre>
+      <div class="info"><strong>Note:</strong> macOS <code>gcc</code> command is symlinked to Clang by default. Use <code>gcc-13</code> for actual GCC.</div>
+    </section>
+
+    <section id="linux" class="panel">
+      <h2>Linux Installation</h2>
+      
+      <h3>Debian/Ubuntu</h3>
+      <pre><code>sudo apt update
+sudo apt install build-essential -y</code><button class="copy-btn" data-copy="sudo apt update\nsudo apt install build-essential -y">COPY</button></pre>
+      <p>This installs GCC, G++, Make, and essential headers.</p>
+
+      <h3>Fedora/RHEL/CentOS</h3>
+      <pre><code>sudo dnf groupinstall "Development Tools" -y
+sudo dnf install gcc gcc-c++ make -y</code><button class="copy-btn" data-copy="sudo dnf groupinstall \"Development Tools\" -y\nsudo dnf install gcc gcc-c++ make -y">COPY</button></pre>
+
+      <h3>Arch Linux</h3>
+      <pre><code>sudo pacman -S base-devel</code><button class="copy-btn" data-copy="sudo pacman -S base-devel">COPY</button></pre>
+
+      <h3>Install Clang (Alternative)</h3>
+      <h4>Debian/Ubuntu:</h4>
+      <pre><code>sudo apt install clang -y</code><button class="copy-btn" data-copy="sudo apt install clang -y">COPY</button></pre>
+      <h4>Fedora:</h4>
+      <pre><code>sudo dnf install clang -y</code><button class="copy-btn" data-copy="sudo dnf install clang -y">COPY</button></pre>
+      <h4>Arch:</h4>
+      <pre><code>sudo pacman -S clang</code><button class="copy-btn" data-copy="sudo pacman -S clang">COPY</button></pre>
+    </section>
+
+    <section id="verify" class="panel">
+      <h2>Verification</h2>
+      <h3>Test C Compiler</h3>
+      <p>Create <code>test.c</code>:</p>
+      <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("C compiler works!\n");
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <stdio.h>\n\nint main() {\n    printf(\"C compiler works!\\n\");\n    return 0;\n}">COPY</button></pre>
+      <p>Compile and run:</p>
+      <pre><code>gcc test.c -o test
+./test</code><button class="copy-btn" data-copy="gcc test.c -o test\n./test">COPY</button></pre>
+
+      <h3>Test C++ Compiler</h3>
+      <p>Create <code>test.cpp</code>:</p>
+      <pre><code>#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; "C++ compiler works!" &lt;&lt; std::endl;
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <iostream>\n\nint main() {\n    std::cout << \"C++ compiler works!\" << std::endl;\n    return 0;\n}">COPY</button></pre>
+      <p>Compile and run:</p>
+      <pre><code>g++ test.cpp -o testcpp
+./testcpp</code><button class="copy-btn" data-copy="g++ test.cpp -o testcpp\n./testcpp">COPY</button></pre>
+
+      <h3>Check Compiler Versions</h3>
+      <pre><code>gcc --version
+g++ --version
+clang --version
+clang++ --version</code><button class="copy-btn" data-copy="gcc --version\ng++ --version\nclang --version\nclang++ --version">COPY</button></pre>
+    </section>
+
+    <section id="build-tools" class="panel">
+      <h2>Build Tools & Systems</h2>
+      
+      <h3>Make</h3>
+      <p>Included with GCC toolchain. Example <code>Makefile</code>:</p>
+      <pre><code>CC = gcc
+CFLAGS = -Wall -O2
+
+all: program
+
+program: main.c
+	$(CC) $(CFLAGS) main.c -o program
+
+clean:
+	rm -f program</code><button class="copy-btn" data-copy="CC = gcc\nCFLAGS = -Wall -O2\n\nall: program\n\nprogram: main.c\n\t$(CC) $(CFLAGS) main.c -o program\n\nclean:\n\trm -f program">COPY</button></pre>
+
+      <h3>CMake (Modern Build System)</h3>
+      <h4>Install CMake:</h4>
+      <p><strong>Windows:</strong> Download from <a href="https://cmake.org/download/" target="_blank" rel="noopener">cmake.org</a></p>
+      <p><strong>macOS:</strong> <code>brew install cmake</code></p>
+      <p><strong>Linux:</strong> <code>sudo apt install cmake</code> (Debian/Ubuntu)</p>
+      
+      <h4>Sample CMakeLists.txt:</h4>
+      <pre><code>cmake_minimum_required(VERSION 3.20)
+project(MyProject)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(myapp main.cpp)</code><button class="copy-btn" data-copy="cmake_minimum_required(VERSION 3.20)\nproject(MyProject)\n\nset(CMAKE_CXX_STANDARD 17)\n\nadd_executable(myapp main.cpp)">COPY</button></pre>
+
+      <h4>Build with CMake:</h4>
+      <pre><code>mkdir build && cd build
+cmake ..
+cmake --build .</code><button class="copy-btn" data-copy="mkdir build && cd build\ncmake ..\ncmake --build .">COPY</button></pre>
+
+      <h3>Ninja (Fast Build Tool)</h3>
+      <pre><code># Install
+sudo apt install ninja-build  # Linux
+brew install ninja            # macOS
+
+# Use with CMake
+cmake -G Ninja ..
+ninja</code><button class="copy-btn" data-copy="cmake -G Ninja ..\nninja">COPY</button></pre>
+    </section>
+
+    <section id="ides" class="panel">
+      <h2>Recommended IDEs & Editors</h2>
+      <table>
+        <thead>
+          <tr><th>IDE/Editor</th><th>Platform</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Visual Studio Code</td><td>All</td><td>Install C/C++ extension by Microsoft</td></tr>
+          <tr><td>Visual Studio</td><td>Windows</td><td>Full IDE with MSVC toolchain</td></tr>
+          <tr><td>CLion</td><td>All</td><td>JetBrains IDE, excellent CMake support</td></tr>
+          <tr><td>Code::Blocks</td><td>All</td><td>Lightweight, beginner-friendly</td></tr>
+          <tr><td>Qt Creator</td><td>All</td><td>Great for Qt/GUI development</td></tr>
+          <tr><td>Xcode</td><td>macOS</td><td>Apple's IDE with Clang</td></tr>
+          <tr><td>Vim/Neovim</td><td>All</td><td>Terminal editor with LSP support</td></tr>
+        </tbody>
+      </table>
+
+      <h3>VS Code Setup (Quick)</h3>
+      <ol class="steps">
+        <li>Install <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VS Code</a></li>
+        <li>Install "C/C++" extension (ms-vscode.cpptools)</li>
+        <li>Install "CMake Tools" extension (optional)</li>
+        <li>Configure <code>c_cpp_properties.json</code> for IntelliSense</li>
+      </ol>
+      <div class="info"><strong>Tip:</strong> Use VS Code tasks.json to configure build commands with F5 debug support.</div>
+    </section>
+
+    <section id="best-practices" class="panel">
+      <h2>Best Practices</h2>
+      <ul>
+        <li><strong>Enable warnings:</strong> <code>-Wall -Wextra -Wpedantic</code></li>
+        <li><strong>Use optimization flags:</strong> <code>-O2</code> for release, <code>-g</code> for debug</li>
+        <li><strong>Modern C++ standards:</strong> <code>-std=c++17</code> or <code>-std=c++20</code></li>
+        <li><strong>Static analysis:</strong> Use <code>clang-tidy</code>, <code>cppcheck</code></li>
+        <li><strong>Memory safety:</strong> Run with Valgrind, AddressSanitizer (<code>-fsanitize=address</code>)</li>
+        <li><strong>Version control:</strong> Commit often, use <code>.gitignore</code> for build artifacts</li>
+        <li><strong>Cross-platform builds:</strong> Prefer CMake over platform-specific makefiles</li>
+      </ul>
+
+      <details class="collapsible">
+        <summary>Advanced Compiler Flags</summary>
+        <div class="collapsible-content">
+          <p><strong>Performance:</strong></p>
+          <pre><code>-O3 -march=native -flto</code><button class="copy-btn" data-copy="-O3 -march=native -flto">COPY</button></pre>
+          <p><strong>Debug with sanitizers:</strong></p>
+          <pre><code>-g -fsanitize=address -fsanitize=undefined</code><button class="copy-btn" data-copy="-g -fsanitize=address -fsanitize=undefined">COPY</button></pre>
+          <p><strong>Threading:</strong></p>
+          <pre><code>-pthread</code><button class="copy-btn" data-copy="-pthread">COPY</button></pre>
+          <p><strong>Position-independent code:</strong></p>
+          <pre><code>-fPIC</code><button class="copy-btn" data-copy="-fPIC">COPY</button></pre>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary>Debugging Tools</summary>
+        <div class="collapsible-content">
+          <p><strong>GDB (GNU Debugger):</strong></p>
+          <pre><code>gdb ./program
+(gdb) break main
+(gdb) run
+(gdb) next
+(gdb) print variable</code><button class="copy-btn" data-copy="gdb ./program\nbreak main\nrun\nnext\nprint variable">COPY</button></pre>
+          <p><strong>Valgrind (Memory Leak Detection):</strong></p>
+          <pre><code>valgrind --leak-check=full ./program</code><button class="copy-btn" data-copy="valgrind --leak-check=full ./program">COPY</button></pre>
+          <p><strong>LLDB (LLVM Debugger):</strong></p>
+          <pre><code>lldb ./program
+(lldb) b main
+(lldb) run</code><button class="copy-btn" data-copy="lldb ./program\nb main\nrun">COPY</button></pre>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      C & C++ Install Guide • Internal CSS/JS • Dark Theme • Updated Nov 15 2025
+    </footer>
+  </div>
+
+  <div id="copyFeedback" class="copy-feedback">Copied!</div>
+  <script>
+    // Copy buttons
+    const feedback = document.getElementById('copyFeedback');
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          feedback.classList.add('show');
+          setTimeout(()=>feedback.classList.remove('show'),1400);
+        });
+      });
+    });
+    // Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+  </script>
+</body>
+</html>

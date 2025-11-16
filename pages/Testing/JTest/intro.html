@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JTest (Java Testing) — Introduction | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul,ol{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>JTest — Introduction (JUnit + Mockito)</h1>
+      <p class="subtitle">Test Java effectively with JUnit 5 for unit tests and Mockito for mocking. Works with Maven and Gradle.</p>
+      <div class="badge-row">
+        <span class="badge">JAVA</span>
+        <span class="badge">JUNIT 5</span>
+        <span class="badge">MOCKITO</span>
+        <span class="badge">COVERAGE</span>
+      </div>
+      <nav>
+        <a href="#anatomy">Test Anatomy</a>
+        <a href="#assertions">Assertions</a>
+        <a href="#lifecycle">Lifecycle</a>
+        <a href="#param">Parameterized</a>
+        <a href="#mockito">Mockito</a>
+      </nav>
+    </header>
+
+    <section id="anatomy" class="card">
+      <h2>Test Anatomy</h2>
+      <pre><code>// src/main/java/com/acme/Calc.java
+public class Calc { public int add(int a, int b){ return a + b; } }
+
+// src/test/java/com/acme/CalcTest.java
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+class CalcTest {
+  @Test void adds(){ assertEquals(5, new Calc().add(2,3)); }
+}</code><button class="copy-btn" data-copy="assertEquals(5, new Calc().add(2,3));">COPY</button></pre>
+    </section>
+
+    <section id="assertions" class="card">
+      <h2>Common Assertions</h2>
+      <pre><code>assertEquals("Ada", name);
+assertTrue(list.contains("x"));
+assertThrows(IllegalArgumentException.class, () -&gt; doThing(null));</code><button class="copy-btn" data-copy="assertThrows(IllegalArgumentException.class, () -> doThing(null));">COPY</button></pre>
+    </section>
+
+    <section id="lifecycle" class="card">
+      <h2>Lifecycle</h2>
+      <pre><code>@BeforeAll static void initAll(){}
+@BeforeEach void init(){}
+@Test void works(){}
+@AfterEach void tearDown(){}
+@AfterAll static void tearDownAll(){}</code><button class="copy-btn" data-copy="@BeforeEach void init(){}">COPY</button></pre>
+    </section>
+
+    <section id="param" class="card">
+      <h2>Parameterized Tests</h2>
+      <pre><code>import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.ValueSource;
+
+@ParameterizedTest
+@ValueSource(strings = {"a","bb","ccc"})
+void hasLength(String s){
+  Assertions.assertTrue(s.length() &gt; 0);
+}</code><button class="copy-btn" data-copy="@ParameterizedTest">COPY</button></pre>
+    </section>
+
+    <section id="mockito" class="card">
+      <h2>Mockito Basics</h2>
+      <pre><code>import static org.mockito.Mockito.*;
+
+interface Api { String fetch(); }
+
+@Test
+void mocks(){
+  Api api = mock(Api.class);
+  when(api.fetch()).thenReturn("fake");
+  Assertions.assertEquals("fake", api.fetch());
+  verify(api, times(1)).fetch();
+}</code><button class="copy-btn" data-copy="when(api.fetch()).thenReturn(&quot;fake&quot;)">COPY</button></pre>
+      <p>Next: <a href="install-guide.html">Install JTest (JUnit + Mockito)</a></p>
+    </section>
+
+    <footer class="page-footer">&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>
+

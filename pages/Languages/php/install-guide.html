@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHP Installation Guide | DevSphere</title>
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Inter, system-ui, -apple-system, sans-serif; background:linear-gradient(135deg,#0a0e14,#1a1f2e 50%,#0f1419); color:#e1e4e8; line-height:1.65; }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .wrapper { max-width:1180px; margin:0 auto; padding:2.2rem 1.2rem 4rem; }
+    header.hero { background:#161b22; border:1px solid #30363d; border-top:4px solid #f59e0b; padding:2.1rem 2rem 2.35rem; border-radius:.85rem; margin-bottom:2.3rem; box-shadow:0 4px 14px rgba(0,0,0,.45); }
+    h1 { font-size:2.6rem; font-weight:800; margin-bottom:.6rem; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.05rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.5rem 0 .6rem; color:#f59e0b; }
+    h4 { font-size:1.05rem; font-weight:600; margin:1.2rem 0 .5rem; color:#8b5cf6; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin:.7rem 0 1rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    .grid { display:grid; gap:1.5rem; grid-template-columns:1fr; }
+    @media(min-width:900px){ .grid.two { grid-template-columns:repeat(2,1fr); } }
+    .panel { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.55rem 1.5rem 1.75rem; position:relative; transition:.25s; }
+    .panel:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .panel.accent { border-top:4px solid #8b5cf6; }
+    pre { background:#0d1117; border:1px solid #30363d; padding:1rem 1.1rem; border-radius:.6rem; overflow:auto; font-size:.85rem; position:relative; }
+    code, pre code { font-family:"JetBrains Mono","Cascadia Code", Menlo, monospace; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .steps { counter-reset: step; }
+    .steps li { position:relative; padding-left:2.1rem; }
+    .steps li::before { counter-increment: step; content:counter(step); position:absolute; left:0; top:.15rem; background:#8b5cf6; color:#fff; width:1.35rem; height:1.35rem; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:600; border-radius:.4rem; }
+    .info { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:.9rem 1rem 1rem; border-radius:.6rem; margin:1.1rem 0; font-size:.85rem; }
+    .info.warn { border-left-color:#f59e0b; }
+    .info.success { border-left-color:#10b981; }
+    .inline-badges { display:flex; flex-wrap:wrap; gap:.45rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .6rem; font-size:.65rem; letter-spacing:.05em; font-weight:600; border-radius:.45rem; }
+    details.collapsible { border:1px solid #30363d; border-radius:.7rem; overflow:hidden; margin:1.5rem 0; }
+    details.collapsible summary { cursor:pointer; list-style:none; padding:.85rem 1rem; background:#161b22; font-weight:600; }
+    details.collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { background:#0d1117; padding:1rem 1.15rem 1.3rem; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    nav.quick { display:flex; flex-wrap:wrap; gap:.55rem; margin:1.4rem 0 2rem; }
+    nav.quick a { background:#0d1117; border:1px solid #30363d; color:#8b92a0; font-size:.7rem; padding:.45rem .7rem; border-radius:.5rem; transition:.2s; }
+    nav.quick a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+    footer { margin-top:3.6rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    table { width:100%; border-collapse:collapse; margin:1.2rem 0; }
+    th, td { padding:.65rem .8rem; border:1px solid #30363d; text-align:left; }
+    th { background:#161b22; color:#e1e4e8; font-weight:600; }
+    td { background:#0d1117; color:#8b92a0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="hero">
+      <h1>🐘 PHP Installation Guide</h1>
+      <p class="subtitle">Install PHP, configure web servers, and set up your PHP development environment.</p>
+      <div class="inline-badges">
+        <span class="badge">PHP 8.3</span>
+        <span class="badge">COMPOSER</span>
+        <span class="badge">XAMPP</span>
+        <span class="badge">APACHE</span>
+        <span class="badge">NGINX</span>
+      </div>
+      <nav class="quick">
+        <a href="#windows">Windows</a>
+        <a href="#macos">macOS</a>
+        <a href="#linux">Linux</a>
+        <a href="#verify">Verify</a>
+        <a href="#composer">Composer</a>
+        <a href="#servers">Web Servers</a>
+        <a href="#ides">IDEs</a>
+      </nav>
+      <div class="info success"><strong>Recommendation:</strong> Use PHP 8.0+ for modern features like named arguments, JIT compilation, and union types.</div>
+    </header>
+
+    <section id="windows" class="panel accent">
+      <h2>Windows Installation</h2>
+      
+      <h3>Option A: XAMPP (Easiest – Includes Apache + MySQL + PHP)</h3>
+      <ol class="steps">
+        <li>Download <a href="https://www.apachefriends.org/" target="_blank" rel="noopener">XAMPP</a> installer for Windows.</li>
+        <li>Run the installer and choose components (Apache, MySQL, PHP, phpMyAdmin).</li>
+        <li>Install to <code>C:\xampp</code> (default).</li>
+        <li>Launch XAMPP Control Panel and start Apache.</li>
+        <li>Test at <code>http://localhost</code> in your browser.</li>
+      </ol>
+      <div class="info warn"><strong>Note:</strong> XAMPP is for development only – not recommended for production servers.</div>
+
+      <h3>Option B: Standalone PHP Installation</h3>
+      <ol class="steps">
+        <li>Download PHP from <a href="https://windows.php.net/download/" target="_blank" rel="noopener">windows.php.net/download</a>.</li>
+        <li>Choose "Thread Safe" version (for Apache) or "Non-Thread Safe" (for IIS/Nginx).</li>
+        <li>Extract to <code>C:\php</code>.</li>
+        <li>Add <code>C:\php</code> to System PATH.</li>
+        <li>Copy <code>php.ini-development</code> to <code>php.ini</code>.</li>
+      </ol>
+
+      <h4>Add PHP to PATH (PowerShell Admin):</h4>
+      <pre><code>[System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\php", "Machine")</code><button class="copy-btn" data-copy="[System.Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\php\", \"Machine\")">COPY</button></pre>
+
+      <h3>Option C: Chocolatey Package Manager</h3>
+      <pre><code># Install Chocolatey first (if not installed)
+Set-ExecutionPolicy Bypass -Scope Process -Force
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install PHP
+choco install php -y
+
+# Verify
+php -v</code><button class="copy-btn" data-copy="choco install php -y\nphp -v">COPY</button></pre>
+    </section>
+
+    <section id="macos" class="panel">
+      <h2>macOS Installation</h2>
+      
+      <h3>Option A: Homebrew (Recommended)</h3>
+      <pre><code># Install Homebrew if missing
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install PHP (latest version)
+brew install php
+
+# Or install specific version
+brew install php@8.3
+
+# Start PHP service
+brew services start php
+
+# Verify
+php -v</code><button class="copy-btn" data-copy="brew install php\nbrew services start php\nphp -v">COPY</button></pre>
+
+      <h3>Option B: MacPorts</h3>
+      <pre><code>sudo port install php83
+sudo port select --set php php83</code><button class="copy-btn" data-copy="sudo port install php83\nsudo port select --set php php83">COPY</button></pre>
+
+      <h3>Option C: MAMP (Apache + MySQL + PHP Bundle)</h3>
+      <ol class="steps">
+        <li>Download <a href="https://www.mamp.info/en/downloads/" target="_blank" rel="noopener">MAMP</a> for macOS.</li>
+        <li>Install and launch MAMP.</li>
+        <li>Start servers from MAMP control panel.</li>
+        <li>Access at <code>http://localhost:8888</code>.</li>
+      </ol>
+
+      <h3>Configure php.ini Location</h3>
+      <pre><code>php --ini  # Find loaded config file path</code><button class="copy-btn" data-copy="php --ini">COPY</button></pre>
+    </section>
+
+    <section id="linux" class="panel">
+      <h2>Linux Installation</h2>
+      
+      <h3>Debian/Ubuntu</h3>
+      <pre><code>sudo apt update
+sudo apt install php php-cli php-fpm php-mysql php-xml php-mbstring -y
+
+# Verify
+php -v</code><button class="copy-btn" data-copy="sudo apt update\nsudo apt install php php-cli php-fpm php-mysql php-xml php-mbstring -y\nphp -v">COPY</button></pre>
+
+      <h4>Install Specific Version (e.g., PHP 8.3):</h4>
+      <pre><code>sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:ondrej/php -y
+sudo apt update
+sudo apt install php8.3 php8.3-cli php8.3-fpm php8.3-mysql -y</code><button class="copy-btn" data-copy="sudo add-apt-repository ppa:ondrej/php -y\nsudo apt update\nsudo apt install php8.3 php8.3-cli php8.3-fpm php8.3-mysql -y">COPY</button></pre>
+
+      <h3>Fedora/RHEL/CentOS</h3>
+      <pre><code>sudo dnf install php php-cli php-fpm php-mysqlnd php-xml php-mbstring -y
+
+# Start PHP-FPM
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm</code><button class="copy-btn" data-copy="sudo dnf install php php-cli php-fpm php-mysqlnd php-xml php-mbstring -y\nsudo systemctl start php-fpm">COPY</button></pre>
+
+      <h3>Arch Linux</h3>
+      <pre><code>sudo pacman -S php php-fpm</code><button class="copy-btn" data-copy="sudo pacman -S php php-fpm">COPY</button></pre>
+
+      <h3>Enable Common Extensions</h3>
+      <p>Edit <code>/etc/php/8.x/cli/php.ini</code> and uncomment:</p>
+      <pre><code>extension=mysqli
+extension=pdo_mysql
+extension=mbstring
+extension=curl
+extension=gd
+extension=zip</code><button class="copy-btn" data-copy="extension=mysqli\nextension=pdo_mysql\nextension=mbstring\nextension=curl\nextension=gd\nextension=zip">COPY</button></pre>
+    </section>
+
+    <section id="verify" class="panel">
+      <h2>Verification</h2>
+      <pre><code>php -v          # Check PHP version
+php -m          # List installed modules
+php --ini       # Show config file locations</code><button class="copy-btn" data-copy="php -v\nphp -m\nphp --ini">COPY</button></pre>
+      
+      <h3>Test PHP Script</h3>
+      <p>Create <code>test.php</code>:</p>
+      <pre><code>&lt;?php
+phpinfo();
+?&gt;</code><button class="copy-btn" data-copy="<?php\nphpinfo();\n?>">COPY</button></pre>
+      
+      <h4>Run Built-in Server:</h4>
+      <pre><code>php -S localhost:8000 test.php</code><button class="copy-btn" data-copy="php -S localhost:8000 test.php">COPY</button></pre>
+      <p>Visit <code>http://localhost:8000</code> in browser to see PHP info page.</p>
+
+      <h3>Simple CLI Test</h3>
+      <p>Create <code>hello.php</code>:</p>
+      <pre><code>&lt;?php
+echo "PHP is working!\n";
+echo "Version: " . PHP_VERSION . "\n";
+?&gt;</code><button class="copy-btn" data-copy="<?php\necho \"PHP is working!\\n\";\necho \"Version: \" . PHP_VERSION . \"\\n\";\n?>">COPY</button></pre>
+      <p>Run: <code>php hello.php</code></p>
+      <div class="info success"><strong>Expected Output:</strong> <code>PHP is working!<br>Version: 8.x.x</code></div>
+    </section>
+
+    <section id="composer" class="panel">
+      <h2>Composer Installation</h2>
+      <p><strong>Composer</strong> is the dependency manager for PHP (like npm for Node.js).</p>
+      
+      <h3>Windows</h3>
+      <ol class="steps">
+        <li>Download <a href="https://getcomposer.org/Composer-Setup.exe" target="_blank" rel="noopener">Composer-Setup.exe</a>.</li>
+        <li>Run installer (will auto-detect PHP).</li>
+        <li>Verify: <code>composer --version</code></li>
+      </ol>
+
+      <h3>macOS/Linux</h3>
+      <pre><code>php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+sudo mv composer.phar /usr/local/bin/composer
+
+# Verify
+composer --version</code><button class="copy-btn" data-copy="php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"\nphp composer-setup.php\nsudo mv composer.phar /usr/local/bin/composer\ncomposer --version">COPY</button></pre>
+
+      <h3>Using Composer</h3>
+      <pre><code># Create new project
+composer create-project laravel/laravel my-app
+
+# Install dependencies
+composer install
+
+# Add package
+composer require monolog/monolog
+
+# Update packages
+composer update</code><button class="copy-btn" data-copy="composer create-project laravel/laravel my-app\ncd my-app\nphp artisan serve">COPY</button></pre>
+    </section>
+
+    <section id="servers" class="panel">
+      <h2>Web Server Configuration</h2>
+      
+      <h3>Built-in Development Server</h3>
+      <pre><code># Simple server
+php -S localhost:8000
+
+# With specific document root
+php -S localhost:8000 -t public/
+
+# With router script
+php -S localhost:8000 router.php</code><button class="copy-btn" data-copy="php -S localhost:8000 -t public/">COPY</button></pre>
+
+      <h3>Apache Configuration</h3>
+      <p>Enable PHP module in <code>httpd.conf</code> or <code>apache2.conf</code>:</p>
+      <pre><code>LoadModule php_module modules/libphp.so
+AddHandler php-script .php
+DirectoryIndex index.php index.html</code><button class="copy-btn" data-copy="LoadModule php_module modules/libphp.so\nAddHandler php-script .php">COPY</button></pre>
+
+      <h3>Nginx + PHP-FPM</h3>
+      <p>Configure Nginx site (<code>/etc/nginx/sites-available/default</code>):</p>
+      <pre><code>server {
+    listen 80;
+    server_name localhost;
+    root /var/www/html;
+    index index.php index.html;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}</code><button class="copy-btn" data-copy="location ~ \\.php$ {\n    fastcgi_pass unix:/run/php/php8.3-fpm.sock;\n    fastcgi_index index.php;\n    include fastcgi_params;\n    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;\n}">COPY</button></pre>
+      <p>Restart Nginx: <code>sudo systemctl restart nginx</code></p>
+    </section>
+
+    <section id="ides" class="panel">
+      <h2>Development Tools</h2>
+      
+      <h3>Recommended IDEs</h3>
+      <ul>
+        <li><strong>PhpStorm:</strong> Premium PHP IDE by JetBrains (best features, paid).</li>
+        <li><strong>VS Code:</strong> Free, extensible (install PHP Intelephense extension).</li>
+        <li><strong>Sublime Text:</strong> Lightweight with PHP packages.</li>
+        <li><strong>Atom:</strong> GitHub's editor with PHP support.</li>
+      </ul>
+
+      <h3>VS Code Extensions</h3>
+      <ul>
+        <li><strong>PHP Intelephense</strong> – IntelliSense and code completion</li>
+        <li><strong>PHP Debug</strong> – Xdebug integration</li>
+        <li><strong>Laravel Blade Snippets</strong> – Blade templating support</li>
+        <li><strong>PHP DocBlocker</strong> – Auto-generate documentation</li>
+      </ul>
+
+      <h3>Debugging with Xdebug</h3>
+      <pre><code># Install Xdebug (Linux/macOS)
+pecl install xdebug
+
+# Enable in php.ini
+zend_extension=xdebug.so
+xdebug.mode=debug
+xdebug.start_with_request=yes
+xdebug.client_port=9003</code><button class="copy-btn" data-copy="pecl install xdebug">COPY</button></pre>
+    </section>
+
+    <section id="best-practices" class="panel">
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Use PHP 8.0+ for modern features and performance.</li>
+        <li>✅ Enable <code>display_errors=Off</code> in production.</li>
+        <li>✅ Use <code>error_reporting(E_ALL)</code> in development.</li>
+        <li>✅ Enable OPcache for better performance.</li>
+        <li>✅ Use environment variables for sensitive config (via <code>.env</code> files).</li>
+        <li>✅ Follow PSR coding standards (PSR-1, PSR-12).</li>
+        <li>✅ Use prepared statements to prevent SQL injection.</li>
+        <li>✅ Validate and sanitize all user inputs.</li>
+      </ul>
+
+      <h3>Common php.ini Settings</h3>
+      <pre><code>; Increase memory limit
+memory_limit = 256M
+
+; File upload size
+upload_max_filesize = 20M
+post_max_size = 25M
+
+; Error reporting (development)
+display_errors = On
+error_reporting = E_ALL
+
+; Timezone
+date.timezone = "UTC"</code><button class="copy-btn" data-copy="memory_limit = 256M\nupload_max_filesize = 20M\npost_max_size = 25M">COPY</button></pre>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DevSphere. Empowering developers with knowledge.</p>
+    </footer>
+  </div>
+
+  <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(code).then(() => {
+          const feedback = document.getElementById('copyFeedback');
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2000);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

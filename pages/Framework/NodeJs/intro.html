@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Node.js — Introduction | DevSphere</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);color:#e1e4e8;line-height:1.7;min-height:100vh}
+    a{color:#8b5cf6;text-decoration:none;font-weight:500}
+    a:hover{text-decoration:underline;color:#a78bfa}
+    .wrap{max-width:1200px;margin:0 auto;padding:2.25rem 1.25rem 4rem}
+    header{background:#161b22;border:1px solid #30363d;border-top:4px solid #8b5cf6;padding:2rem 2rem 2.25rem;border-radius:.85rem;margin-bottom:2.25rem;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    h1{font-size:2.6rem;margin-bottom:.5rem;font-weight:800;letter-spacing:-.02em}
+    .subtitle{color:#8b92a0;font-size:1.1rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.1rem}
+    .badge{background:#0d1117;border:1px solid #30363d;color:#8b5cf6;padding:.35rem .65rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;border-radius:.45rem}
+    .card{background:#161b22;border:1px solid #30363d;border-radius:.85rem;padding:1.5rem 1.5rem 1.75rem;position:relative;transition:.25s;overflow:hidden}
+    .card:hover{border-color:#8b5cf6;box-shadow:0 6px 18px rgba(139,92,246,.15)}
+    h2{font-size:1.9rem;font-weight:700;margin:0 0 1.1rem;padding-bottom:.55rem;border-bottom:2px solid #8b5cf6}
+    h3{font-size:1.15rem;font-weight:600;margin:1.2rem 0 .55rem;color:#f59e0b}
+    p{margin:.7rem 0;color:#8b92a0}
+    ul,ol{margin:.6rem 0 .9rem 1.35rem}
+    li{margin:.45rem 0;color:#8b92a0}
+    pre{background:#0d1117;color:#e1e4e8;padding:1rem 1.1rem;border:1px solid #30363d;border-radius:.6rem;overflow:auto;position:relative;margin:.85rem 0}
+    pre .copy-btn{position:absolute;top:.55rem;right:.55rem;background:#161b22;color:#8b5cf6;border:1px solid #30363d;font-size:.7rem;padding:.35rem .55rem;border-radius:.4rem;cursor:pointer;transition:.2s}
+    pre .copy-btn:hover{background:#8b5cf6;color:#fff}
+    nav a{background:#0d1117;padding:.5rem .75rem;border:1px solid #30363d;border-radius:.55rem;font-size:.75rem;color:#8b92a0;transition:.2s;margin-right:.5rem}
+    nav a:hover{color:#e1e4e8;border-color:#8b5cf6;text-decoration:none}
+    .copy-feedback{position:fixed;bottom:1.2rem;right:1.2rem;background:#10b981;color:#fff;padding:.6rem .9rem;font-size:.8rem;border-radius:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:.35s}
+    .copy-feedback.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Node.js — Introduction</h1>
+      <p class="subtitle">A JavaScript runtime built on Chrome's V8 engine with an event-driven, non-blocking I/O model ideal for scalable servers and tooling.</p>
+      <div class="badge-row">
+        <span class="badge">EVENT LOOP</span>
+        <span class="badge">NPM</span>
+        <span class="badge">ESM/CJS</span>
+        <span class="badge">HTTP</span>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#modules">Modules</a>
+        <a href="#http">HTTP</a>
+        <a href="#npm">npm Scripts</a>
+        <a href="#typescript">TypeScript</a>
+        <a href="#docker">Docker Dev</a>
+        <a href="#structure">Folder Structure</a>
+        <a href="#pitfalls">Common Pitfalls</a>
+      </nav>
+    </header>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>Node.js uses a single-threaded event loop with libuv to handle concurrent I/O efficiently. It powers web servers, CLIs, build tools, and microservices.</p>
+      <ul>
+        <li>Non-blocking I/O via callbacks, Promises, and async/await</li>
+        <li>Rich package ecosystem via npm and pnpm/yarn</li>
+        <li>Runs on Windows, macOS, and Linux</li>
+      </ul>
+    </section>
+
+    <section id="modules" class="card">
+      <h2>Modules: ESM vs CommonJS</h2>
+      <pre><code>// ESM (package.json: { "type": "module" })
+export function add(a, b) { return a + b }
+import { add } from './math.js'
+
+// CommonJS
+module.exports = { add }
+const { add } = require('./math')</code><button class="copy-btn" data-copy="export function add(a,b){return a+b}">COPY</button></pre>
+    </section>
+
+    <section id="http" class="card">
+      <h2>HTTP Server</h2>
+      <pre><code>// server.js
+import http from 'node:http'
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' })
+  res.end(JSON.stringify({ ok: true }))
+})
+server.listen(3000)</code><button class="copy-btn" data-copy="server.listen(3000)">COPY</button></pre>
+    </section>
+
+    <section id="npm" class="card">
+      <h2>npm Scripts</h2>
+      <pre><code>{
+  "name": "app",
+  "type": "module",
+  "scripts": { "dev": "node server.js" }
+}</code><button class="copy-btn" data-copy="npm run dev">COPY</button></pre>
+    </section>
+
+    <section id="typescript" class="card">
+      <h2>TypeScript Setup</h2>
+      <pre><code>npm i -D typescript ts-node @types/node
+npx tsc --init
+
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}</code><button class="copy-btn" data-copy="npm i -D typescript ts-node @types/node">COPY</button></pre>
+      <pre><code>// src/server.ts
+import http from 'node:http'
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' })
+  res.end(JSON.stringify({ ok: true }))
+})
+server.listen(3000)
+
+// Run: npx ts-node src/server.ts</code><button class="copy-btn" data-copy="npx ts-node src/server.ts">COPY</button></pre>
+    </section>
+
+    <section id="docker" class="card">
+      <h2>Docker Dev Environment</h2>
+      <pre><code># Dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
+
+# docker-compose.yml
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development</code><button class="copy-btn" data-copy="docker compose up">COPY</button></pre>
+    </section>
+
+    <section id="structure" class="card">
+      <h2>Folder Structure</h2>
+      <pre><code>project/
+  src/
+    controllers/
+    services/
+    models/
+    routes/
+    utils/
+    server.ts
+  dist/         # Compiled output
+  tests/
+  .env
+  .env.example
+  package.json
+  tsconfig.json
+  Dockerfile
+  .dockerignore</code><button class="copy-btn" data-copy="src/">COPY</button></pre>
+    </section>
+
+    <section id="pitfalls" class="card">
+      <h2>Common Pitfalls</h2>
+      <ul>
+        <li><strong>Blocking the event loop:</strong> Avoid CPU-intensive sync operations; use worker threads or offload to services.</li>
+        <li><strong>ESM vs CJS mismatch:</strong> Ensure <code>package.json</code> has <code>"type": "module"</code> for ESM or use <code>.mjs</code>/<code>.cjs</code> extensions.</li>
+        <li><strong>Missing error handling:</strong> Always handle Promise rejections and use try/catch with async/await.</li>
+        <li><strong>Callback hell:</strong> Prefer Promises and async/await over deeply nested callbacks.</li>
+        <li><strong>Not setting NODE_ENV:</strong> Use <code>NODE_ENV=production</code> for optimizations in frameworks like Express.</li>
+      </ul>
+      <p>Next: <a href="install-guide.html">Install Node.js</a></p>
+    </section>
+
+    <footer style="margin-top:3.5rem;text-align:center;font-size:.8rem;color:#8b92a0">&copy; 2025 DevSphere</footer>
+  </div>
+
+  <div id="copyToast" class="copy-feedback">Copied to clipboard!</div>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(t).then(()=>{
+          const el=document.getElementById('copyToast');
+          el.classList.add('show');
+          setTimeout(()=>el.classList.remove('show'),1600);
+        });
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
+    });
+  </script>
+</body>
+</html>

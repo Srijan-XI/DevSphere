@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C & C++ Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    .examples { margin-top:1.2rem; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; }
+    .collapsible { border:1px solid #30363d; border-radius:.65rem; overflow:hidden; margin:1.5rem 0; }
+    .collapsible summary { cursor:pointer; padding:.85rem 1rem; background:#161b22; font-weight:600; color:#e1e4e8; list-style:none; }
+    .collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { padding:1rem 1.15rem 1.3rem; background:#0d1117; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+    table { width:100%; border-collapse:collapse; margin:1.2rem 0; }
+    th, td { padding:.65rem .8rem; border:1px solid #30363d; text-align:left; }
+    th { background:#161b22; color:#e1e4e8; font-weight:600; }
+    td { background:#0d1117; color:#8b92a0; }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>⚡ C & C++ Introduction</h1>
+      <p class="subtitle">Master systems programming with the foundation of modern computing.</p>
+      <div class="badge-row">
+        <span class="badge">SYSTEMS</span>
+        <span class="badge">PERFORMANCE</span>
+        <span class="badge">LOW-LEVEL</span>
+        <span class="badge">OOP</span>
+        <span class="badge">COMPILED</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What are C & C++?</a>
+        <a href="#why-use">Why Use Them</a>
+        <a href="#comparison">C vs C++</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Power & Control:</strong> C and C++ give you direct hardware access, precise memory management, and maximum performance for critical systems.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Are C & C++?</h2>
+      <p><strong>C</strong> is a procedural programming language created in the early 1970s, foundational to operating systems like UNIX, Linux, and countless embedded systems. It emphasizes simplicity, efficiency, and portability.</p>
+      <p><strong>C++</strong> extends C with object-oriented programming (OOP), generic programming via templates, and modern abstractions while maintaining backward compatibility. C++ powers game engines, databases, browsers, and high-performance applications.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Compiled:</strong> Direct to machine code for maximum speed.</li>
+        <li><strong>Manual Memory Management:</strong> malloc/free (C), new/delete (C++).</li>
+        <li><strong>Statically Typed:</strong> Type safety enforced at compile time.</li>
+        <li><strong>Portable:</strong> Standards (C11, C17, C++17, C++20) ensure cross-platform code.</li>
+        <li><strong>Low-Level Access:</strong> Pointers, inline assembly, hardware I/O.</li>
+      </ul>
+      <div class="info-box warning"><strong>Note:</strong> Manual memory management requires discipline—modern C++ emphasizes RAII and smart pointers to reduce errors.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use C & C++?</h2>
+      <p>C and C++ remain dominant in domains where performance, control, and efficiency are paramount. They power the infrastructure underlying modern computing.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Operating Systems</span>
+        <span class="topic">Game Engines</span>
+        <span class="topic">Embedded Systems</span>
+        <span class="topic">Database Engines</span>
+        <span class="topic">Compilers</span>
+        <span class="topic">Real-Time Systems</span>
+        <span class="topic">High-Freq Trading</span>
+        <span class="topic">Device Drivers</span>
+        <span class="topic">Graphics Rendering</span>
+        <span class="topic">IoT Firmware</span>
+        <span class="topic">Browsers</span>
+        <span class="topic">Scientific Computing</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Performance:</strong> Near-zero overhead abstractions.</li>
+        <li><strong>Control:</strong> Manage every byte, every cycle.</li>
+        <li><strong>Ecosystem:</strong> Decades of libraries, tools, and frameworks.</li>
+        <li><strong>Portability:</strong> Write once, compile anywhere.</li>
+        <li><strong>Industry Standard:</strong> Foundation for systems engineering.</li>
+      </ul>
+    </section>
+
+    <section id="comparison" class="card">
+      <h2>C vs C++</h2>
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>C</th><th>C++</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Paradigm</td><td>Procedural</td><td>Multi-paradigm (OOP, Generic, Functional)</td></tr>
+          <tr><td>Memory</td><td>malloc/free</td><td>new/delete + smart pointers</td></tr>
+          <tr><td>Standard Library</td><td>Minimal (stdio, stdlib)</td><td>Rich (STL, containers, algorithms)</td></tr>
+          <tr><td>OOP</td><td>No</td><td>Classes, inheritance, polymorphism</td></tr>
+          <tr><td>Templates</td><td>No</td><td>Yes (compile-time generics)</td></tr>
+          <tr><td>Exceptions</td><td>No</td><td>try/catch/throw</td></tr>
+          <tr><td>Use Case</td><td>Kernels, embedded</td><td>Applications, engines, frameworks</td></tr>
+        </tbody>
+      </table>
+      <div class="info-box"><strong>Tip:</strong> Use C for minimal footprint systems; use C++ for complex applications needing abstractions.</div>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>C Example: Hello World</h3>
+      <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, DevSphere!\n");
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <stdio.h>\n\nint main() {\n    printf(\"Hello, DevSphere!\\n\");\n    return 0;\n}">COPY</button></pre>
+      
+      <h3>C++: Classes & Objects</h3>
+      <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Greeter {
+    std::string name;
+public:
+    Greeter(std::string n) : name(n) {}
+    void greet() {
+        std::cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; "!\n";
+    }
+};
+
+int main() {
+    Greeter g("DevSphere");
+    g.greet();
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <iostream>\n#include <string>\n\nclass Greeter {\n    std::string name;\npublic:\n    Greeter(std::string n) : name(n) {}\n    void greet() {\n        std::cout << \"Hello, \" << name << \"!\\n\";\n    }\n};\n\nint main() {\n    Greeter g(\"DevSphere\");\n    g.greet();\n    return 0;\n}">COPY</button></pre>
+
+      <h3>Memory Management (C)</h3>
+      <pre><code>#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int* allocate_array(int size) {
+    int* arr = (int*)malloc(size * sizeof(int));
+    if (arr == NULL) return NULL;
+    memset(arr, 0, size * sizeof(int));
+    return arr;
+}
+
+int main() {
+    int* data = allocate_array(10);
+    // Use data...
+    free(data);
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <stdlib.h>\n#include <string.h>\n\nint* allocate_array(int size) {\n    int* arr = (int*)malloc(size * sizeof(int));\n    if (arr == NULL) return NULL;\n    memset(arr, 0, size * sizeof(int));\n    return arr;\n}\n\nint main() {\n    int* data = allocate_array(10);\n    // Use data...\n    free(data);\n    return 0;\n}">COPY</button></pre>
+
+      <h3>Smart Pointers (Modern C++)</h3>
+      <pre><code>#include &lt;memory&gt;
+#include &lt;vector&gt;
+
+int main() {
+    auto data = std::make_unique&lt;std::vector&lt;int&gt;&gt;(10, 0);
+    data->push_back(42);
+    // Automatic cleanup, no manual delete
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <memory>\n#include <vector>\n\nint main() {\n    auto data = std::make_unique<std::vector<int>>(10, 0);\n    data->push_back(42);\n    // Automatic cleanup, no manual delete\n    return 0;\n}">COPY</button></pre>
+    </section>
+
+    <section id="examples" class="card">
+      <h2>Mini Examples</h2>
+      <div class="examples">
+        <h3>File I/O (C)</h3>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    FILE* fp = fopen("data.txt", "w");
+    if (fp) {
+        fprintf(fp, "Sample data\n");
+        fclose(fp);
+    }
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <stdio.h>\n\nint main() {\n    FILE* fp = fopen(\"data.txt\", \"w\");\n    if (fp) {\n        fprintf(fp, \"Sample data\\n\");\n        fclose(fp);\n    }\n    return 0;\n}">COPY</button></pre>
+        
+        <h3>STL Containers (C++)</h3>
+        <pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+int main() {
+    std::vector&lt;int&gt; nums = {5, 2, 8, 1, 9};
+    std::sort(nums.begin(), nums.end());
+    for (int n : nums) {
+        std::cout &lt;&lt; n &lt;&lt; " ";
+    }
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::vector<int> nums = {5, 2, 8, 1, 9};\n    std::sort(nums.begin(), nums.end());\n    for (int n : nums) {\n        std::cout << n << \" \";\n    }\n    return 0;\n}">COPY</button></pre>
+
+        <h3>Threading (C++11+)</h3>
+        <pre><code>#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;chrono&gt;
+
+void worker(int id) {
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout &lt;&lt; "Worker " &lt;&lt; id &lt;&lt; " done\n";
+}
+
+int main() {
+    std::thread t1(worker, 1);
+    std::thread t2(worker, 2);
+    t1.join();
+    t2.join();
+    return 0;
+}</code><button class="copy-btn" data-copy="#include <iostream>\n#include <thread>\n#include <chrono>\n\nvoid worker(int id) {\n    std::this_thread::sleep_for(std::chrono::seconds(1));\n    std::cout << \"Worker \" << id << \" done\\n\";\n}\n\nint main() {\n    std::thread t1(worker, 1);\n    std::thread t2(worker, 2);\n    t1.join();\n    t2.join();\n    return 0;\n}">COPY</button></pre>
+      </div>
+
+      <details class="collapsible">
+        <summary>Advanced Topics</summary>
+        <div class="collapsible-content">
+          <p><strong>Template Metaprogramming:</strong> Compile-time computation and type manipulation.</p>
+          <p><strong>Move Semantics:</strong> C++11 rvalue references for efficient resource transfers.</p>
+          <p><strong>RAII:</strong> Resource Acquisition Is Initialization—automatic cleanup pattern.</p>
+          <p><strong>Constexpr:</strong> Compile-time evaluation of functions and variables.</p>
+          <p><strong>Concepts (C++20):</strong> Constraints on template parameters for better error messages.</p>
+          <p><strong>Modules (C++20):</strong> Modern replacement for header files.</p>
+        </div>
+      </details>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <p>Move on to the <a href="install-guide.html">C & C++ Installation Guide</a> to set up compilers (GCC, Clang, MSVC) and build tools (Make, CMake). Then explore:</p>
+      <ul>
+        <li>Data structures: arrays, linked lists, trees, hash tables</li>
+        <li>Algorithms: sorting, searching, dynamic programming</li>
+        <li>Design patterns: RAII, Singleton, Factory, Observer</li>
+        <li>Debugging tools: GDB, Valgrind, AddressSanitizer</li>
+        <li>Build systems: CMake, Meson, Ninja</li>
+        <li>Modern C++ features: lambdas, std::optional, std::variant</li>
+      </ul>
+      <div class="info-box"><strong>Pro Tip:</strong> Read compiler warnings carefully—they often catch subtle bugs before runtime.</div>
+    </section>
+
+    <footer>
+      C & C++ Intro • Internal CSS/JS • Dark Theme • Updated Nov 15 2025
+    </footer>
+  </div>
+
+  <div id="copyFeedback" class="copy-feedback">Copied!</div>
+  <script>
+    // Copy buttons
+    const feedback = document.getElementById('copyFeedback');
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 1400);
+        });
+      });
+    });
+    // Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+  </script>
+</body>
+</html>

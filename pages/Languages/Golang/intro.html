@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go (Golang) Introduction | DevSphere</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%);
+      color:#e1e4e8;
+      line-height:1.7;
+      min-height:100vh;
+    }
+    a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+    a:hover { text-decoration:underline; color:#a78bfa; }
+    .page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+    header.page-header {
+      background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6;
+      padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    h1 { font-size:2.75rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+    .subtitle { color:#8b92a0; font-size:1.15rem; }
+    .grid-2 { display:grid; gap:1.75rem; grid-template-columns:1fr; }
+    @media(min-width:880px){ .grid-2 { grid-template-columns:repeat(2,1fr); } }
+    .card {
+      background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem;
+      position:relative; transition:.25s; overflow:hidden;
+    }
+    .card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+    .card.accent { border-top:4px solid #f59e0b; }
+    h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+    h3 { font-size:1.25rem; font-weight:600; margin:1.6rem 0 .6rem; color:#f59e0b; }
+    p { margin:.75rem 0; color:#8b92a0; }
+    ul,ol { margin: .6rem 0 .9rem 1.35rem; }
+    li { margin:.45rem 0; color:#8b92a0; }
+    code, pre code { font-family: "JetBrains Mono", "Cascadia Code", Menlo, monospace; font-size:.85rem; }
+    pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; }
+    pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+    pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+    .badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+    .info-box { background:#0d1117; border:1px solid #30363d; border-left:4px solid #8b5cf6; padding:1rem 1rem 1.05rem; border-radius:.6rem; margin:1.1rem 0; }
+    .info-box.warning { border-left-color:#f59e0b; }
+    .info-box.success { border-left-color:#10b981; }
+    .flex-list { display:flex; flex-direction:column; gap:.55rem; }
+    .topic-grid { display:grid; gap:.9rem; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:.6rem; }
+    .topic { background:#0d1117; border:1px solid #30363d; padding:.6rem .7rem; font-size:.8rem; border-radius:.5rem; color:#8b92a0; transition:.2s; }
+    .topic:hover { border-color:#8b5cf6; color:#e1e4e8; }
+    .examples { margin-top:1.2rem; }
+    footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+    .section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+    .section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+    .section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; }
+    .collapsible { border:1px solid #30363d; border-radius:.65rem; overflow:hidden; margin:1.5rem 0; }
+    .collapsible summary { cursor:pointer; padding:.85rem 1rem; background:#161b22; font-weight:600; color:#e1e4e8; list-style:none; }
+    .collapsible[open] summary { border-bottom:1px solid #30363d; }
+    .collapsible-content { padding:1rem 1.15rem 1.3rem; background:#0d1117; }
+    .copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+    .copy-feedback.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>🐹 Go (Golang) Introduction</h1>
+      <p class="subtitle">Fast, simple, and reliable – build scalable systems with Go's concurrency-first design.</p>
+      <div class="badge-row">
+        <span class="badge">CONCURRENT</span>
+        <span class="badge">COMPILED</span>
+        <span class="badge">STATICALLY TYPED</span>
+        <span class="badge">CLOUD-NATIVE</span>
+        <span class="badge">SIMPLE</span>
+      </div>
+      <nav class="section-nav">
+        <a href="#what-is">What is Go?</a>
+        <a href="#why-use">Why Use It</a>
+        <a href="#core-concepts">Core Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#next-steps">Next Steps</a>
+      </nav>
+      <div class="info-box success">
+        <strong>Built for Concurrency:</strong> Go's goroutines and channels make concurrent programming simple and efficient.
+      </div>
+    </header>
+
+    <section id="what-is" class="card accent">
+      <h2>What Is Go?</h2>
+      <p><strong>Go</strong> (often called Golang) is a statically typed, compiled language created at Google in 2009. Designed for simplicity, speed, and reliable concurrency, Go powers cloud infrastructure, microservices, DevOps tools, and distributed systems.</p>
+      <h3>Key Characteristics</h3>
+      <ul class="flex-list">
+        <li><strong>Fast Compilation:</strong> Compiles to native binaries in seconds.</li>
+        <li><strong>Built-in Concurrency:</strong> Goroutines and channels for lightweight parallelism.</li>
+        <li><strong>Simple Syntax:</strong> Clean, minimal design with 25 keywords.</li>
+        <li><strong>Garbage Collection:</strong> Automatic memory management with low latency.</li>
+        <li><strong>Standard Library:</strong> Comprehensive packages for HTTP, JSON, crypto, testing.</li>
+        <li><strong>Cross-Compilation:</strong> Build for any platform from any platform.</li>
+      </ul>
+      <div class="info-box warning"><strong>Philosophy:</strong> Go favors simplicity over complexity – no inheritance, generics are minimal, and error handling is explicit.</div>
+    </section>
+
+    <section id="why-use" class="card">
+      <h2>Why Use Go?</h2>
+      <p>Go excels in building network services, cloud infrastructure, CLI tools, and concurrent systems. Its performance rivals C/C++ while maintaining developer productivity close to Python.</p>
+      <h3>Common Use Cases</h3>
+      <div class="topic-grid">
+        <span class="topic">Microservices</span>
+        <span class="topic">Cloud Infrastructure</span>
+        <span class="topic">CLI Tools</span>
+        <span class="topic">Web APIs</span>
+        <span class="topic">DevOps Automation</span>
+        <span class="topic">Distributed Systems</span>
+        <span class="topic">Network Services</span>
+        <span class="topic">Container Runtimes</span>
+        <span class="topic">Database Engines</span>
+        <span class="topic">Proxies & Load Balancers</span>
+      </div>
+      <h3>Advantages</h3>
+      <ul>
+        <li><strong>Speed:</strong> Compiled binaries run at near-C performance.</li>
+        <li><strong>Concurrency:</strong> Lightweight goroutines scale to millions.</li>
+        <li><strong>Simplicity:</strong> Easy to learn, read, and maintain.</li>
+        <li><strong>Deployment:</strong> Single binary with no dependencies.</li>
+        <li><strong>Tooling:</strong> Built-in formatter (gofmt), tester, profiler.</li>
+        <li><strong>Community:</strong> Strong ecosystem for cloud-native development.</li>
+      </ul>
+      <div class="info-box"><strong>Examples:</strong> Docker, Kubernetes, Terraform, Prometheus, Consul all written in Go.</div>
+    </section>
+
+    <section id="core-concepts" class="card">
+      <h2>Core Concepts</h2>
+      <h3>Hello World</h3>
+      <pre><code>package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, DevSphere!")
+}</code><button class="copy-btn" data-copy="package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, DevSphere!\")\n}">COPY</button></pre>
+      
+      <h3>Variables & Types</h3>
+      <pre><code>package main
+
+import "fmt"
+
+func main() {
+    // Short declaration
+    name := "Go"
+    version := 1.21
+    
+    // Explicit type
+    var active bool = true
+    
+    // Multiple variables
+    x, y := 10, 20
+    
+    fmt.Println(name, version, active, x+y)
+}</code><button class="copy-btn" data-copy="package main\n\nimport \"fmt\"\n\nfunc main() {\n    // Short declaration\n    name := \"Go\"\n    version := 1.21\n    \n    // Explicit type\n    var active bool = true\n    \n    // Multiple variables\n    x, y := 10, 20\n    \n    fmt.Println(name, version, active, x+y)\n}">COPY</button></pre>
+
+      <h3>Structs & Methods</h3>
+      <pre><code>package main
+
+import "fmt"
+
+type Person struct {
+    Name string
+    Age  int
+}
+
+func (p Person) Greet() {
+    fmt.Printf("Hi, I'm %s, %d years old\n", p.Name, p.Age)
+}
+
+func main() {
+    p := Person{Name: "Alice", Age: 30}
+    p.Greet()
+}</code><button class="copy-btn" data-copy="package main\n\nimport \"fmt\"\n\ntype Person struct {\n    Name string\n    Age  int\n}\n\nfunc (p Person) Greet() {\n    fmt.Printf(\"Hi, I'm %s, %d years old\\n\", p.Name, p.Age)\n}\n\nfunc main() {\n    p := Person{Name: \"Alice\", Age: 30}\n    p.Greet()\n}">COPY</button></pre>
+
+      <h3>Goroutines & Channels</h3>
+      <pre><code>package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func worker(id int, ch chan string) {
+    time.Sleep(time.Second)
+    ch <- fmt.Sprintf("Worker %d done", id)
+}
+
+func main() {
+    ch := make(chan string)
+    
+    for i := 1; i <= 3; i++ {
+        go worker(i, ch)
+    }
+    
+    for i := 1; i <= 3; i++ {
+        msg := <-ch
+        fmt.Println(msg)
+    }
+}</code><button class="copy-btn" data-copy="package main\n\nimport (\n    \"fmt\"\n    \"time\"\n)\n\nfunc worker(id int, ch chan string) {\n    time.Sleep(time.Second)\n    ch <- fmt.Sprintf(\"Worker %d done\", id)\n}\n\nfunc main() {\n    ch := make(chan string)\n    \n    for i := 1; i <= 3; i++ {\n        go worker(i, ch)\n    }\n    \n    for i := 1; i <= 3; i++ {\n        msg := <-ch\n        fmt.Println(msg)\n    }\n}">COPY</button></pre>
+    </section>
+
+    <section id="examples" class="card">
+      <h2>Mini Examples</h2>
+      <div class="examples">
+        <h3>HTTP Server</h3>
+        <pre><code>package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hello from Go!")
+}
+
+func main() {
+    http.HandleFunc("/", handler)
+    fmt.Println("Server on :8080")
+    http.ListenAndServe(":8080", nil)
+}</code><button class="copy-btn" data-copy="package main\n\nimport (\n    \"fmt\"\n    \"net/http\"\n)\n\nfunc handler(w http.ResponseWriter, r *http.Request) {\n    fmt.Fprintf(w, \"Hello from Go!\")\n}\n\nfunc main() {\n    http.HandleFunc(\"/\", handler)\n    fmt.Println(\"Server on :8080\")\n    http.ListenAndServe(\":8080\", nil)\n}">COPY</button></pre>
+        
+        <h3>JSON Encoding/Decoding</h3>
+        <pre><code>package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type User struct {
+    Name  string `json:"name"`
+    Email string `json:"email"`
+}
+
+func main() {
+    u := User{Name: "Bob", Email: "bob@example.com"}
+    
+    // Encode
+    data, _ := json.Marshal(u)
+    fmt.Println(string(data))
+    
+    // Decode
+    var u2 User
+    json.Unmarshal(data, &u2)
+    fmt.Printf("%+v\n", u2)
+}</code><button class="copy-btn" data-copy="package main\n\nimport (\n    \"encoding/json\"\n    \"fmt\"\n)\n\ntype User struct {\n    Name  string `json:\"name\"`\n    Email string `json:\"email\"`\n}\n\nfunc main() {\n    u := User{Name: \"Bob\", Email: \"bob@example.com\"}\n    \n    // Encode\n    data, _ := json.Marshal(u)\n    fmt.Println(string(data))\n    \n    // Decode\n    var u2 User\n    json.Unmarshal(data, &u2)\n    fmt.Printf(\"%+v\\n\", u2)\n}">COPY</button></pre>
+
+        <h3>Error Handling</h3>
+        <pre><code>package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("division by zero")
+    }
+    return a / b, nil
+}
+
+func main() {
+    result, err := divide(10, 0)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Result:", result)
+}</code><button class="copy-btn" data-copy="package main\n\nimport (\n    \"errors\"\n    \"fmt\"\n)\n\nfunc divide(a, b float64) (float64, error) {\n    if b == 0 {\n        return 0, errors.New(\"division by zero\")\n    }\n    return a / b, nil\n}\n\nfunc main() {\n    result, err := divide(10, 0)\n    if err != nil {\n        fmt.Println(\"Error:\", err)\n        return\n    }\n    fmt.Println(\"Result:\", result)\n}">COPY</button></pre>
+      </div>
+
+      <details class="collapsible">
+        <summary>Advanced Features</summary>
+        <div class="collapsible-content">
+          <p><strong>Interfaces:</strong> Implicit implementation via method sets.</p>
+          <pre><code>type Writer interface {
+    Write([]byte) (int, error)
+}
+
+// Any type with Write method satisfies Writer</code><button class="copy-btn" data-copy="type Writer interface {\n    Write([]byte) (int, error)\n}\n\n// Any type with Write method satisfies Writer">COPY</button></pre>
+          <p><strong>Defer:</strong> Schedule function calls to run before return.</p>
+          <pre><code>func readFile() {
+    f, _ := os.Open("file.txt")
+    defer f.Close() // Runs when function exits
+    // ... work with f
+}</code><button class="copy-btn" data-copy="func readFile() {\n    f, _ := os.Open(\"file.txt\")\n    defer f.Close() // Runs when function exits\n    // ... work with f\n}">COPY</button></pre>
+          <p><strong>Select:</strong> Multiplex channel operations.</p>
+          <pre><code>select {
+case msg := <-ch1:
+    fmt.Println("From ch1:", msg)
+case msg := <-ch2:
+    fmt.Println("From ch2:", msg)
+case <-time.After(time.Second):
+    fmt.Println("Timeout")
+}</code><button class="copy-btn" data-copy="select {\ncase msg := <-ch1:\n    fmt.Println(\"From ch1:\", msg)\ncase msg := <-ch2:\n    fmt.Println(\"From ch2:\", msg)\ncase <-time.After(time.Second):\n    fmt.Println(\"Timeout\")\n}">COPY</button></pre>
+        </div>
+      </details>
+    </section>
+
+    <section id="ecosystem" class="card">
+      <h2>Go Ecosystem</h2>
+      <h3>Popular Frameworks</h3>
+      <ul>
+        <li><strong>Gin:</strong> High-performance HTTP web framework.</li>
+        <li><strong>Echo:</strong> Minimalist web framework.</li>
+        <li><strong>Fiber:</strong> Express-inspired framework.</li>
+        <li><strong>Chi:</strong> Lightweight router.</li>
+        <li><strong>gRPC-Go:</strong> Official gRPC implementation.</li>
+      </ul>
+      <h3>Database Drivers</h3>
+      <ul>
+        <li><strong>database/sql:</strong> Standard database interface.</li>
+        <li><strong>GORM:</strong> ORM library.</li>
+        <li><strong>sqlx:</strong> Extensions to database/sql.</li>
+        <li><strong>pgx:</strong> PostgreSQL driver and toolkit.</li>
+      </ul>
+      <h3>Tools</h3>
+      <ul>
+        <li><strong>go fmt:</strong> Auto-formatter (standard style).</li>
+        <li><strong>go test:</strong> Built-in testing framework.</li>
+        <li><strong>go mod:</strong> Dependency management.</li>
+        <li><strong>go build:</strong> Compile binaries.</li>
+        <li><strong>golangci-lint:</strong> Meta-linter for code quality.</li>
+      </ul>
+    </section>
+
+    <section id="next-steps" class="card">
+      <h2>Next Steps</h2>
+      <p>Move on to the <a href="install-guide.html">Go Installation Guide</a> to set up your environment and start building. Then explore:</p>
+      <ul>
+        <li>Concurrency patterns: worker pools, pipelines, fan-out/fan-in</li>
+        <li>Context package for cancellation and timeouts</li>
+        <li>Testing with table-driven tests and benchmarks</li>
+        <li>Building REST APIs with Gin or Echo</li>
+        <li>Deploying Go applications as containers</li>
+        <li>Using Go modules for dependency management</li>
+      </ul>
+      <div class="info-box"><strong>Pro Tip:</strong> Run <code>gofmt</code> before every commit to maintain consistent code style across your team.</div>
+    </section>
+
+    <footer>
+      Go Intro • Internal CSS/JS • Dark Theme • Updated Nov 15 2025
+    </footer>
+  </div>
+
+  <div id="copyFeedback" class="copy-feedback">Copied!</div>
+  <script>
+    // Copy buttons
+    const feedback = document.getElementById('copyFeedback');
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 1400);
+        });
+      });
+    });
+    // Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+  </script>
+</body>
+</html>

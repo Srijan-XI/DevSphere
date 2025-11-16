@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MySQL Introduction | DevSphere</title>
+	<style>
+		* { box-sizing: border-box; margin:0; padding:0; }
+		body { font-family: Inter, system-ui, -apple-system, sans-serif; background: linear-gradient(135deg,#0a0e14 0%,#1a1f2e 50%,#0f1419 100%); color:#e1e4e8; line-height:1.7; min-height:100vh; }
+		a { color:#8b5cf6; text-decoration:none; font-weight:500; }
+		a:hover { text-decoration:underline; color:#a78bfa; }
+		.page-wrapper { max-width:1200px; margin:0 auto; padding:2.25rem 1.25rem 4rem; }
+		header.page-header { background:#161b22; border:1px solid #30363d; border-top:4px solid #8b5cf6; padding:2rem 2rem 2.25rem; border-radius:.85rem; margin-bottom:2.25rem; box-shadow:0 4px 12px rgba(0,0,0,.4); }
+		h1 { font-size:2.6rem; margin-bottom:.5rem; font-weight:800; letter-spacing:-.02em; }
+		.subtitle { color:#8b92a0; font-size:1.1rem; }
+		.card { background:#161b22; border:1px solid #30363d; border-radius:.85rem; padding:1.5rem 1.5rem 1.75rem; position:relative; transition:.25s; overflow:hidden; }
+		.card:hover { border-color:#8b5cf6; box-shadow:0 6px 18px rgba(139,92,246,.15); }
+		.card.accent { border-top:4px solid #f59e0b; }
+		h2 { font-size:1.9rem; font-weight:700; margin:0 0 1.1rem; padding-bottom:.55rem; border-bottom:2px solid #8b5cf6; }
+		h3 { font-size:1.15rem; font-weight:600; margin:1.2rem 0 .55rem; color:#f59e0b; }
+		p { margin:.7rem 0; color:#8b92a0; }
+		ul,ol { margin:.6rem 0 .9rem 1.35rem; }
+		li { margin:.45rem 0; color:#8b92a0; }
+		code, pre code { font-family: "JetBrains Mono","Cascadia Code",Menlo,monospace; font-size:.85rem; }
+		pre { background:#0d1117; color:#e1e4e8; padding:1rem 1.1rem; border:1px solid #30363d; border-radius:.6rem; overflow:auto; position:relative; margin:.85rem 0; }
+		pre .copy-btn { position:absolute; top:.55rem; right:.55rem; background:#161b22; color:#8b5cf6; border:1px solid #30363d; font-size:.7rem; padding:.35rem .55rem; border-radius:.4rem; cursor:pointer; transition:.2s; }
+		pre .copy-btn:hover { background:#8b5cf6; color:#fff; }
+		.badge-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.1rem; }
+		.badge { background:#0d1117; border:1px solid #30363d; color:#8b5cf6; padding:.35rem .65rem; font-size:.7rem; font-weight:600; letter-spacing:.05em; border-radius:.45rem; }
+		.section-nav { margin:1.4rem 0 2rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+		.section-nav a { background:#0d1117; padding:.5rem .75rem; border:1px solid #30363d; border-radius:.55rem; font-size:.75rem; color:#8b92a0; transition:.2s; }
+		.section-nav a:hover { color:#e1e4e8; border-color:#8b5cf6; text-decoration:none; }
+		footer { margin-top:3.5rem; text-align:center; font-size:.75rem; color:#8b92a0; }
+		.copy-feedback { position:fixed; bottom:1.2rem; right:1.2rem; background:#10b981; color:#fff; padding:.6rem .9rem; font-size:.8rem; border-radius:.5rem; box-shadow:0 4px 12px rgba(0,0,0,.4); opacity:0; transform:translateY(10px); transition:.35s; }
+		.copy-feedback.show { opacity:1; transform:translateY(0); }
+	</style>
+</head>
+<body>
+	<div class="page-wrapper">
+		<header class="page-header">
+			<h1>MySQL — Introduction</h1>
+			<p class="subtitle">The world’s most popular open-source relational database for OLTP workloads.</p>
+			<div class="badge-row">
+				<span class="badge">RELATIONAL</span>
+				<span class="badge">SQL</span>
+				<span class="badge">ACID</span>
+				<span class="badge">INNODB</span>
+			</div>
+			<nav class="section-nav">
+				<a href="#what">What is MySQL</a>
+				<a href="#concepts">Core Concepts</a>
+				<a href="#queries">SQL Examples</a>
+				<a href="#performance">Performance</a>
+				<a href="#next">Next Steps</a>
+			</nav>
+		</header>
+
+		<section id="what" class="card accent">
+			<h2>What is MySQL?</h2>
+			<p>MySQL is a robust, open-source RDBMS powering millions of applications. It supports ACID transactions, strong indexing, and replication for high availability.</p>
+			<ul>
+				<li><strong>Storage engine:</strong> InnoDB (default) with MVCC, row-level locking.</li>
+				<li><strong>Replication:</strong> Async/semisync; Group Replication for HA.</li>
+				<li><strong>Schemas:</strong> Structured, normalized data in tables, rows, columns.</li>
+			</ul>
+		</section>
+
+		<section id="concepts" class="card">
+			<h2>Core Concepts</h2>
+			<ul>
+				<li><strong>Databases & tables</strong> organize data in a structured schema.</li>
+				<li><strong>Primary/foreign keys</strong> enforce identity and relationships.</li>
+				<li><strong>Indexes</strong> accelerate lookups; use covering and composite indexes wisely.</li>
+				<li><strong>Transactions</strong> ensure atomicity, consistency, isolation, durability.</li>
+			</ul>
+		</section>
+
+		<section id="queries" class="card">
+			<h2>SQL Examples</h2>
+			<h3>Create database & user</h3>
+			<pre><code>CREATE DATABASE appdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'app'@'%' IDENTIFIED BY 'StrongP@ssw0rd';
+GRANT ALL PRIVILEGES ON appdb.* TO 'app'@'%';
+FLUSH PRIVILEGES;</code><button class="copy-btn" data-copy="CREATE DATABASE appdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;">COPY</button></pre>
+
+			<h3>Create table</h3>
+			<pre><code>USE appdb;
+CREATE TABLE users (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	name VARCHAR(120) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	KEY idx_users_created_at (created_at)
+) ENGINE=InnoDB;</code><button class="copy-btn" data-copy="CREATE TABLE users (id BIGINT PRIMARY KEY AUTO_INCREMENT, email VARCHAR(255) NOT NULL UNIQUE, name VARCHAR(120) NOT NULL);">COPY</button></pre>
+
+			<h3>CRUD</h3>
+			<pre><code>INSERT INTO users(email,name) VALUES ('ada@example.com','Ada');
+SELECT id,email,name FROM users WHERE email='ada@example.com';
+UPDATE users SET name='Ada L.' WHERE email='ada@example.com';
+DELETE FROM users WHERE email='ada@example.com';</code><button class="copy-btn" data-copy="SELECT id,email,name FROM users WHERE email='ada@example.com';">COPY</button></pre>
+		</section>
+
+		<section id="performance" class="card">
+			<h2>Performance</h2>
+			<ul>
+				<li>Prefer <strong>covering indexes</strong> for frequently queried columns.</li>
+				<li>Use <strong>EXPLAIN</strong> to analyze query plans.</li>
+				<li>Avoid SELECT *; project only needed columns.</li>
+				<li>Normalize to reduce duplication; denormalize selectively for reads.</li>
+			</ul>
+		</section>
+
+		<section id="next" class="card">
+			<h2>Next Steps</h2>
+			<ul>
+				<li>📦 <a href="install-guide.html">Install MySQL</a> for your OS</li>
+				<li>🛠️ Create a schema and seed data</li>
+				<li>📊 Add essential indexes, measure with EXPLAIN</li>
+			</ul>
+		</section>
+
+		<footer>
+			<p>&copy; 2025 DevSphere</p>
+		</footer>
+	</div>
+
+	<div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
+	<script>
+		document.querySelectorAll('.copy-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				const txt = btn.getAttribute('data-copy');
+				navigator.clipboard.writeText(txt).then(() => {
+					const fb = document.getElementById('copyFeedback');
+					fb.classList.add('show');
+					setTimeout(() => fb.classList.remove('show'), 1800);
+				});
+			});
+		});
+		document.querySelectorAll('a[href^="#"]').forEach(a => {
+			a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); });
+		});
+	</script>
+</body>
+</html>
